@@ -3,25 +3,22 @@ import datetime
 
 db = SQLAlchemy()
 
-class BaseModel(db.Model):
-    """Base data model for all objects"""
-    __abstract__ = True
-
-    def __init__(self, *args):
-        super().__init__(*args)
-
-    def __repr__(self):
-        """Define a base way to print models"""
-        return '%s(%s)' % (self.__class__.__name__, {
-            column: value
-            for column, value in self._to_dict().items()
-        })
-
-    def json(self):
-        """
-                Define a base way to jsonify models, dealing with datetime objects
-        """
-        return {
-            column: value if not isinstance(value, datetime.date) else value.strftime('%Y-%m-%d')
-            for column, value in self._to_dict().items()
-        }
+class User(db.Model):
+  __tablename__ = 'users'
+  uid = db.Column(db.Integer, primary_key = True)
+  firstname = db.Column(db.String(100))
+  lastname = db.Column(db.String(100))
+  email = db.Column(db.String(120), unique=True)
+  pwdhash = db.Column(db.String(54))
+   
+  def __init__(self, firstname, lastname, email, password):
+    self.firstname = firstname.title()
+    self.lastname = lastname.title()
+    self.email = email.lower()
+    self.set_password(password)
+     
+  def set_password(self, password):
+    self.pwdhash = generate_password_hash(password)
+   
+  def check_password(self, password):
+    return check_password_hash(self.pwdhash, password)

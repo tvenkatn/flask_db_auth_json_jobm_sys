@@ -1,15 +1,22 @@
-from flask import Flask, url_for, redirect, render_template, request
+from flask import Flask, url_for, redirect, render_template, request, flash, session
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
 import datetime
 import psycopg2
 import subprocess
 import json
+from werkzeug import generate_password_hash, check_password_hash
+from flask_wtf import Form
+from wtforms import TextField, TextAreaField, SubmitField, validators, ValidationError, PasswordField
+from flask_login import LoginManager, login_user, login_required, logout_user
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:welcome@localhost/flaskApp1'
 db=SQLAlchemy(app)
-#db.create_all()
+app.secret_key = 'CatchMe, if yOU Ca nn~!'
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 ## psycopg2
 def getPostName(nameHere):
@@ -19,6 +26,7 @@ def getPostName(nameHere):
     rows = cur.fetchall()
     return rows[0]
 
+## for models.py
 class Bmi(db.Model):
     __tablename__="bmi"
     id=db.Column(db.Integer, primary_key=True)
@@ -31,6 +39,83 @@ class Bmi(db.Model):
         self.name_=name_
         self.weight_=weight_
         self.height_=height_
+        
+class User(db.Model):
+    __tablename__ = 'users'
+    uid = db.Column(db.Integer, primary_key = True)
+    firstname = db.Column(db.String(100))
+    lastname = db.Column(db.String(100))
+    email = db.Column(db.String(120), unique=True)
+    pwdhash = db.Column(db.String(154))
+
+    def __init__(self, firstname, lastname, email, password):
+        self.firstname = firstname.title()
+        self.lastname = lastname.title()
+        self.email = email.lower()
+        self.set_password(password)
+
+    def set_password(self, password):
+        self.pwdhash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.pwdhash, password)
+
+## form templates
+class SignupForm(Form):
+    firstname = TextField("First name",  [validators.Required("Please enter your first name.")])
+    lastname = TextField("Last name",  [validators.Required("Please enter your last name.")])
+    email = TextField("Email",  [validators.Required("Please enter your email address."), validators.Email("Please enter your email address.")])
+    password = PasswordField('Password', [validators.Required("Please enter a password.")])
+    submit = SubmitField("Create account")
+
+    def __init__(self, *args, **kwargs):
+        Form.__init__(self, *args, **kwargs)
+ 
+    def validate(self):
+        if not Form.validate(self):
+            return False
+        user = db.session.query(User).filter_by(email = self.email.data.lower()).first()
+        if user:
+            self.email.errors.append("That email is already taken")
+            return False
+        else:
+            return True
+
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    if 'email' in session:
+        return redirect(url_for('profile'))
+    form = SignupForm()
+    if request.method == 'POST':
+        if form.validate() == False:
+            return render_template('signup.html', form=form)
+        else:
+            newuser = User(form.firstname.data, form.lastname.data, form.email.data, form.password.data)
+            db.session.add(newuser)
+            db.session.commit()
+            session['email'] = newuser.email
+            return redirect(url_for('profile'))
+
+    elif request.method == 'GET':
+        db.create_all()
+        return render_template('signup.html', form=form)
+    
+@app.route('/profile')
+def profile():
+    if 'email' not in session:
+        return redirect(url_for('signup'))
+    user = User.query.filter_by(email = session['email']).first()
+    if user is None:
+        return redirect(url_for('signup'))
+    else:
+        return render_template('profile.html')
+
+@app.route('/signout')
+def signout():
+    if 'email' not in session:
+        return redirect(url_for('signup'))
+    session.pop('email', None)
+    return redirect(url_for('signup'))
 
 @app.route("/", methods=["GET", "POST"])
 def main():
@@ -38,7 +123,7 @@ def main():
 
 @app.route('/HH<name>')
 def hello_name(name):
-   return 'Hello %s!' % name
+    return 'Hello %s!' % name
 #http://127.0.0.1:5000/HHsri
 #HH is case sensitive. URLs should be case sensitive!!
 #https://stackoverflow.com/questions/28801707/case-insensitive-routing-in-flask
@@ -72,6 +157,8 @@ def defTest():
 
 @app.route('/runR', methods=["GET", "POST"])
 def runR():
+    if 'email' not in session:
+        return redirect(url_for('signup'))
     colours = ['Red', 'Blue', 'Black', 'Orange']
     if request.method == "POST" and 'thisColor' in request.form:
 #        return "the selected color is %s" % request.form.get("thisColor")
