@@ -1,4 +1,4 @@
-from flask import Flask, url_for, redirect, render_template, request, flash, session
+from flask import Flask, url_for, redirect, render_template, request, flash, session, jsonify, json
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
 import datetime
@@ -9,6 +9,8 @@ from werkzeug import generate_password_hash, check_password_hash
 from flask_wtf import Form
 from wtforms import TextField, TextAreaField, SubmitField, validators, ValidationError, PasswordField
 from flask_login import LoginManager, login_user, login_required, logout_user
+import pyodbc
+import csv
 
 
 app = Flask(__name__)
@@ -99,7 +101,7 @@ def signup():
     elif request.method == 'GET':
         db.create_all()
         return render_template('signup.html', form=form)
-    
+
 @app.route('/profile')
 def profile():
     if 'email' not in session:
@@ -154,6 +156,18 @@ def defTest():
     else:
         return render_template('allUsers.html', colours=colours)
 
+@app.route('/getVulns', methods=["GET", "POST"])
+def getVulns():
+    # serList = ["ca-md1-02","ca1mdrlcsint02","ca1mdmcert30","ca1mdtools01","ca1mdnaeq18"];
+    with open('data/serList.csv', 'r') as f:
+        serList = [line.rstrip() for line in f]
+    if request.method == "POST" and 'server' in request.form:
+        from defs import getVulnDbs
+        vulns = getVulnDbs(request.form.get("server"))
+        # return "the selected server is %s" % ser
+        return render_template('allVulns.html', serList=serList, selVuln=vulns)
+    else:
+        return render_template('allVulns.html', serList=serList)
 
 @app.route('/runR', methods=["GET", "POST"])
 def runR():
@@ -162,7 +176,7 @@ def runR():
     colours = ['Red', 'Blue', 'Black', 'Orange']
     if request.method == "POST" and 'thisColor' in request.form:
 #        return "the selected color is %s" % request.form.get("thisColor")
-        R = subprocess.call(["cmd", "/c", "Rscript","D:/Srinivas/work/20180105_flask_db_auth_json/rFiles/createFiles.r", """"%s""" % request.form.get("thisColor")])    
+        R = subprocess.call(["cmd", "/c", "Rscript","D:/Srinivas                                                 /work/20180105_flask_db_auth_json/rFiles/createFiles.r", """"%s""" % request.form.get("thisColor")])
         return render_template('allUsers.html', colours=colours, selColor = request.form.get("thisColor"))
     else:
         return render_template('allUsers.html', colours=colours)
@@ -214,4 +228,4 @@ def bmi():
 
 
 if __name__ == '__main__':
-    app.run(host= '0.0.0.0', port = 5005, debug=True)
+    app.run(host='0.0.0.0', port = 5005, debug=True)

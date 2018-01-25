@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
 from app import db
+import pyodbc
 
 
 def getColors():
@@ -13,3 +14,15 @@ def getNames():
         nm.append(row.name_)
     return nm
 
+def getVulnDbs(ser):
+    command = ["""SELECT name FROM   sys.databases WHERE  CASE WHEN state_desc = 'ONLINE' THEN OBJECT_ID(QUOTENAME(name) + '.[dbo].[cghs]', 'U') END IS NOT NULL""", """select name from sys.databases where name like 'RMS_VULN%'"""]
+    vulns = []
+    cnn = pyodbc.connect(driver='{SQL Server}', host=ser, Trusted_Connection='yes')
+    # cnn = pyodbc.connect(driver='{SQL Server}', host=ser, user='sa', password='Rmsuser!')
+    cursor = cnn.cursor()
+    cursor.execute(command[1])
+    rows = cursor.fetchall()
+    for row in rows:
+        a = row[0]
+        vulns.append(a)
+    return vulns
