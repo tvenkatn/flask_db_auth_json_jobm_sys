@@ -3,6 +3,7 @@ from sqlalchemy.sql import func
 from app import db
 import pyodbc
 
+ALLOWED_EXTENSIONS = set(['txt','dat','csv','xml','zip','bat'])
 
 def getColors():
     return ["Cyan", "Magenta", "Yello", "Key"]
@@ -26,3 +27,7 @@ def getVulnDbs(ser):
         a = row[0]
         vulns.append(a)
     return vulns
+
+def allowed_file(filename):
+    return '.' in filename and \
+        filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS

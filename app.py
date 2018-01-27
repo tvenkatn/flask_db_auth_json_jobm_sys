@@ -1,3 +1,4 @@
+import os
 from flask import Flask, url_for, redirect, render_template, request, flash, session, jsonify, json
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
@@ -5,13 +6,13 @@ import datetime
 import psycopg2
 import subprocess
 import json
-from werkzeug import generate_password_hash, check_password_hash
+from werkzeug import generate_password_hash, check_password_hash, secure_filename
 from flask_wtf import Form
 from wtforms import TextField, TextAreaField, SubmitField, validators, ValidationError, PasswordField
 from flask_login import LoginManager, login_user, login_required, logout_user
-import pyodbc
-import csv
 
+ALLOWED_EXTENSIONS = set(['txt','dat','csv','xml','zip','bat'])
+UPLOAD_FOLDER = './rFiles/rlr/'
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:welcome@localhost/flaskApp1'
@@ -19,6 +20,8 @@ db=SQLAlchemy(app)
 app.secret_key = 'CatchMe, if yOU Ca nn~!'
 login_manager = LoginManager()
 login_manager.init_app(app)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 
 ## psycopg2
 def getPostName(nameHere):
@@ -190,7 +193,26 @@ def rlrunner():
         return render_template('allUsers.html', colours=colours, selColor = request.form.get("thisColor"))
     else:
         return render_template('allUsers.html', colours=colours)    
-    
+
+@app.route('/rlr', methods=["GET", "POST"])
+def rlr():
+    colours = ['Red', 'Blue', 'Black', 'Orange']
+    if request.method == "POST":
+        from defs import allowed_file
+        runMTH=request.form['options']
+        ups=[]
+        for f in request.files.getlist('myFile'):
+            if(allowed_file(f.filename)):
+                filename = secure_filename(f.filename)
+                ups.append(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+
+        return 'Upload completed. ' + ", ".join(ups)
+
+    else:
+        return render_template('runRLR.html')
+
 @app.route('/bmi', methods=["GET", "POST"])
 def bmi():
     myName = ""
