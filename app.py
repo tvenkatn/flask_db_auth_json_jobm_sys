@@ -10,6 +10,7 @@ from werkzeug import generate_password_hash, check_password_hash, secure_filenam
 from flask_wtf import Form
 from wtforms import TextField, TextAreaField, SubmitField, validators, ValidationError, PasswordField
 from flask_login import LoginManager, login_user, login_required, logout_user
+from celery import Celery
 
 ALLOWED_EXTENSIONS = set(['txt','dat','csv','xml','zip','bat','yml'])
 UPLOAD_FOLDER = './rFiles/rlr/'
@@ -21,6 +22,8 @@ app.secret_key = 'CatchMe, if yOU Ca nn~!'
 login_manager = LoginManager()
 login_manager.init_app(app)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['CELERY_BROKER_URL'] = 'redis://localhost:6379/0'
+app.config['CELERY_RESULT_BACKEND'] = 'redis://localhost:6379/0'
 
 
 ## psycopg2
@@ -133,6 +136,18 @@ def hello_name(name):
 #HH is case sensitive. URLs should be case sensitive!!
 #https://stackoverflow.com/questions/28801707/case-insensitive-routing-in-flask
 
+celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'])
+celery.conf.update(app.config)
+
+@celery.task
+def runRinBack(thisCol):
+    subprocess.call(["cmd", "/c", "Rscript", "D:/Srinivas/work/20180105_flask_db_auth_json/rFiles/createFiles.r",""""%s""" % thisCol])
+
+def runRinBackNC(thisCol):
+    subprocess.call(["cmd", "/c", "Rscript", "D:/Srinivas/work/20180105_flask_db_auth_json/rFiles/createFiles.r",""""%s""" % thisCol])
+    return("done")
+
+
 @app.route('/ddtest', methods=["GET", "POST"])
 def getDropDown():
     colours = ['Red', 'Blue', 'Black', 'Orange']
@@ -174,15 +189,38 @@ def getVulns():
 
 @app.route('/runR', methods=["GET", "POST"])
 def runR():
-    if 'email' not in session:
-        return redirect(url_for('signup'))
+    # if 'email' not in session:
+    #     return redirect(url_for('signup'))
     colours = ['Red', 'Blue', 'Black', 'Orange']
     if request.method == "POST" and 'thisColor' in request.form:
 #        return "the selected color is %s" % request.form.get("thisColor")
-        R = subprocess.call(["cmd", "/c", "Rscript","D:/Srinivas                                                 /work/20180105_flask_db_auth_json/rFiles/createFiles.r", """"%s""" % request.form.get("thisColor")])
-        return render_template('allUsers.html', colours=colours, selColor = request.form.get("thisColor"))
+        task = runRinBack.delay(request.form.get("thisColor"))
+        # task = runRinBack.apply_async(args=[request.form.get("thisColor")], countdown=1)
+#         R = runRinBackNC(request.form.get("thisColor"))
+#         R = subprocess.call(["cmd", "/c", "Rscript", "D:/Srinivas/work/20180105_flask_db_auth_json/rFiles/createFiles.r", """"%s""" % request.form.get("thisColor")])
+        return render_template('allUsers.html', colours=colours, selColor = request.form.get("thisColor") + ". Task ID: " + task.id + ". Location: " + url_for('taskstatus',
+                                                  task_id=task.id))
     else:
         return render_template('allUsers.html', colours=colours)
+
+@app.route('/status/<task_id>')
+def taskstatus(task_id):
+    task = runRinBack.AsyncResult(task_id)
+    # if task.state == 'PENDING':
+    #     # job did not start yet
+    #     response = {
+    #         'status': 'Pending...'
+    #     }
+    # elif task.state != 'FAILURE':
+    #     response = {
+    #         'status': "FAILURE..."
+    #     }
+    # else:
+    #     # something went wrong in the background job
+    #     response = {
+    #         'status': str(task.info),  # this is the exception raised
+    #     }
+    return jsonify(task.state)
 
 @app.route('/rlrunner', methods=["GET", "POST"])
 def rlrunner():
