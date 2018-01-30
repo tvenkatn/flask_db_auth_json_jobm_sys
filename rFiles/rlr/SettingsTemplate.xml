@@ -1,0 +1,272 @@
+﻿<?xml version="1.0"?>
+<AnalysisSettings>
+  <!-- GENERAL PARAMETERS -->
+  <Settings>
+    <Setting>
+      <Name>Mode</Name>
+      <Value>SPRAY</Value>
+    </Setting>
+    <Setting>
+      <Name>SimYears</Name>
+      <Value>100</Value>
+    </Setting>
+    <Setting>
+      <Name>MaxDegreeOfParallelism</Name>
+      <Value>6</Value>
+    </Setting>
+    <Setting>
+      <Name>OutputEventGenResults</Name>
+      <Value>TRUE</Value>
+    </Setting>
+    <Setting>
+      <Name>OutputDamageResults</Name>
+      <Value>TRUE</Value>
+    </Setting>
+    <Setting>
+      <Name>OutputUncertResults</Name>
+      <Value>FALSE</Value>
+    </Setting>
+    <Setting>
+      <Name>Models</Name>
+      <Values>
+        <Value>JPEQ</Value>
+      </Values>
+    </Setting>
+    <!-- MODEL PARAMETERS -->
+    <ModelSettings model="JPEQ">
+      <Setting>
+        <Name>SubRegions</Name>
+        <Values>
+          <Value>JP</Value>
+        </Values>
+      </Setting>
+      <Setting>
+        <Name>SubSubRegions</Name>
+        <Values>
+			<Value>JP</Value>
+        </Values>
+      </Setting>
+      <Setting>
+        <Name>SubPerils</Name>
+        <Values>
+          <Value>SH</Value>
+        </Values>
+      </Setting>
+    </ModelSettings>
+  </Settings>
+  <!-- MODULE SECTION -->
+  <Modules>
+    <!-- EXPOSURE MODULE -->
+    <Module title="Exposure">
+      <Class>Rms.Analytics.DataService.Zip.ExposureZipDataService</Class>
+      <Assembly>Rms.Analytics.DataService.Zip</Assembly>
+      <Property>
+        <Name>BatchIds</Name>
+        <Values>
+          <Value>batchNumber</Value>
+        </Values>
+      </Property>
+      <Property>
+        <Name>UseFiles</Name>
+        <Value>True</Value>
+      </Property>
+      <Property>
+        <Name>BatchFileNameTemplate</Name>
+        <Value>batchPath</Value>
+      </Property>
+    </Module>
+    <!-- PERSISTENCE MODULE -->
+    <Module>
+      <Class>Rms.Analytics.DataService.Persistence.DataServicePersistenceModule</Class>
+      <Assembly>Rms.Analytics.DataService.Persistence</Assembly>
+      <Property>
+        <Name>AnalysisUniqueId</Name>
+        <Value>doNotChange</Value>
+      </Property>
+      <Property>
+        <Name>LocalOutputRootFolder</Name>
+        <Value>opath</Value>
+      </Property>
+      <Property>
+        <Name>OptimalFileOrChunkSize</Name>
+        <Value>1073741824</Value>
+      </Property>
+      <Property>
+        <Name>SerializerType</Name>
+        <Value>Csv</Value>
+      </Property>
+      <Property>
+        <Name>WriterType</Name>
+        <Value>WriteToFlat</Value>
+      </Property>
+      <Property>
+        <Name>FlusherType</Name>
+        <Value>None</Value>
+      </Property>
+      <Property>
+        <Name>HazardAggregationInstructions</Name>
+        <Values>
+          <Value>0101</Value>
+        </Values>
+      </Property>
+      <Property>
+        <Name>DamageAggregationInstructions</Name>
+        <Values>
+          <Value>0101</Value>
+        </Values>
+      </Property>
+      <Property>
+        <Name>UncertaintyAggregationInstructions</Name>
+        <Values>
+          <Value>0101</Value>
+        </Values>
+      </Property>
+      <Property>
+        <Name>InsuredLossAggregationInstructions</Name>
+        <Values>
+          <Value>00010302</Value>
+        </Values>
+      </Property>
+    </Module>
+    <!-- INSURED LOSS MODULE -->
+     <Module title="InsuredLoss">
+      <Class>Rms.Analytics.Tests.Mock.Module.InsuredLoss.MockInsuredLoss4GroundupModule</Class>
+      <Assembly>Rms.Analytics.Tests.Mock</Assembly>
+      <Property>
+        <Name>OutputOptions</Name>
+        <Values>
+          <Value>SH</Value>
+          </Values>
+      </Property>
+    </Module>
+    <ModelModules model="JPEQ">
+			<Module title="LossAdjust">
+				<Class>Rms.Analytics.Module.LossAdjust.LossAdjustPassThroughModule</Class>
+				<Assembly>Rms.Analytics.Module.LossAdjust</Assembly>
+				<Property>
+					<Name>Model</Name>
+					<Value>JPEQ</Value>
+				</Property>
+        </Module>
+		<Module title="Aggregator">
+        <Class>Rms.Analytics.Module.Aggregator.JpEq.v18.JpEqAggregatorProcessModule</Class>
+        <Assembly>Rms.Analytics.Module.Aggregator.JpEq.v18</Assembly>
+        <Property>
+          <Name>Model</Name>
+          <Value>JPEQ</Value>
+        </Property>
+      </Module>
+			
+      <!-- EVENT GEN SUBMODULE -->
+      <Module title="EventGen">
+        <Class>Rms.Analytics.Module.EventGen.JPEQ.v18.JPEQEventGenProcessModule</Class>
+        <Assembly>Rms.Analytics.Module.EventGen.JPEQ.v18</Assembly>
+        <Property>
+          <Name>DataDirectory</Name>
+          <Value>D:\main\NGDLMDATA\</Value>
+        </Property>
+        <Property>
+	         <Name>ApplyVs30BasedAmplification</Name>
+	         <Value>true</Value>
+        </Property>
+			<Property>
+<Name>AttenuationMapScheme</Name>
+<Value>-1</Value>
+</Property>
+		</Module>
+	      <!-- DAMAGE SUBMODULE -->
+      <Module title="Damage">
+        <Class>Rms.Analytics.Module.Damage.JPEQ.v18.JPEQDamageProcessModule</Class>
+        <Assembly>Rms.Analytics.Module.Damage.JPEQ.v18</Assembly>
+        <Property>
+          <Name>DataDirectory</Name>
+          <Value>D:\main\NGDLMDATA\</Value>
+        </Property>
+		<Property>
+			<Name>LiquefactionOption</Name>
+			<!--  0: NoLiquefaction-->
+			<!-- -1: Default behaviour - Vert and Lat Liquefaction-->
+			<!--  1: Only Vert Liquefaction-->
+			<!--  2: Only Lat Liquefaction-->
+			<Value>-1</Value> 
+        </Property>
+        <Property>
+			<Name>ApplyLandslide</Name>
+			<Value>TRUE</Value>
+        </Property>
+		<Property>
+			<Name>ForceRLLandslide</Name>
+			<Value>FALSE</Value>
+		</Property>	
+		<Property>
+			<Name>ApplyVs30BasedAmplification</Name>
+			<Value>true</Value>
+        </Property>
+		<!-- To Produce Intermediate Results -->
+		<Property>
+          <Name>OutputIntermediates</Name>
+          <Value>true</Value>
+        </Property>
+        <Property>
+          <Name>OutputPath</Name>
+          <Value>opath</Value>
+        </Property>
+        <Property>
+	         <Name>SkipBI</Name>
+	         <Value>false</Value>
+        </Property>
+
+      </Module>
+      <!-- UNCERTAINTY SUBMODULE -->
+      <Module title="Uncert">
+		<!--
+        <Class>Rms.Analytics.Module.Uncertainty.Spray.SprayKumarP4UncertaintyModule</Class>
+		-->
+        <Class>Rms.Analytics.Module.Uncertainty.Spray.SprayFixedP4UncertaintyModule</Class>
+        <Assembly>Rms.Analytics.Module.Uncertainty</Assembly>
+        <Property>
+          <Name>CorrelationXMLConfig</Name>
+          <Value>CORRELATIONMODEL.XML</Value>
+        </Property>
+        <Property>
+          <Name>OutputUncertToBinary</Name>
+          <Value>false</Value>
+        </Property>
+        <Property>
+          <Name>IndRandomSeedModifier</Name>
+          <Value>9999</Value>
+        </Property>
+        <Property>
+          <Name>DataDirectory</Name>
+          <Value>D:\main\NGDLMDATA\</Value>
+        </Property>
+        <Property>
+          <Name>MinDamageThreshold</Name>
+          <Value>0</Value>
+        </Property>
+		<Property>
+          <Name>MaxNumBldgsPerExposure</Name>
+          <Value>1</Value>
+        </Property>
+        <Property>
+          <Name>NumberOfSamples</Name>
+          <Value>1</Value>
+        </Property>
+        <Property>
+          <Name>StartSampleId</Name>
+          <Value>0</Value>
+        </Property>
+        <Property>
+          <Name>Model</Name>
+          <Value>JPEQ</Value>
+        </Property>
+        <Property>
+          <Name>Version</Name>
+          <Value>14.0</Value>
+        </Property>
+      </Module>
+
+      <!-- END MODULE SECTION -->
+    </ModelModules>
+  </Modules>
+</AnalysisSettings>

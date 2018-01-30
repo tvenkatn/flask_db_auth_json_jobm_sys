@@ -20,6 +20,10 @@
     <form method='POST' enctype="multipart/form-data">
        <h4>Run MTH</h4>
         <p>
+            <label for="test_Name">Test Name</label>
+            <input type="text" name="testName">
+        </p>
+        <p>
             <input type="radio" name="options" id="Yes" value="yes" checked="checked"> Yes <br>
             <input type="radio" name="options" id="No" value="no"> No <br>
         </p>
@@ -29,6 +33,12 @@
         </p>
 
     </form>
+
+    {% if msg %}
+        <p> Message: {{ msg }} </p>
+        <p> Downloaded File: {{ dFname }} </p>
+        <a href="{{ url_for('download', filename=dFname) }}">FileDownload</a></td>
+    {% endif %}
 
 
 <script>

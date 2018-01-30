@@ -1,5 +1,5 @@
 import os
-from flask import Flask, url_for, redirect, render_template, request, flash, session, jsonify, json
+from flask import Flask, url_for, redirect, render_template, request, flash, session, jsonify, json, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
 import datetime
@@ -11,7 +11,7 @@ from flask_wtf import Form
 from wtforms import TextField, TextAreaField, SubmitField, validators, ValidationError, PasswordField
 from flask_login import LoginManager, login_user, login_required, logout_user
 
-ALLOWED_EXTENSIONS = set(['txt','dat','csv','xml','zip','bat'])
+ALLOWED_EXTENSIONS = set(['txt','dat','csv','xml','zip','bat','yml'])
 UPLOAD_FOLDER = './rFiles/rlr/'
 
 app = Flask(__name__)
@@ -198,20 +198,26 @@ def rlrunner():
 def rlr():
     colours = ['Red', 'Blue', 'Black', 'Orange']
     if request.method == "POST":
-        from defs import allowed_file
+        from defs import allowed_file, mkDirs
+        tName = request.form.get("testName")
+        mkDirs(app.config['UPLOAD_FOLDER'], tName)
         runMTH=request.form['options']
         ups=[]
         for f in request.files.getlist('myFile'):
             if(allowed_file(f.filename)):
                 filename = secure_filename(f.filename)
-                ups.append(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-
-
-        return 'Upload completed. ' + ", ".join(ups)
+                ups.append(os.path.join(app.config['UPLOAD_FOLDER'], tName, filename))
+                f.save(os.path.join(app.config['UPLOAD_FOLDER'], tName, filename))
+        return render_template('runRLR.html', msg='Upload completed. ' + ", ".join(ups), dFname=os.path.join(app.config['UPLOAD_FOLDER'], tName, "EventIds.csv").replace("\\","/"))
 
     else:
         return render_template('runRLR.html')
+
+#https://stackoverflow.com/questions/17681762/unable-to-retrieve-files-from-send-from-directory-in-flask
+@app.route('/downloads/<path:filename>', methods=['GET', 'POST'])
+def download(filename):
+    uploads = os.path.join(app.config['UPLOAD_FOLDER'], "Test1")
+    return send_from_directory(directory='', filename=filename)
 
 @app.route('/bmi', methods=["GET", "POST"])
 def bmi():

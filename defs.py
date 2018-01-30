@@ -2,6 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
 from app import db
 import pyodbc
+import os
 
 ALLOWED_EXTENSIONS = set(['txt','dat','csv','xml','zip','bat'])
 
@@ -31,3 +32,10 @@ def getVulnDbs(ser):
 def allowed_file(filename):
     return '.' in filename and \
         filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
+
+def mkDirs(bPath, dirName):
+    dName = os.path.join(bPath, dirName)
+    if not os.path.exists(dName):
+        os.makedirs(dName)
+    return dName
