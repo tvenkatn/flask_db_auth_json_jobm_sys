@@ -11,6 +11,15 @@ from flask_wtf import Form
 from wtforms import TextField, TextAreaField, SubmitField, validators, ValidationError, PasswordField
 from flask_login import LoginManager, login_user, login_required, logout_user
 from celery import Celery
+from flask_socketio import SocketIO, emit
+import time
+
+# import eventlet
+# eventlet.monkey_patch()
+
+# to turn on Celery, run
+# celery worker -A app.celery --loglevel=info
+# in a separate command window within the venv
 
 ALLOWED_EXTENSIONS = set(['txt','dat','csv','xml','zip','bat','yml'])
 UPLOAD_FOLDER = './rFiles/rlr/'
@@ -24,7 +33,11 @@ login_manager.init_app(app)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['CELERY_BROKER_URL'] = 'redis://localhost:6379/0'
 app.config['CELERY_RESULT_BACKEND'] = 'redis://localhost:6379/0'
-
+app.config['SOCKETIO_REDIS_URL'] = 'redis://localhost:6379/0'
+# socketio = SocketIO(app, async_mode='eventlet', message_queue=app.config['SOCKETIO_REDIS_URL'])
+socketio = SocketIO(app)
+celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'])
+celery.conf.update(app.config)
 
 ## psycopg2
 def getPostName(nameHere):
@@ -67,6 +80,19 @@ class User(db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.pwdhash, password)
+
+class RunRTasks(db.Model):
+    __tablename__="runRTasks"
+    id=db.Column(db.Integer, primary_key=True)
+    color_= db.Column(db.String(20), unique=False)
+    initTime = db.Column(db.DateTime, default=datetime.datetime.now)
+    status_ = db.Column(db.String(120), unique=False, default="Pending")
+    taskId_ = db.Column(db.String(120), unique=True)
+
+    def __init__(self, color_, status_, taskId_):
+        self.color_=color_
+        self.status_=status_
+        self.taskId_ = taskId_
 
 ## form templates
 class SignupForm(Form):
@@ -132,12 +158,10 @@ def main():
 @app.route('/HH<name>')
 def hello_name(name):
     return 'Hello %s!' % name
+
 #http://127.0.0.1:5000/HHsri
 #HH is case sensitive. URLs should be case sensitive!!
 #https://stackoverflow.com/questions/28801707/case-insensitive-routing-in-flask
-
-celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'])
-celery.conf.update(app.config)
 
 @celery.task
 def runRinBack(thisCol):
@@ -192,14 +216,16 @@ def runR():
     # if 'email' not in session:
     #     return redirect(url_for('signup'))
     colours = ['Red', 'Blue', 'Black', 'Orange']
+    db.create_all()
     if request.method == "POST" and 'thisColor' in request.form:
 #        return "the selected color is %s" % request.form.get("thisColor")
-        task = runRinBack.delay(request.form.get("thisColor"))
-        # task = runRinBack.apply_async(args=[request.form.get("thisColor")], countdown=1)
-#         R = runRinBackNC(request.form.get("thisColor"))
-#         R = subprocess.call(["cmd", "/c", "Rscript", "D:/Srinivas/work/20180105_flask_db_auth_json/rFiles/createFiles.r", """"%s""" % request.form.get("thisColor")])
+        tc = request.form.get("thisColor")
+        task = runRinBack.delay(tc)
+        runRTasks=RunRTasks(tc, "Pending", task.id)
+        db.session.add(runRTasks)
+        db.session.commit()
         return render_template('allUsers.html', colours=colours, selColor = request.form.get("thisColor") + ". Task ID: " + task.id + ". Location: " + url_for('taskstatus',
-                                                  task_id=task.id))
+                                                  task_id=task.id) + ". State: " + runRinBack.AsyncResult(task.id).state, statusPageLink=True)
     else:
         return render_template('allUsers.html', colours=colours)
 
@@ -222,6 +248,40 @@ def taskstatus(task_id):
     #     }
     return jsonify(task.state)
 
+@app.route('/runRStatus')
+def runRStatus():
+    tasks = db.session.query(RunRTasks)
+    tid = {}
+    for task in tasks:
+        runStat = str(runRinBack.AsyncResult(task.taskId_).state)
+        tid[task.taskId_] = (runStat,task.id,task.color_, str(task.initTime))
+    # return jsonify(tid)
+    # tid = []
+    # for task in tasks:
+    #     tid.append((task.id, task.color_, task.initTime, runRinBack.AsyncResult(task.taskId_).state))
+    # return type(list(tid.values()))
+    return render_template('runRStatus.html', tasks_=list(tid.values()))
+    # return render_template(runRStatus, tasks_=list(tid.values()))
+
+@socketio.on('my event', namespace='/test')
+def test_message(message):
+    i = 10
+    k=0
+    time.sleep(3)
+    emit('my response', {'data': 'Backend saw "' + message['data'] + '" from the frontend. Time at ' + time.strftime("%H:%M:%S")})
+    # for k in range(0,i):
+    #     emit('my response',
+    #          {'data': 'Backend saw "' + message['data'] + '" from the frontend. Time at ' + time.strftime("%H:%M:%S")})
+    #     time.sleep(5)
+    # while k < i:
+    #     emit('my response', {'data': 'Backend saw "' + message['data'] + '" from the frontend. Time at ' + time.strftime("%H:%M:%S")})
+    #     k+=1
+    #     time.sleep(5)
+
+@app.route('/getTime')
+def getTime():
+    return render_template('fromSocket.html')
+
 @app.route('/rlrunner', methods=["GET", "POST"])
 def rlrunner():
     colours = ['Red', 'Blue', 'Black', 'Orange']
@@ -234,7 +294,7 @@ def rlrunner():
 
 @app.route('/rlr', methods=["GET", "POST"])
 def rlr():
-    colours = ['Red', 'Blue', 'Black', 'Orange']
+    db.create_all()
     if request.method == "POST":
         from defs import allowed_file, mkDirs
         tName = request.form.get("testName")
@@ -294,4 +354,5 @@ def bmi():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port = 5005, debug=True)
+    # app.run(host='0.0.0.0', port = 5005, debug=True)
+    socketio.run(app, host='0.0.0.0', port = 5005, debug=True)
