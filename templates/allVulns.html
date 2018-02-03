@@ -1,52 +1,53 @@
-<!doctype html>
+{% extends "runRTemplate.html" %}
+{% block morehead %}
 
-<head>
-<!-- <link rel="stylesheet" type="text/css" href="{{ url_for("static", filename = "style.css") }}" -->
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.js"></script>
     <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
     <style>
-
         ul {list-style-type: none;}
-
     </style>
 
+{% endblock %}
 
-</head>
-
-<body>
-    <h2> Vulnerabilites </h2>
-    <form method='POST'>
-        <input type="text" name="server" placeholder="serverName" id="server">
-        <button type="submit">Done!</button>
-    </form>
-    {% if selVuln %}
-    Selected Vulns are
-        {% if selVuln|length > 0 %}
-        <select name="thisVuln" method="POST">
-            <option value="{{selVuln[0]}}" selected>{{selVuln[0]}}</option>
-            {% if selVuln|length > 1 %}
-                {% for vuln in selVuln[1:] %}
-                    <option value="{{vuln}}">{{vuln}}</option>
-                {% endfor %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <h2> Vulnerabilites </h2>
+            <form method='POST'>
+                <input type="text" name="server" placeholder="serverName" id="server">
+                <button type="submit">Done!</button>
+            </form>
+            {% if selVuln %}
+                Selected Vulns are
+                {% if selVuln|length > 0 %}
+                    <select name="thisVuln" method="POST">
+                    <option value="{{selVuln[0]}}" selected>{{selVuln[0]}}</option>
+                    {% if selVuln|length > 1 %}
+                        {% for vuln in selVuln[1:] %}
+                            <option value="{{vuln}}">{{vuln}}</option>
+                        {% endfor %}
+                    {% endif %}
+                    </select>
+                {% endif %}
             {% endif %}
-        </select>
-        {% endif %}
-    {% endif %}
 
-<script>
-$( function() {
-    var availableTags = {{ serList|tojson|safe }};
-    <!--var availableTags = ["ca-md1-02","ca1mdrlcsint02","ca1mdmcert30","ca1mdtools01","ca1mdnaeq18"];-->
-    $("#server").autocomplete({
-        source: availableTags,
-    delay: 0,
-	minLength: 0,
+            <script>
+                $( function() {
+                    var availableTags = {{ serList|tojson|safe }};
+                    <!--var availableTags = ["ca-md1-02","ca1mdrlcsint02","ca1mdmcert30","ca1mdtools01","ca1mdnaeq18"];-->
+                    $("#server").autocomplete({
+                        source: availableTags,
+                        delay: 0,
+                        minLength: 0
+                    });
+                });
+            </script>
 
-  });
-});
-</script>
-
-</body>
+        </div>
+    </div>
+</div>
+{% endblock %}

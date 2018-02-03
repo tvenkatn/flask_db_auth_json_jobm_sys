@@ -1,48 +1,43 @@
-<!doctype html>
+{% extends "runRTemplate.html" %}
+{% block morehead %}
 
-<head>
-<!-- <link rel="stylesheet" type="text/css" href="{{ url_for("static", filename = "style.css") }}" -->
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.js"></script>
     <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
     <style>
-
         ul {list-style-type: none;}
-
     </style>
 
+{% endblock %}
 
-</head>
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <form method='POST' enctype="multipart/form-data">
+                <h4>Run MTH</h4>
+                <p>
+                    <label for="test_Name">Test Name</label>
+                    <input type="text" name="testName">
+                </p>
+                <p>
+                    <input type="radio" name="options" id="Yes" value="yes" checked="checked"> Yes <br>
+                    <input type="radio" name="options" id="No" value="no"> No <br>
+                </p>
+                <p>
+                    <input type='file' name='myFile' multiple>
+                    <input type='submit' value='upload'>
+                </p>
+            </form>
 
-<body>
-    <form method='POST' enctype="multipart/form-data">
-       <h4>Run MTH</h4>
-        <p>
-            <label for="test_Name">Test Name</label>
-            <input type="text" name="testName">
-        </p>
-        <p>
-            <input type="radio" name="options" id="Yes" value="yes" checked="checked"> Yes <br>
-            <input type="radio" name="options" id="No" value="no"> No <br>
-        </p>
-        <p>
-            <input type='file' name='myFile' multiple>
-            <input type='submit' value='upload'>
-        </p>
-
-    </form>
-
-    {% if msg %}
-        <p> Message: {{ msg }} </p>
-        <p> Downloaded File: {{ dFname }} </p>
-        <a href="{{ url_for('download', filename=dFname) }}">FileDownload</a></td>
-    {% endif %}
-
-
-<script>
-
-</script>
-
-</body>
+            {% if msg %}
+                <p> Message: {{ msg }} </p>
+                <p> Downloaded File: {{ dFname }} </p>
+                <a href="{{ url_for('download', filename=dFname) }}">FileDownload</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
