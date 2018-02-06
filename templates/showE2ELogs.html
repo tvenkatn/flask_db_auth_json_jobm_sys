@@ -1,0 +1,51 @@
+{% extends "runRTemplate.html" %}
+
+{% block morehead %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js">
+</script>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <h2>E2E Log</h2>
+
+            <p id="e2e"></p>
+        </div>
+    </div>
+</div>
+
+<script>
+
+function update_values() {
+    $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    $.getJSON($SCRIPT_ROOT+"/getE2ELog",
+        function(data) {
+        $('.e2eMore').remove();
+        for (var i = 0; i < data.length; i++) {
+        console.log(data[i]);
+            $('#e2e').before('<div class="e2eMore">' + data[i] + '</div>');
+            }
+        })
+    }
+<!--function update_values() {-->
+    <!--$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};-->
+    <!--$.getJSON($SCRIPT_ROOT+"/getE2ELog",-->
+        <!--function(data) {-->
+            <!--for (var i = 0; i < data.length; i++) {-->
+            <!--console.log(i);-->
+            <!--console.log("<p>" + data[i] + "</p>");-->
+            <!--&lt;!&ndash;var jd = JSON.parse(data[i])&ndash;&gt;-->
+            <!--&lt;!&ndash;console.log(jd)&ndash;&gt;-->
+            <!--p = $('</p>');-->
+            <!--p.append("<p>" + data[i] + "</p>");-->
+        <!--}-->
+    <!--})-->
+    <!--};-->
+var refreshId = setInterval(update_values, 5000);
+
+</script>
+
+{% endblock %}

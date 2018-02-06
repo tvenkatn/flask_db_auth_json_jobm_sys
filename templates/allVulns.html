@@ -5,6 +5,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-autocomplete/1.0.7/jquery.auto-complete.js"></script>
     <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-bootstrap/0.5pre/css/custom-theme/jquery-ui-1.10.0.custom.css" rel="stylesheet"/>
+
 
     <style>
         ul {list-style-type: none;}
@@ -18,8 +20,8 @@
         <div class="col-md-8 mx-auto">
             <h2> Vulnerabilites </h2>
             <form method='POST'>
-                <input type="text" name="server" placeholder="serverName" id="server">
-                <button type="submit">Done!</button>
+                <input type="text" name="server" placeholder="serverName" id="server" class="form-control autocomplete">
+                <button type="submit" class="btn btn-primary btn-sm bg-danger">Done!</button>
             </form>
             {% if selVuln %}
                 Selected Vulns are

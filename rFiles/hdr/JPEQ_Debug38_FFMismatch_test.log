@@ -1,0 +1,33 @@
+A copy of the current configuration file is saved at D:/Srinivas/mytools/EQ_E2E/Results/JPEQ_Debug38_FFMismatch/20180205_14h33m13s
+ca1mdrlcsint02 connection successful
+EDM_VUL_INV_02_FF_JPEQ_v2 is found on the linked server ca1mdrlcsint02
+LocIds being analysed are 115
+Completed reading location information from EDM 
+
+
+Reading HD soil from EDS, from D:/Srinivas/mytools/EQ_E2E/Misc_Data/test/eds/eds38
+EventIds being analysed are 8701147
+NOTE: Fields marked with * indicate data being read directly from input and not computations. 
+
+Loading HazPar.xml 
+Loading HazardCache.sdf 
+Completed reading Fault magnitude, header and segment tables.. 
+Performing preliminary optimization for RNI.. 
+Vulncache connection created to the database RMS_VULN_JPEQHD_v15  
+Eliminating first cut RNI optimized locids before running VGEO/IMAP calls.. 
+Getting VGEO and IMAP records.. 
+Completed getting VGEO and IMAP records.. 
+elapsed 
+   0.28 
+Reading location information from EDM
+Distance calculation begins.. 
+Calculating dipping angles for all the planes.. 
+Completed calculating dipping angles for all the planes.. 
+elapsed 
+   0.14 
+Calculating fault distances..
+Number of location-events before RNI: 1
+Number of location-events after RNI: 1
+Completed calculating fault distances..
+elapsed 
+   0.72 

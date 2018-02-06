@@ -1,0 +1,365 @@
+A copy of the current configuration file is saved at D:/Srinivas/mytools/EQ_E2E/Results/JPEQ_Debug38_FFMismatch/20180205_14h33m13s
+ca1mdrlcsint02 connection successful
+EDM_VUL_INV_02_FF_JPEQ_v2 is found on the linked server ca1mdrlcsint02
+LocIds being analysed are 115
+Completed reading location information from EDM 
+
+
+Reading HD soil from EDS, from D:/Srinivas/mytools/EQ_E2E/Misc_Data/test/eds/eds38
+EventIds being analysed are 8701147
+NOTE: Fields marked with * indicate data being read directly from input and not computations. 
+
+Loading HazPar.xml 
+Loading HazardCache.sdf 
+Completed reading Fault magnitude, header and segment tables.. 
+Performing preliminary optimization for RNI.. 
+Vulncache connection created to the database RMS_VULN_JPEQHD_v15  
+Eliminating first cut RNI optimized locids before running VGEO/IMAP calls.. 
+Getting VGEO and IMAP records.. 
+Completed getting VGEO and IMAP records.. 
+elapsed 
+   0.28 
+Reading location information from EDM
+Distance calculation begins.. 
+Calculating dipping angles for all the planes.. 
+Completed calculating dipping angles for all the planes.. 
+elapsed 
+   0.14 
+Calculating fault distances..
+Number of location-events before RNI: 1
+Number of location-events after RNI: 1
+Completed calculating fault distances..
+elapsed 
+   0.72 
+Warning messages:
+1: In `[.data.table`(plane.info, , `:=`(c(1, 2, 3, 10, 11, 12, 13),  :
+  with=FALSE ignored, it isn't needed when using :=. See ?':=' for examples.
+2: In `[.data.table`(plane.info, , `:=`(c(1, 2, 3, 10, 11, 12, 13),  :
+  with=FALSE ignored, it isn't needed when using :=. See ?':=' for examples.
+3: In `[.data.table`(plane.info, , `:=`(c(1, 2, 3, 10, 11, 12, 13),  :
+  with=FALSE ignored, it isn't needed when using :=. See ?':=' for examples.
+4: In `[.data.table`(plane.info, , `:=`(c(1, 2, 3, 10, 11, 12, 13),  :
+  with=FALSE ignored, it isn't needed when using :=. See ?':=' for examples.
+5: In `[.data.table`(plane.info, , `:=`(c(1, 2, 3, 10, 11, 12, 13),  :
+  with=FALSE ignored, it isn't needed when using :=. See ?':=' for examples.
+6: In `[.data.table`(plane.info, , `:=`(c(1, 2, 3, 10, 11, 12, 13),  :
+  with=FALSE ignored, it isn't needed when using :=. See ?':=' for examples.
+7: In `[.data.table`(plane.info, , `:=`(c(1, 2, 3, 10, 11, 12, 13),  :
+  with=FALSE ignored, it isn't needed when using :=. See ?':=' for examples.
+8: In `[.data.table`(plane.info, , `:=`(c(1, 2, 3, 10, 11, 12, 13),  :
+  with=FALSE ignored, it isn't needed when using :=. See ?':=' for examples.
+9: In `[.data.table`(plane.info, , `:=`(c(1, 2, 3, 10, 11, 12, 13),  :
+  with=FALSE ignored, it isn't needed when using :=. See ?':=' for examples.
+10: In if (ftype %in% c("DS", "DP") & !(unique(FSegDist$Dip) == 90)) { :
+  the condition has length > 1 and only the first element will be used
+PGA calculation begins.. 
+elapsed 
+   0.05 
+PGA calculation completed.. 
+Sending data to distance deserializer.. 
+
+
+Completed MMI1 calculations..
+Exporting distances and PGA to csv file.. 
+Filtering by GeoAdmins. Any extra records will be saved to SkippedRecordsGeoAd_Haz.csv 
+Eliminating loc-events by RNI.. 
+Eliminating loc-events by MMI Threshold.. 
+HazardExpectedResult file is saved in D:/Srinivas/mytools/EQ_E2E/Results/JPEQ_Debug38_FFMismatch/20180205_14h33m13s 
+Creating period, SA, SD vectorsWarning messages:
+1: In if (is.na(mmimod[list(do$Atten, do$SubRegion)]$C4)) { :
+  the condition has length > 1 and only the first element will be used
+2: In if (is.na(mmimod[list(do$Atten, do$SubRegion)]$C4)) { :
+  the condition has length > 1 and only the first element will be used
+3: In if (is.na(mmimod[list(do$Atten, do$SubRegion)]$C4)) { :
+  the condition has length > 1 and only the first element will be used
+Starting to read vdc binary files..NOT READING RSPEC as it is already in workspace.. 
+elapsed 
+      0 
+NOT READING BASINTABLE as it is already in workspace.. 
+######## DC for Locid: 115 ##########################################################
+###### Coverage: 1 #################################################################
+###### LOCCVGID: 115 #################################################################
+
+Extracting damage curve
+###### Locid: 115 #################################################################
+###### Loccvgid: 115 #################################################################
+###### EventId: 8701147 #################################################################
+
+*SourceId: 8701147
+*Event Magnitude: 8.7
+*Fault type: DS
+*Attenuation ID: 8104
+*Fault depth: 15
+
+Rrup: 15.0322757208566
+Rjb:  0
+Rx:   18.830250733019
+HW:   1
+FW:   0
+TOR:  9
+BOR:  54
+Closest PlaneID:  8
+Closest Plane Dip:  18.8052300761066
+
+####################################
+PGA rock (g): 1.04191303253174
+*Soil Type: 2.01892126
+####################################
+Landslide probability= 0.158238756457244
+Landslide displacement= 32.4470020677888
+Landslide MDR key= 
+Landslide dr before probability= 0.025000000372529
+Landslide MDR= 0.00395596897037963
+####################################
+
+Computing liquefaction and shake MDR 
+
+Liquefaction MDR: 0
+
+Shake MDR: 89.2631446759302
+Shake MDR with liquefaction/landslide:89.2671006449006
+
+Net FLI: 8.76687634836435
+PGA Fire>0.152905 computing fire MDR.. 
+Fire MDR: 70.1900859735712
+
+######## DC for Locid: 115 ##########################################################
+###### Coverage: 1 #################################################################
+###### LOCCVGID: 115 #################################################################
+
+Extracting damage curve
+###### Locid: 115 #################################################################
+###### Loccvgid: 115 #################################################################
+###### EventId: 8701147 #################################################################
+
+*SourceId: 8701147
+*Event Magnitude: 8.7
+*Fault type: DS
+*Attenuation ID: 8107
+*Fault depth: 15
+
+Rrup: 15.0322757208566
+Rjb:  0
+Rx:   18.830250733019
+HW:   1
+FW:   0
+TOR:  9
+BOR:  54
+Closest PlaneID:  8
+Closest Plane Dip:  18.8052300761066
+
+####################################
+PGA rock (g): 0.521972298622131
+*Soil Type: 2.01892126
+####################################
+Landslide probability= 0.029308457085147
+Landslide displacement= 0.0492291713790245
+Landslide MDR key= 
+Landslide dr before probability= 0.025000000372529
+Landslide MDR= 0.000732711438046927
+####################################
+
+Computing liquefaction and shake MDR 
+
+Liquefaction MDR: 0
+
+Shake MDR: 23.9795643880313
+Shake MDR with liquefaction/landslide:23.9802970994693
+
+Net FLI: 8.76687634836435
+PGA Fire>0.152905 computing fire MDR.. 
+Fire MDR: 11.2556940421723
+
+######## DC for Locid: 115 ##########################################################
+###### Coverage: 1 #################################################################
+###### LOCCVGID: 115 #################################################################
+
+Extracting damage curve
+###### Locid: 115 #################################################################
+###### Loccvgid: 115 #################################################################
+###### EventId: 8701147 #################################################################
+
+*SourceId: 8701147
+*Event Magnitude: 8.7
+*Fault type: DS
+*Attenuation ID: 8113
+*Fault depth: 15
+
+Rrup: 15.0322757208566
+Rjb:  0
+Rx:   18.830250733019
+HW:   1
+FW:   0
+TOR:  9
+BOR:  54
+Closest PlaneID:  8
+Closest Plane Dip:  18.8052300761066
+
+####################################
+PGA rock (g): 0.780620574951172
+*Soil Type: 2.01892126
+####################################
+Landslide probability= 0.0700948438143433
+Landslide displacement= 8.13056323633541
+Landslide MDR key= 
+Landslide dr before probability= 0.025000000372529
+Landslide MDR= 0.00175237112147095
+####################################
+
+Computing liquefaction and shake MDR 
+
+Liquefaction MDR: 0
+
+Shake MDR: 50.7366236695091
+Shake MDR with liquefaction/landslide:50.7383760406305
+
+Net FLI: 8.76687634836435
+PGA Fire>0.152905 computing fire MDR.. 
+Fire MDR: 34.4322925803173
+
+######## DC for Locid: 115 ##########################################################
+###### Coverage: 2 #################################################################
+###### LOCCVGID: 882 #################################################################
+
+Extracting damage curve
+###### Locid: 115 #################################################################
+###### Loccvgid: 882 #################################################################
+###### EventId: 8701147 #################################################################
+
+*SourceId: 8701147
+*Event Magnitude: 8.7
+*Fault type: DS
+*Attenuation ID: 8104
+*Fault depth: 15
+
+Rrup: 15.0322757208566
+Rjb:  0
+Rx:   18.830250733019
+HW:   1
+FW:   0
+TOR:  9
+BOR:  54
+Closest PlaneID:  8
+Closest Plane Dip:  18.8052300761066
+
+####################################
+PGA rock (g): 1.04191303253174
+*Soil Type: 2.01892126
+####################################
+Landslide probability= 0.158238756457244
+Landslide displacement= 32.4470020677888
+Landslide MDR key= 
+Landslide dr before probability= 0.025000000372529
+Landslide MDR= 0.00395596897037963
+####################################
+
+Computing liquefaction and shake MDR 
+
+Liquefaction MDR: 0
+
+Shake MDR: 82.5970148816281
+Shake MDR with liquefaction/landslide:82.6006754206905
+
+Net FLI: 8.76687634836435
+PGA Fire>0.152905 computing fire MDR.. 
+Fire MDR: 70.1900859735712
+
+######## DC for Locid: 115 ##########################################################
+###### Coverage: 2 #################################################################
+###### LOCCVGID: 882 #################################################################
+
+Extracting damage curve
+###### Locid: 115 #################################################################
+###### Loccvgid: 882 #################################################################
+###### EventId: 8701147 #################################################################
+
+*SourceId: 8701147
+*Event Magnitude: 8.7
+*Fault type: DS
+*Attenuation ID: 8107
+*Fault depth: 15
+
+Rrup: 15.0322757208566
+Rjb:  0
+Rx:   18.830250733019
+HW:   1
+FW:   0
+TOR:  9
+BOR:  54
+Closest PlaneID:  8
+Closest Plane Dip:  18.8052300761066
+
+####################################
+PGA rock (g): 0.521972298622131
+*Soil Type: 2.01892126
+####################################
+Landslide probability= 0.029308457085147
+Landslide displacement= 0.0492291713790245
+Landslide MDR key= 
+Landslide dr before probability= 0.025000000372529
+Landslide MDR= 0.000732711438046927
+####################################
+
+Computing liquefaction and shake MDR 
+
+Liquefaction MDR: 0
+
+Shake MDR: 11.8910362910681
+Shake MDR with liquefaction/landslide:11.8913996295408
+
+Net FLI: 8.76687634836435
+PGA Fire>0.152905 computing fire MDR.. 
+Fire MDR: 11.2556940421723
+
+######## DC for Locid: 115 ##########################################################
+###### Coverage: 2 #################################################################
+###### LOCCVGID: 882 #################################################################
+
+Extracting damage curve
+###### Locid: 115 #################################################################
+###### Loccvgid: 882 #################################################################
+###### EventId: 8701147 #################################################################
+
+*SourceId: 8701147
+*Event Magnitude: 8.7
+*Fault type: DS
+*Attenuation ID: 8113
+*Fault depth: 15
+
+Rrup: 15.0322757208566
+Rjb:  0
+Rx:   18.830250733019
+HW:   1
+FW:   0
+TOR:  9
+BOR:  54
+Closest PlaneID:  8
+Closest Plane Dip:  18.8052300761066
+
+####################################
+PGA rock (g): 0.780620574951172
+*Soil Type: 2.01892126
+####################################
+Landslide probability= 0.0700948438143433
+Landslide displacement= 8.13056323633541
+Landslide MDR key= 
+Landslide dr before probability= 0.025000000372529
+Landslide MDR= 0.00175237112147095
+####################################
+
+Computing liquefaction and shake MDR 
+
+Liquefaction MDR: 0
+
+Shake MDR: 38.0407054543502
+Shake MDR with liquefaction/landslide:38.0420193264382
+
+Net FLI: 8.76687634836435
+PGA Fire>0.152905 computing fire MDR.. 
+Fire MDR: 34.4322925803173
+
+Computing CV..
+CV values computed..
+Computing BI MDR-CVs..
+Computing f0f1..
+##########################################

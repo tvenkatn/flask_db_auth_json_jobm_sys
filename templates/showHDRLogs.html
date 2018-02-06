@@ -1,0 +1,54 @@
+{% extends "runRTemplate.html" %}
+
+{% block morehead %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js">
+</script>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <h2>HDR Log</h2>
+
+            <table>
+                <tr>
+                  <th>Test Case</th>
+                  <th>Passing Records</th>
+                  <th>Total Records</th>
+                  <th>Extra Records</th>
+                </tr>
+                <tbody>
+                    <tr>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<script>
+
+function update_values() {
+    $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    $.getJSON($SCRIPT_ROOT+"/getHDRLog",
+        function(data) {
+            $('table').find('tbody').empty();
+            for (var i = 0; i < data.length; i++) {
+            var jd = JSON.parse(data[i])
+            tr = $('<tr/>');
+            tr.append("<td>" + jd.a + "</td>");
+            tr.append("<td>" + jd.b + "</td>");
+            tr.append("<td>" + jd.c + "</td>");
+            tr.append("<td>" + jd.d + "</td>");
+            $('table').append(tr);
+        }
+    })
+    };
+var refreshId = setInterval(update_values, 5000);
+
+</script>
+
+{% endblock %}
