@@ -24,6 +24,7 @@ import time
 
 ALLOWED_EXTENSIONS = set(['txt','dat','csv','xml','zip','bat','yml'])
 UPLOAD_FOLDER = './rFiles/rlr/'
+e2eLogFolder = r'D:\Srinivas\work\20180105_flask_db_auth_json\rFiles\hdr'
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:welcome@localhost/flaskApp1'
@@ -281,8 +282,8 @@ def test_message(message):
 
 @app.route('/getHDRLog')
 @app.route('/getHDRLog/<path:fname>')
-def getHDRLog(fname = r'D:\Srinivas\work\20180105_flask_db_auth_json\rFiles\hdr\20170629_14h06m26s_allReports.csv'):
-    fn_= fname
+def getHDRLog(fname_= r'D:\Srinivas\work\20180105_flask_db_auth_json\rFiles\hdr\20170629_14h06m26s_allReports.csv'):
+    fn_= fname_
     csvfile = open(fn_, 'r')
 
     fieldnames = ("a", "b", "c", "d");
@@ -302,16 +303,21 @@ def showHDRLog():
     return render_template('showHDRLogs.html')
 
 @app.route('/getE2ELog')
-@app.route('/getE2ELog/<path:fname>')
-def getE2ELog(fname = r'D:\Srinivas\work\20180105_flask_db_auth_json\rFiles\hdr\JPEQ_Debug38_FFMismatch_test.log'):
-    fn_= fname
+@app.route('/getE2ELog/<path:fname_>')
+def getE2ELog(fname_ = r'D:\Srinivas\work\20180105_flask_db_auth_json\rFiles\hdr\JPEQ_Debug38_FFMismatch_test.log'):
+    fn_= fname_
+    if os.path.splitext(fname_)[1]=="":
+        fn_= fn_ + ".log"
+    if os.path.dirname(fn_)=="":
+        fn_=os.path.join(e2eLogFolder, fn_)
     text_file = open(fn_, "r")
     lines = [line for line in text_file.readlines()]
     text_file.close()
     return jsonify(lines)
 
 @app.route('/showE2ELog')
-def showE2ELog():
+@app.route('/showE2ELog/<path:fname_>')
+def showE2ELog(fname_):
     return render_template('showE2ELogs.html')
 
 @app.route('/getTime')

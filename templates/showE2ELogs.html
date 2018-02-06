@@ -18,32 +18,28 @@
 </div>
 
 <script>
+function getMyFN() {
+<!-- gets a file name if provided-->
+    var allLocs = window.location.href.match(/^.*\//).input.split('/');
+    fN = allLocs[allLocs.length-1];
+    if (fN === "showE2ELog") {
+        return '';
+    } else {
+        return ("/" + fN);
+    }
+}
 
 function update_values() {
     $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-    $.getJSON($SCRIPT_ROOT+"/getE2ELog",
+    $.getJSON($SCRIPT_ROOT+"/getE2ELog"+getMyFN(),
         function(data) {
         $('.e2eMore').remove();
         for (var i = 0; i < data.length; i++) {
-        console.log(data[i]);
             $('#e2e').before('<div class="e2eMore">' + data[i] + '</div>');
             }
         })
     }
-<!--function update_values() {-->
-    <!--$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};-->
-    <!--$.getJSON($SCRIPT_ROOT+"/getE2ELog",-->
-        <!--function(data) {-->
-            <!--for (var i = 0; i < data.length; i++) {-->
-            <!--console.log(i);-->
-            <!--console.log("<p>" + data[i] + "</p>");-->
-            <!--&lt;!&ndash;var jd = JSON.parse(data[i])&ndash;&gt;-->
-            <!--&lt;!&ndash;console.log(jd)&ndash;&gt;-->
-            <!--p = $('</p>');-->
-            <!--p.append("<p>" + data[i] + "</p>");-->
-        <!--}-->
-    <!--})-->
-    <!--};-->
+
 var refreshId = setInterval(update_values, 5000);
 
 </script>
