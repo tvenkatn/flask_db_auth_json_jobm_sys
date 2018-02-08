@@ -1,0 +1,69 @@
+{% extends "runRTemplate.html" %}
+{% block morehead %}
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-bootstrap/0.5pre/css/custom-theme/jquery-ui-1.10.0.custom.css" rel="stylesheet"/>
+
+
+    <style>
+        ul {list-style-type: none;}
+    </style>
+
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            {% if not selGeohazs %}
+            <h2> Geohazard validation tool</h2>
+            <form method='POST' id="geohazSer">
+                <input type="text" name="server" placeholder="serverName" id="server" class="form-control autocomplete">
+                <button type="submit" class="btn btn-primary btn-sm bg-danger">Select!</button>
+            </form>
+            {% endif %}
+
+            {% if selGeohazs %}
+            <h2> Geohazard validation tool</h2>
+            <form method='POST' id="geohazSer">
+                <input type="text" name="myServer" placeholder={{ thisSer }} id="server" class="form-control autocomplete" value="{{ thisSer }}" readonly="readonly">
+                <br>
+                <br>
+                Available geohazard databases on this server
+                <br>
+                <br>
+                {% if selGeohazs|length > 0 %}
+                    <select name="thisGeohaz" method="POST" form="geohazSer">
+                    <option value="{{selGeohazs[0]}}" selected>{{selGeohazs[0]}}</option>
+                    {% if selGeohazs|length > 1 %}
+                        {% for ghaz in selGeohazs[1:] %}
+                            <option value="{{ghaz}}">{{ghaz}}</option>
+                        {% endfor %}
+                    {% endif %}
+                    </select>
+                {% endif %}
+                <button type="submit" class="btn btn-primary btn-sm bg-danger" name="btn" value="Run" form="geohazSer">Run</button>
+            </form>
+            {% endif %}
+            <br>
+            <br>
+            {% if statusPageLink %}
+                Check status of the tasks: click  <a href="{{ url_for('getGVStatus') }}">here</a>
+            {% endif %}
+
+
+            <script>
+                $( function() {
+                    var availableTags = {{ serList|tojson|safe }};
+                    <!--var availableTags = ["ca-md1-02","ca1mdrlcsint02","ca1mdmcert30","ca1mdtools01","ca1mdnaeq18"];-->
+                    $("#server").autocomplete({
+                        source: availableTags,
+                        delay: 0,
+                        minLength: 0
+                    });
+                });
+            </script>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

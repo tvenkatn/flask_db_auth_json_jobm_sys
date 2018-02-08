@@ -22,9 +22,9 @@ import time
 # celery worker -A app.celery --loglevel=info
 # in a separate command window within the venv
 
-ALLOWED_EXTENSIONS = set(['txt','dat','csv','xml','zip','bat','yml'])
 UPLOAD_FOLDER = './rFiles/rlr/'
 e2eLogFolder = r'D:\Srinivas\mytools\EQ_E2E'
+GEOHAZ_TOOLPATH = r'D:\Srinivas\tools\ModelDev_TFS\ModelDataValidation\Geohaz\latest'
 # e2eLogFolder = r'D:\Srinivas\work\20180105_flask_db_auth_json\rFiles\hdr'
 
 app = Flask(__name__)
@@ -96,6 +96,24 @@ class RunRTasks(db.Model):
         self.color_=color_
         self.status_=status_
         self.taskId_ = taskId_
+
+# for geohazard validation tool logging
+class RunGeohazValidTasks(db.Model):
+    __tablename__="runGeohazValidTasks"
+    id=db.Column(db.Integer, primary_key=True)
+    server_= db.Column(db.String(40), unique=False)
+    initTime = db.Column(db.DateTime, default=datetime.datetime.now)
+    db_ = db.Column(db.String(120), unique=False)
+    status_ = db.Column(db.String(120), unique=False, default="Pending")
+    taskId_ = db.Column(db.String(120), unique=True)
+    reportName_ = db.Column(db.String(120), unique=True)
+
+    def __init__(self, server_, db_, status_, taskId_, reportName_):
+        self.server_ = server_
+        self.db_ = db_
+        self.status_ = status_
+        self.taskId_ = taskId_
+        self.reportName_ = reportName_
 
 ## form templates
 class SignupForm(Form):
@@ -394,6 +412,52 @@ def bmi():
 #            return str(getPostName(myName))
     else:
         return render_template('bmi.html')
+
+@celery.task
+def runGeohazValidBack(toolPath, dbName, dbSer, repName):
+    subprocess.call(["cmd", "/c", "Rscript", os.path.join(toolPath,"Main.r"),""""%s %s %s %s %s""" % (dbName, dbSer, "sa", "Rmsuser!", repName)])
+
+@app.route('/runGeohazValid', methods=["GET", "POST"])
+def runGeohazValid():
+    db.create_all()
+    with open('data/serList.csv', 'r') as f:
+        serList = [line.rstrip() for line in f]
+    if request.method == "POST" and 'server' in request.form:
+        from defs import getGeohazDbs
+        thisSer = request.form.get("server")
+        geohazs = getGeohazDbs(thisSer)
+        return render_template('runGeohazValidation.html', serList=serList, selGeohazs=geohazs, thisSer=thisSer)
+    elif 'myServer' in request.form:
+        ghazDb = request.form.get("thisGeohaz")
+        thisSer = request.form.get("myServer")
+        reportName = datetime.datetime.now().strftime("%Y%m%d_%Hh%Mm%Ss")
+        task = runGeohazValidBack.delay(str(GEOHAZ_TOOLPATH), str(ghazDb), str(thisSer), str(reportName))
+        runRGeoHaz = RunGeohazValidTasks(thisSer, ghazDb, "Pending", task.id, reportName)
+        db.session.add(runRGeoHaz)
+        db.session.commit()
+        return redirect(url_for('getGVStatus'))
+        # return render_template('runGeohazValidation.html', serList=serList, selGeohazs=ghazDb, thisSer=thisSer, statusPageLink = True)
+    else:
+        return render_template('runGeohazValidation.html', serList=serList)
+
+@app.route('/getGVStatus', methods=["GET", "POST"])
+def getGVStatus():
+    tasks = db.session.query(RunGeohazValidTasks)
+    tid = {}
+    numShow = 5
+    if request.method== "POST":
+        numShow = int(request.form.get("thisGeohaz"))
+    for task in tasks[-1*int(numShow):]:
+        runStat = str(runGeohazValidBack.AsyncResult(task.taskId_).state)
+        repLink = task.reportName_
+        tid[task.taskId_] = (task.id,task.server_, task.db_, str(task.initTime), runStat, repLink)
+    return render_template('getGeohazValidationStatus.html', tasks_=list(tid.values()))
+
+@app.route('/getGVReport/<rep_name>')
+def getGVReport(rep_name):
+    return send_from_directory(directory=os.path.join(str(GEOHAZ_TOOLPATH),'log'), filename="Report_"+rep_name+".html")
+    # return render_template(os.path.join(str(GEOHAZ_TOOLPATH),'log',"Report_"+rep_name+".html"))
+
 
 
 if __name__ == '__main__':

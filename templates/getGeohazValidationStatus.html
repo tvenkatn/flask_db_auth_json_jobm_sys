@@ -1,0 +1,50 @@
+{% extends "runRTemplate.html" %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <h2>Geohazard validation: Job Status</h2>
+            <h6>Displaying last 5 runs..</h6>
+            <form method='POST'>
+                <select name="thisGeohaz" method="POST">
+                    <option value="5" selected>5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                </select>
+                <button type="submit" class="btn btn-default">Go</button>
+            </form>
+            {% if tasks_ %}
+                <table class="table table-sm">
+                    <tr>
+                        <th scope="row" class="bg-danger text-white">Job Id</th>
+                        <th scope="row" class="bg-danger text-white">Server</th>
+                        <th scope="row" class="bg-danger text-white">Database</th>
+                        <th scope="row" class="bg-danger text-white">Jub submission time</th>
+                        <th scope="row" class="bg-danger text-white">Job status</th>
+                        <th scope="row" class="bg-danger text-white">Report</th>
+                    </tr>
+                    {% for task in tasks_ %}
+                        <tr>
+                            <td>{{task[0]}}</td>
+                            <td>{{task[1]}}</td>
+                            <td>{{task[2]}}</td>
+                            <td>{{task[3]}}</td>
+                            <td>{{task[4]}}</td>
+                            <td>
+                                {% if task[4]== "SUCCESS" %}
+                                    <a href="{{ url_for('getGVReport', rep_name=task[5]) }}">{{task[5]}}</a>
+                                {% else %}
+                                    {{task[5]}}
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

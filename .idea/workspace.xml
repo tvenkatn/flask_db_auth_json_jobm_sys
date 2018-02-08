@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="69ddd861-7033-4c51-a449-c02021b355cc" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/templates/getGeohazValidationStatus.html" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/app.py" afterPath="$PROJECT_DIR$/app.py" />
+      <change beforePath="$PROJECT_DIR$/defs.py" afterPath="$PROJECT_DIR$/defs.py" />
       <change beforePath="$PROJECT_DIR$/templates/runRTemplate.html" afterPath="$PROJECT_DIR$/templates/runRTemplate.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -14,6 +17,18 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
+      <file leaf-file-name="defs.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/defs.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="32" column="224" lean-forward="false" selection-start-line="32" selection-start-column="224" selection-end-line="32" selection-end-column="224" />
+              <folding>
+                <element signature="e#0#39#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="runRLR.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/runRLR.html">
           <provider selected="true" editor-type-id="text-editor">
@@ -34,31 +49,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="signup.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/signup.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="28" column="27" lean-forward="true" selection-start-line="28" selection-start-column="27" selection-end-line="28" selection-end-column="27" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="bmi.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/bmi.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="612">
-              <caret line="36" column="0" lean-forward="false" selection-start-line="36" selection-start-column="0" selection-end-line="41" selection-end-column="11" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="app.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="app.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="41" column="107" lean-forward="false" selection-start-line="41" selection-start-column="107" selection-end-line="41" selection-end-column="107" />
+            <state relative-caret-position="458">
+              <caret line="449" column="33" lean-forward="false" selection-start-line="449" selection-start-column="33" selection-end-line="449" selection-end-column="33" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -66,11 +61,21 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="getGeohazValidationStatus.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/getGeohazValidationStatus.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="12" column="50" lean-forward="true" selection-start-line="12" selection-start-column="50" selection-end-line="12" selection-end-column="50" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="showE2ELogs.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/showE2ELogs.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-18">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="339">
+              <caret line="21" column="14" lean-forward="true" selection-start-line="21" selection-start-column="14" selection-end-line="21" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -79,18 +84,18 @@
       <file leaf-file-name="showHDRLogs.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/showHDRLogs.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
+            <state relative-caret-position="306">
               <caret line="37" column="12" lean-forward="false" selection-start-line="37" selection-start-column="12" selection-end-line="37" selection-end-column="12" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="allVulns.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/allVulns.html">
+      <file leaf-file-name="runGeohazValidation.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/runGeohazValidation.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="12" lean-forward="true" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
+            <state relative-caret-position="85">
+              <caret line="18" column="47" lean-forward="true" selection-start-line="18" selection-start-column="12" selection-end-line="18" selection-end-column="47" />
               <folding />
             </state>
           </provider>
@@ -99,8 +104,8 @@
       <file leaf-file-name="allUsers.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/allUsers.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="14" column="38" lean-forward="true" selection-start-line="14" selection-start-column="38" selection-end-line="14" selection-end-column="38" />
+            <state relative-caret-position="476">
+              <caret line="28" column="96" lean-forward="true" selection-start-line="28" selection-start-column="50" selection-end-line="28" selection-end-column="96" />
               <folding />
             </state>
           </provider>
@@ -109,8 +114,8 @@
       <file leaf-file-name="runRTemplate.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/runRTemplate.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="27" column="70" lean-forward="false" selection-start-line="27" selection-start-column="67" selection-end-line="27" selection-end-column="70" />
+            <state relative-caret-position="408">
+              <caret line="57" column="25" lean-forward="true" selection-start-line="57" selection-start-column="25" selection-end-line="57" selection-end-column="25" />
               <folding>
                 <element signature="n#style#0;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#a#0;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -119,8 +124,7 @@
                 <element signature="n#style#0;n#a#0;n#li#2;n#ul#0;n#div#0;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#a#0;n#li#3;n#ul#0;n#div#0;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#a#0;n#li#4;n#ul#0;n#div#0;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#0;n#form#0;n#div#0;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#button#0;n#form#0;n#div#0;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#li#5;n#ul#0;n#div#0;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -137,32 +141,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>colo</find>
-      <find>color</find>
-      <find>col</find>
-      <find>getvu</find>
-      <find>defs</find>
-      <find>send_from</find>
-      <find>uploads</find>
-      <find>LT_BA</find>
-      <find>@sock</find>
       <find>time.</find>
       <find>soc</find>
       <find>@soc</find>
       <find>create</find>
       <find>Bmi</find>
       <find>rlr</find>
-      <find>runR</find>
       <find>while</find>
       <find>RunRTasks</find>
       <find>'</find>
       <find>vuln</find>
       <find>login</find>
       <find>sidebar</find>
-      <find>done</find>
       <find>e2e</find>
-      <find>sta</find>
       <find>status</find>
+      <find>runR</find>
+      <find>time</find>
+      <find>selvuln</find>
+      <find>== &quot;</find>
+      <find>thisVuln</find>
+      <find>runGeohazValid</find>
+      <find>.delay</find>
+      <find>class</find>
+      <find>statusPageLink</find>
+      <find>Check status of the tasks: click</find>
+      <find>geohazs</find>
+      <find>runRinBack</find>
+      <find>done</find>
+      <find>send_from_directory</find>
+      <find>redirect</find>
+      <find>sta</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -172,16 +180,18 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/rFiles/createFiles.r" />
-        <option value="$PROJECT_DIR$/defs.py" />
         <option value="$PROJECT_DIR$/templates/fromSocket.html" />
         <option value="$PROJECT_DIR$/templates/runRStatus.html" />
         <option value="$PROJECT_DIR$/templates/showHDRLogs.html" />
         <option value="$PROJECT_DIR$/templates/runRLR.html" />
-        <option value="$PROJECT_DIR$/templates/allVulns.html" />
         <option value="$PROJECT_DIR$/templates/allUsers.html" />
         <option value="$PROJECT_DIR$/templates/showE2ELogs.html" />
+        <option value="$PROJECT_DIR$/templates/allVulns.html" />
+        <option value="$PROJECT_DIR$/defs.py" />
+        <option value="$PROJECT_DIR$/templates/runGeohazValidation.html" />
         <option value="$PROJECT_DIR$/templates/runRTemplate.html" />
         <option value="$PROJECT_DIR$/app.py" />
+        <option value="$PROJECT_DIR$/templates/getGeohazValidationStatus.html" />
       </list>
     </option>
   </component>
@@ -212,6 +222,11 @@
             <path>
               <item name="20180105_flask_db_auth_json" type="b2602c69:ProjectViewProjectNode" />
               <item name="20180105_flask_db_auth_json" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="20180105_flask_db_auth_json" type="b2602c69:ProjectViewProjectNode" />
+              <item name="20180105_flask_db_auth_json" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="20180105_flask_db_auth_json" type="b2602c69:ProjectViewProjectNode" />
@@ -299,15 +314,16 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287841" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3281075" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998565" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32922733" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33660588" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32258064" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22019635" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18612193" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17581187" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15413533" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="R Packages" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="R Graphics" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -422,16 +438,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/defs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/fromSocket.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -456,26 +462,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/showHDRLogs.html">
+    <entry file="file://$PROJECT_DIR$/templates/runRStatus.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="37" column="12" lean-forward="false" selection-start-line="37" selection-start-column="12" selection-end-line="37" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/allUsers.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="38" lean-forward="true" selection-start-line="14" selection-start-column="38" selection-end-line="14" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/allVulns.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="12" lean-forward="true" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
+        <state relative-caret-position="204">
+          <caret line="12" column="23" lean-forward="true" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
           <folding />
         </state>
       </provider>
@@ -488,26 +478,60 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/runRStatus.html">
+    <entry file="file://$PROJECT_DIR$/templates/allVulns.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="23" lean-forward="true" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
+        <state relative-caret-position="272">
+          <caret line="16" column="31" lean-forward="false" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="31" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/showE2ELogs.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-18">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="339">
+          <caret line="21" column="14" lean-forward="true" selection-start-line="21" selection-start-column="14" selection-end-line="21" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/serList.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/defs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="32" column="224" lean-forward="false" selection-start-line="32" selection-start-column="224" selection-end-line="32" selection-end-column="224" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/showHDRLogs.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="37" column="12" lean-forward="false" selection-start-line="37" selection-start-column="12" selection-end-line="37" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/allUsers.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="28" column="96" lean-forward="true" selection-start-line="28" selection-start-column="50" selection-end-line="28" selection-end-column="96" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/runRTemplate.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="27" column="70" lean-forward="false" selection-start-line="27" selection-start-column="67" selection-end-line="27" selection-end-column="70" />
+        <state relative-caret-position="408">
+          <caret line="57" column="25" lean-forward="true" selection-start-line="57" selection-start-column="25" selection-end-line="57" selection-end-column="25" />
           <folding>
             <element signature="n#style#0;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#a#0;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -516,19 +540,34 @@
             <element signature="n#style#0;n#a#0;n#li#2;n#ul#0;n#div#0;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#a#0;n#li#3;n#ul#0;n#div#0;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#a#0;n#li#4;n#ul#0;n#div#0;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#form#0;n#div#0;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#0;n#form#0;n#div#0;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#li#5;n#ul#0;n#div#0;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/runGeohazValidation.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="18" column="47" lean-forward="true" selection-start-line="18" selection-start-column="12" selection-end-line="18" selection-end-column="47" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="41" column="107" lean-forward="false" selection-start-line="41" selection-start-column="107" selection-end-line="41" selection-end-column="107" />
+        <state relative-caret-position="458">
+          <caret line="449" column="33" lean-forward="false" selection-start-line="449" selection-start-column="33" selection-end-line="449" selection-end-column="33" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/getGeohazValidationStatus.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="50" lean-forward="true" selection-start-line="12" selection-start-column="50" selection-end-line="12" selection-end-column="50" />
+          <folding />
         </state>
       </provider>
     </entry>
