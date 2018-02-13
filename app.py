@@ -1,15 +1,14 @@
 import os
-from flask import Flask, url_for, redirect, render_template, request, flash, session, jsonify, json, send_from_directory
+from flask import Flask, url_for, redirect, render_template, request, flash, jsonify, json, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.sql import func
 import datetime
 import psycopg2
 import subprocess
 import csv
 import json
 from werkzeug import generate_password_hash, check_password_hash, secure_filename
-from flask_wtf import Form, FlaskForm
-from wtforms import TextField, TextAreaField, SubmitField, validators, ValidationError, PasswordField, StringField, BooleanField, SubmitField
+from flask_wtf import FlaskForm
+from wtforms import PasswordField, StringField, BooleanField, SubmitField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
 from flask_login import LoginManager, login_user, login_required, logout_user, UserMixin, current_user
 from celery import Celery
@@ -36,6 +35,7 @@ app.secret_key = 'CatchMe, if yOU Ca nn~!'
 login = LoginManager(app)
 login.login_view = 'login' # tells where to redirect if @login_required is not met!
 app.config['TESTING'] = False
+ENABLE_REGISTRATIONS = False
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['CELERY_BROKER_URL'] = 'redis://localhost:6379/0'
@@ -197,7 +197,7 @@ def login():
             return redirect(url_for('login'))
         login_user(user, remember=form.remember_me.data)
         return redirect(url_for('main'))
-    return render_template('login.html', title='Sign In', form=form)
+    return render_template('login.html', title='Sign In', form=form, register = ENABLE_REGISTRATIONS)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -305,8 +305,6 @@ def getVulns():
 @app.route('/runR', methods=["GET", "POST"])
 @login_required
 def runR():
-    # if 'email' not in session:
-    #     return redirect(url_for('signup'))
     colours = ['Red', 'Blue', 'Black', 'Orange']
     db.create_all()
     if request.method == "POST" and 'thisColor' in request.form:
