@@ -8,9 +8,10 @@ import subprocess
 import csv
 import json
 from werkzeug import generate_password_hash, check_password_hash, secure_filename
-from flask_wtf import Form
-from wtforms import TextField, TextAreaField, SubmitField, validators, ValidationError, PasswordField
-from flask_login import LoginManager, login_user, login_required, logout_user
+from flask_wtf import Form, FlaskForm
+from wtforms import TextField, TextAreaField, SubmitField, validators, ValidationError, PasswordField, StringField, BooleanField, SubmitField
+from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
+from flask_login import LoginManager, login_user, login_required, logout_user, UserMixin, current_user
 from celery import Celery
 from flask_socketio import SocketIO, emit
 import time
@@ -31,8 +32,11 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:welcome@localhost/flaskApp1'
 db=SQLAlchemy(app)
 app.secret_key = 'CatchMe, if yOU Ca nn~!'
-login_manager = LoginManager()
-login_manager.init_app(app)
+
+login = LoginManager(app)
+login.login_view = 'login' # tells where to redirect if @login_required is not met!
+app.config['TESTING'] = False
+
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['CELERY_BROKER_URL'] = 'redis://localhost:6379/0'
 app.config['CELERY_RESULT_BACKEND'] = 'redis://localhost:6379/0'
@@ -64,25 +68,27 @@ class Bmi(db.Model):
         self.weight_=weight_
         self.height_=height_
         
-class User(db.Model):
-    __tablename__ = 'users'
-    uid = db.Column(db.Integer, primary_key = True)
-    firstname = db.Column(db.String(100))
-    lastname = db.Column(db.String(100))
-    email = db.Column(db.String(120), unique=True)
-    pwdhash = db.Column(db.String(154))
+class User(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(64), index=True, unique=True)
+    email = db.Column(db.String(120), index=True, unique=True)
+    password_hash = db.Column(db.String(128))
 
-    def __init__(self, firstname, lastname, email, password):
-        self.firstname = firstname.title()
-        self.lastname = lastname.title()
-        self.email = email.lower()
-        self.set_password(password)
+    def __repr__(self):
+        return '<User {}>'.format(self.username)
+
+    def getUName(self):
+        return self.username
 
     def set_password(self, password):
-        self.pwdhash = generate_password_hash(password)
+        self.password_hash = generate_password_hash(password)
 
     def check_password(self, password):
-        return check_password_hash(self.pwdhash, password)
+        return check_password_hash(self.password_hash, password)
+
+@login.user_loader
+def load_user(id):
+    return User.query.get(int(id))
 
 class RunRTasks(db.Model):
     __tablename__="runRTasks"
@@ -116,65 +122,126 @@ class RunGeohazValidTasks(db.Model):
         self.reportName_ = reportName_
 
 ## form templates
-class SignupForm(Form):
-    firstname = TextField("First name",  [validators.Required("Please enter your first name.")])
-    lastname = TextField("Last name",  [validators.Required("Please enter your last name.")])
-    email = TextField("Email",  [validators.Required("Please enter your email address."), validators.Email("Please enter your email address.")])
-    password = PasswordField('Password', [validators.Required("Please enter a password.")])
-    submit = SubmitField("Create account")
+# class SignupForm(Form):
+#     firstname = TextField("First name",  [validators.Required("Please enter your first name.")])
+#     lastname = TextField("Last name",  [validators.Required("Please enter your last name.")])
+#     email = TextField("Email",  [validators.Required("Please enter your email address."), validators.Email("Please enter your email address.")])
+#     password = PasswordField('Password', [validators.Required("Please enter a password.")])
+#     submit = SubmitField("Create account")
+#
+#     def __init__(self, *args, **kwargs):
+#         Form.__init__(self, *args, **kwargs)
+#
+#     def validate(self):
+#         if not Form.validate(self):
+#             return False
+#         user = db.session.query(User).filter_by(email = self.email.data.lower()).first()
+#         if user:
+#             self.email.errors.append("That email is already taken")
+#             return False
+#         else:
+#             return True
 
-    def __init__(self, *args, **kwargs):
-        Form.__init__(self, *args, **kwargs)
- 
-    def validate(self):
-        if not Form.validate(self):
-            return False
-        user = db.session.query(User).filter_by(email = self.email.data.lower()).first()
-        if user:
-            self.email.errors.append("That email is already taken")
-            return False
-        else:
-            return True
+class RegistrationForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    password2 = PasswordField(
+        'Repeat Password', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Register')
 
-@app.route('/signup', methods=['GET', 'POST'])
-def signup():
-    if 'email' in session:
-        return redirect(url_for('profile'))
-    form = SignupForm()
-    if request.method == 'POST':
-        if form.validate() == False:
-            return render_template('signup.html', form=form)
-        else:
-            newuser = User(form.firstname.data, form.lastname.data, form.email.data, form.password.data)
-            db.session.add(newuser)
-            db.session.commit()
-            session['email'] = newuser.email
-            return redirect(url_for('profile'))
+    def validate_username(self, username):
+        user = User.query.filter_by(username=username.data).first()
+        if user is not None:
+            raise ValidationError('Please use a different username.')
 
-    elif request.method == 'GET':
-        db.create_all()
-        return render_template('signup.html', form=form)
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
+        if user is not None:
+            raise ValidationError('Please use a different email address.')
 
-@app.route('/profile')
-def profile():
-    if 'email' not in session:
-        return redirect(url_for('signup'))
-    user = User.query.filter_by(email = session['email']).first()
-    if user is None:
-        return redirect(url_for('signup'))
-    else:
-        return render_template('profile.html')
+class LoginForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    remember_me = BooleanField('Remember Me')
+    submit = SubmitField('Sign In')
 
-@app.route('/signout')
-def signout():
-    if 'email' not in session:
-        return redirect(url_for('signup'))
-    session.pop('email', None)
-    return redirect(url_for('signup'))
+# @app.route('/signup', methods=['GET', 'POST'])
+# def signup():
+#     if 'email' in session:
+#         return redirect(url_for('profile'))
+#     form = SignupForm()
+#     if request.method == 'POST':
+#         if form.validate() == False:
+#             return render_template('signup.html', form=form)
+#         else:
+#             newuser = User(form.firstname.data, form.lastname.data, form.email.data, form.password.data)
+#             db.session.add(newuser)
+#             db.session.commit()
+#             session['email'] = newuser.email
+#             return redirect(url_for('profile'))
+#
+#     elif request.method == 'GET':
+#         db.create_all()
+#         return render_template('signup.html', form=form)
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('main'))
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        if user is None or not user.check_password(form.password.data):
+            flash('Invalid username or password')
+            return redirect(url_for('login'))
+        login_user(user, remember=form.remember_me.data)
+        return redirect(url_for('main'))
+    return render_template('login.html', title='Sign In', form=form)
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    db.create_all()
+    if current_user.is_authenticated:
+        return redirect(url_for('main'))
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(username=form.username.data, email=form.email.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash('Congratulations, you are now a registered user!')
+        return redirect(url_for('main'))
+    return render_template('register.html', title='Register', form=form)
+#
+# @app.route('/profile')
+# def profile():
+#     if 'email' not in session:
+#         return redirect(url_for('signup'))
+#     user = User.query.filter_by(email = session['email']).first()
+#     if user is None:
+#         return redirect(url_for('signup'))
+#     else:
+#         return render_template('profile.html')
+
+# @app.route('/signout')
+# def signout():
+#     if 'email' not in session:
+#         return redirect(url_for('signup'))
+#     session.pop('email', None)
+#     return redirect(url_for('signup'))
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('main'))
 
 @app.route("/", methods=["GET", "POST"])
 def main():
-    return 'Hello World !'
+    if current_user.is_authenticated:
+        return render_template('welcome.html', name_=current_user.username)
+    else:
+        return render_template('welcome.html', loginReq=True)
 
 @app.route('/HH<name>')
 def hello_name(name):
@@ -194,6 +261,7 @@ def runRinBackNC(thisCol):
 
 
 @app.route('/ddtest', methods=["GET", "POST"])
+@login_required
 def getDropDown():
     colours = ['Red', 'Blue', 'Black', 'Orange']
     rows = db.session.query(Bmi)
@@ -208,6 +276,7 @@ def getDropDown():
         return render_template('allUsers.html', colours=colours)
     
 @app.route('/defTest', methods=["GET", "POST"])
+@login_required
 def defTest():
     from defs import getColors, getNames
     colours = ['Red', 'Blue', 'Black', 'Orange']
@@ -220,6 +289,7 @@ def defTest():
         return render_template('allUsers.html', colours=colours)
 
 @app.route('/getVulns', methods=["GET", "POST"])
+@login_required
 def getVulns():
     # serList = ["ca-md1-02","ca1mdrlcsint02","ca1mdmcert30","ca1mdtools01","ca1mdnaeq18"];
     with open('data/serList.csv', 'r') as f:
@@ -233,6 +303,7 @@ def getVulns():
         return render_template('allVulns.html', serList=serList)
 
 @app.route('/runR', methods=["GET", "POST"])
+@login_required
 def runR():
     # if 'email' not in session:
     #     return redirect(url_for('signup'))
@@ -251,6 +322,7 @@ def runR():
         return render_template('allUsers.html', colours=colours)
 
 @app.route('/status/<task_id>')
+@login_required
 def taskstatus(task_id):
     task = runRinBack.AsyncResult(task_id)
     # if task.state == 'PENDING':
@@ -270,6 +342,7 @@ def taskstatus(task_id):
     return jsonify(task.state)
 
 @app.route('/runRStatus')
+@login_required
 def runRStatus():
     tasks = db.session.query(RunRTasks)
     tid = {}
@@ -318,6 +391,7 @@ def getHDRLog(fname_= r'D:\Srinivas\work\20180105_flask_db_auth_json\rFiles\hdr\
     return jsonify(allRecords)
 
 @app.route('/showHDRLog')
+@login_required
 def showHDRLog():
     return render_template('showHDRLogs.html')
 
@@ -336,6 +410,7 @@ def getE2ELog(fname_ = r'D:\Srinivas\work\20180105_flask_db_auth_json\rFiles\hdr
 
 @app.route('/showE2ELog')
 @app.route('/showE2ELog/<path:fname_>')
+@login_required
 def showE2ELog(fname_):
     return render_template('showE2ELogs.html')
 
@@ -344,6 +419,7 @@ def getTime():
     return render_template('fromSocket.html')
 
 @app.route('/rlrunner', methods=["GET", "POST"])
+@login_required
 def rlrunner():
     colours = ['Red', 'Blue', 'Black', 'Orange']
     if request.method == "POST" and 'thisColor' in request.form:
@@ -354,6 +430,7 @@ def rlrunner():
         return render_template('allUsers.html', colours=colours)    
 
 @app.route('/rlr', methods=["GET", "POST"])
+@login_required
 def rlr():
     db.create_all()
     if request.method == "POST":
@@ -418,6 +495,7 @@ def runGeohazValidBack(toolPath, dbName, dbSer, repName):
     subprocess.call(["cmd", "/c", "Rscript", os.path.join(toolPath,"Main.r"),""""%s %s %s %s %s""" % (dbName, dbSer, "sa", "Rmsuser!", repName)])
 
 @app.route('/runGeohazValid', methods=["GET", "POST"])
+@login_required
 def runGeohazValid():
     db.create_all()
     with open('data/serList.csv', 'r') as f:
@@ -441,6 +519,7 @@ def runGeohazValid():
         return render_template('runGeohazValidation.html', serList=serList)
 
 @app.route('/getGVStatus', methods=["GET", "POST"])
+@login_required
 def getGVStatus():
     tasks = db.session.query(RunGeohazValidTasks)
     tid = {}
@@ -454,6 +533,7 @@ def getGVStatus():
     return render_template('getGeohazValidationStatus.html', tasks_=list(tid.values()))
 
 @app.route('/getGVReport/<rep_name>')
+@login_required
 def getGVReport(rep_name):
     return send_from_directory(directory=os.path.join(str(GEOHAZ_TOOLPATH),'log'), filename="Report_"+rep_name+".html")
     # return render_template(os.path.join(str(GEOHAZ_TOOLPATH),'log',"Report_"+rep_name+".html"))

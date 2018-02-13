@@ -1,0 +1,17 @@
+{% extends "runRTemplate.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            {% if name_ %}
+            <h1>Hi, {{ current_user.username }}!</h1>
+            {% endif %}
+
+            {% if loginReq %}
+            <h4>Welcome. Please <a href="{{ url_for('login') }}"> login </a>to continue..</h4>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "runRTemplate.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <h3>Sign In</h3>
+            <form action="" method="post">
+                {{ form.hidden_tag() }}
+                <p>
+                {{ form.username.label }}<br>
+                {{ form.username(size=32) }}
+                </p>
+                <p>
+                {{ form.password.label }}<br>
+                {{ form.password(size=32) }}
+                </p>
+                <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+                <p>{{ form.submit() }}</p>
+            </form>
+            <p>New User? <a href="{{ url_for('register') }}">Click to Register!</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
