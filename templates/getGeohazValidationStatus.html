@@ -36,7 +36,7 @@
                             <td>{{task[3]}}</td>
                             <td>{{task[4]}}</td>
                             <td>
-                                {% if task[4]== "SUCCESS" %}
+                                {% if task[4] in ("Success", "SUCCESS") %}
                                     <a href="{{ url_for('getGVReport', rep_name=task[5]) }}">{{task[5]}}</a>
                                 {% else %}
                                     {{task[5]}}

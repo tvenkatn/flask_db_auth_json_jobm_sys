@@ -20,7 +20,7 @@ import time
 
 # to turn on Celery, run
 # celery worker -A app.celery --loglevel=info
-# in a separate command window within the venv
+# in a separate command window within the same venv as the app
 
 UPLOAD_FOLDER = './rFiles/rlr/'
 e2eLogFolder = r'D:\Srinivas\mytools\EQ_E2E'
@@ -490,7 +490,8 @@ def bmi():
 
 @celery.task
 def runGeohazValidBack(toolPath, dbName, dbSer, repName):
-    subprocess.call(["cmd", "/c", "Rscript", os.path.join(toolPath,"Main.r"),""""%s %s %s %s %s""" % (dbName, dbSer, "sa", "Rmsuser!", repName)])
+    a = ["cmd", "/c", "Rscript", os.path.join(toolPath,"Main.r"), """\"%s\" \"%s\" \"%s\" \"%s\" \"%s\"""" % (dbName, dbSer, "sa", "Rmsuser!", repName)]
+    subprocess.call(" ".join(a))
 
 @app.route('/runGeohazValid', methods=["GET", "POST"])
 @login_required
@@ -507,12 +508,12 @@ def runGeohazValid():
         ghazDb = request.form.get("thisGeohaz")
         thisSer = request.form.get("myServer")
         reportName = datetime.datetime.now().strftime("%Y%m%d_%Hh%Mm%Ss")
+        # return jsonify([(GEOHAZ_TOOLPATH), str(ghazDb), str(thisSer), str(reportName)])
         task = runGeohazValidBack.delay(str(GEOHAZ_TOOLPATH), str(ghazDb), str(thisSer), str(reportName))
         runRGeoHaz = RunGeohazValidTasks(thisSer, ghazDb, "Pending", task.id, reportName)
         db.session.add(runRGeoHaz)
         db.session.commit()
         return redirect(url_for('getGVStatus'))
-        # return render_template('runGeohazValidation.html', serList=serList, selGeohazs=ghazDb, thisSer=thisSer, statusPageLink = True)
     else:
         return render_template('runGeohazValidation.html', serList=serList)
 
@@ -522,12 +523,22 @@ def getGVStatus():
     tasks = db.session.query(RunGeohazValidTasks)
     tid = {}
     numShow = 5
-    if request.method== "POST":
+    if request.method == "POST":
         numShow = int(request.form.get("thisGeohaz"))
     for task in tasks[-1*int(numShow):]:
         runStat = str(runGeohazValidBack.AsyncResult(task.taskId_).state)
+        if runStat == "SUCCESS":
+            tsk = db.session.query(RunGeohazValidTasks).filter_by(taskId_=task.taskId_).first()
+            tsk.status_ = "Success"
+            db.session.commit()
+        elif runStat == "FAILURE":
+            tsk = db.session.query(RunGeohazValidTasks).filter_by(taskId_=task.taskId_).first()
+            tsk.status_ = "Fail"
+            db.session.commit()
+        qr = db.session.query(RunGeohazValidTasks).filter_by(taskId_=task.taskId_).first()
+        runStatNow = qr.status_
         repLink = task.reportName_
-        tid[task.taskId_] = (task.id,task.server_, task.db_, str(task.initTime), runStat, repLink)
+        tid[task.taskId_] = (task.id, task.server_, task.db_, str(task.initTime), runStatNow, repLink)
     return render_template('getGeohazValidationStatus.html', tasks_=list(tid.values()))
 
 @app.route('/getGVReport/<rep_name>')
@@ -535,7 +546,6 @@ def getGVStatus():
 def getGVReport(rep_name):
     return send_from_directory(directory=os.path.join(str(GEOHAZ_TOOLPATH),'log'), filename="Report_"+rep_name+".html")
     # return render_template(os.path.join(str(GEOHAZ_TOOLPATH),'log',"Report_"+rep_name+".html"))
-
 
 
 if __name__ == '__main__':
