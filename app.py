@@ -375,7 +375,7 @@ def test_message(message):
 def getHDRLog(fname_= r'D:\Srinivas\work\20180105_flask_db_auth_json\rFiles\hdr\20170629_14h06m26s_allReports.csv'):
     fn_= fname_
     csvfile = open(fn_, 'r')
-
+    # TODO: get this log file from actual HD regression
     fieldnames = ("a", "b", "c", "d");
     reader = csv.DictReader(csvfile, fieldnames)
     allRecords = []
@@ -437,7 +437,7 @@ def rlr():
         mkDirs(app.config['UPLOAD_FOLDER'], tName)
         runMTH=request.form['options']
         ups=[]
-        for f in request.files.getlist('myFile'):
+        for f in request.files.getlist('file'):
             if(allowed_file(f.filename)):
                 filename = secure_filename(f.filename)
                 ups.append(os.path.join(app.config['UPLOAD_FOLDER'], tName, filename))
@@ -547,6 +547,33 @@ def getGVReport(rep_name):
     return send_from_directory(directory=os.path.join(str(GEOHAZ_TOOLPATH),'log'), filename="Report_"+rep_name+".html")
     # return render_template(os.path.join(str(GEOHAZ_TOOLPATH),'log',"Report_"+rep_name+".html"))
 
+@app.route('/leaf')
+def leaf():
+    return render_template("leafMaps.html")
+
+@app.route('/getLocData')
+def getLocData():
+    # TODO: get these lat-longs as dict from EDM
+    reader = [
+        {
+            "lat": 37.250615,
+            "lon": -122.13778,
+            "title": "Point1"
+        },
+        {
+            "lat": 37.550615,
+            "lon": -122.069778,
+            "title": "Point2"
+        }
+    ]
+    allRecords = []
+    record = {}
+    for row in reader:
+        record['lat'] = row['lat']
+        record['lon'] = row['lon']
+        record['title'] = row['title']
+        allRecords.append(json.dumps(record))
+    return jsonify(allRecords)
 
 if __name__ == '__main__':
     # app.run(host='0.0.0.0', port = 5005, debug=True)

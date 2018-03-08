@@ -1,0 +1,64 @@
+{% extends "runRTemplate.html" %}
+{% block morehead %}
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"
+    integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+    crossorigin=""/>
+
+    <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
+    integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
+    crossorigin=""></script>
+
+{% endblock %}
+
+{% block content %}
+
+<div id="map" style="width: 40%; height: 400px;"></div>
+<script type="text/javascript">
+  // The first parameter are the coordinates of the center of the map
+  // The second parameter is the zoom level
+
+
+  function get_locs() {
+    $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    $.getJSON($SCRIPT_ROOT+"/getLocData",
+        function(data) {
+            lonC = 0;
+            latC = 0;
+            console.log("Number of points: " + data.length)
+            for (var i = 0; i < data.length; i++) {
+                var jd = JSON.parse(data[i])
+                lonC = lonC + (jd.lon);
+                latC = latC + (jd.lat);
+            }
+            lonC = lonC/data.length;
+            latC = latC/data.length;
+            console.log("Lat centroid is " + latC)
+            console.log("Lon centroid is " + lonC)
+
+            var map = L.map('map').setView([lonC, latC], 10);
+
+            var layer = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+            });
+
+            for (var i = 0; i < data.length; i++) {
+                var jd = JSON.parse(data[i])
+                console.log("Lat is " + jd.lat)
+                console.log("Lon is " + jd.lon)
+                L.marker([jd.lat, jd.lon]).addTo(map)
+                .bindPopup("<strong>" + jd.title +"</strong>").openPopup();
+            }
+            // Now add the layer onto the map
+            map.addLayer(layer);
+
+        }
+    )
+    };
+  get_locs()
+
+</script>
+
+
+
+{% endblock %}
