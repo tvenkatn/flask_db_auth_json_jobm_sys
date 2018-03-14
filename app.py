@@ -567,19 +567,23 @@ def viewEDM():
         ghazDb = request.form.get("thisGeohaz")
         thisSer = request.form.get("myServer")
         thisPort = request.form.get("portfolios")
-        return jsonify([ghazDb, thisSer, thisPort])
+        return redirect(url_for('leaf_EDM', ser = thisSer, edm = ghazDb, port = thisPort))
     else:
         return render_template('viewEDM.html', serList=serList)
 
-@app.route('/getEDMPorts', methods=['GET', 'POST'])
+@app.route('/getEDMPorts', methods=['POST'])
 def getEDMPorts():
     edmSer = request.form['ser']
     edm = request.form['edm']
-    # edmSer = 'ca1mdrlcsint02'
-    # edm = "EDM_HAZ_RTV_01_SH_JPEQ_v3"
     from defs import getEDMPorts
     return jsonify(getEDMPorts(edmSer, edm))
-    # return jsonify([edmSer, edm])
+
+@app.route('/leaf_EDM')
+def leaf_EDM():
+    ser = request.args.get('ser')
+    edm = request.args.get('edm')
+    port = request.args.get('port')
+    return render_template("leafMaps_EDM.html", ser = ser, edm = edm, port = port)
 
 @app.route('/getLocData')
 def getLocData():
@@ -603,6 +607,42 @@ def getLocData():
         record['lon'] = row['lon']
         record['title'] = row['title']
         allRecords.append(json.dumps(record))
+    return jsonify(allRecords)
+
+@app.route('/getPortLocs', methods=['GET', 'POST'])
+def getPortLocs():
+    from defs import LocsPorts
+    ser = request.form['ser']
+    edm = request.form['edm']
+    port = int(request.form['port'])
+    # ser = 'ca1mdtools01'
+    # edm = 'EDM_1loc'
+    # port = 15
+    # reader = [
+    #     {
+    #         "lat": 37.250615,
+    #         "lon": -122.13778,
+    #         "title": "Point1"
+    #     },
+    #     {
+    #         "lat": 37.150615,
+    #         "lon": -121.13778,
+    #         "title": "Point3"
+    #     },
+    #     {
+    #         "lat": 37.550615,
+    #         "lon": -122.069778,
+    #         "title": "Point2"
+    #     }
+    # ]
+    # allRecords = []
+    # record = {}
+    # for row in reader:
+    #     record['lat'] = row['lat']
+    #     record['lon'] = row['lon']
+    #     record['title'] = row['title']
+    #     allRecords.append(json.dumps(record))
+    allRecords = LocsPorts(ser, edm, port)
     return jsonify(allRecords)
 
 #endregion

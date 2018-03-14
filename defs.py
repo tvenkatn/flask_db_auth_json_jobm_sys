@@ -73,6 +73,30 @@ def getEDMPorts(ser, EDM):
         record['port'] = row[0]
         allRecords.append(json.dumps(record))
     return allRecords
+def LocsPorts(ser, EDM, port):
+    command = ["""select latitude, longitude, locid from [""" + EDM + """].[dbo].[loc] where accgrpid in (select accgrpid from [""" + EDM + """].[dbo].[portacct] where portinfoid = """ + str(port) + """)"""]
+    command2 = [
+        """select latitude, longitude, a.locid, exposure from (select latitude, longitude, locid, accgrpid from [""" + EDM + """].[dbo].[loc])
+    a
+    inner join (select locid, sum(valueamt) as exposure from [""" + EDM + """].[dbo].[loccvg] group by locid) b
+    on a.locid = b.locid
+    where accgrpid in (select accgrpid from [""" + EDM + """].[dbo].[portacct] where portinfoid = """ + str(
+            port) + """)"""
+        ]
+
+    cnn = pyodbc.connect(driver='{SQL Server}', host=ser, Trusted_Connection='yes')
+    cursor = cnn.cursor()
+    cursor.execute(command2[0])
+    rows = cursor.fetchall()
+    allRecords = []
+    record = {}
+    for row in rows:
+        record['lat'] = row[0]
+        record['lon'] = row[1]
+        record['title'] = row[2]
+        record['exposure'] = row[3]
+        allRecords.append(json.dumps(record))
+    return allRecords
 
 def allowed_file(filename):
     return '.' in filename and \
