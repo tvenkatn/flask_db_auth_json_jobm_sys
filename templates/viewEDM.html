@@ -1,0 +1,105 @@
+{% extends "runRTemplate.html" %}
+{% block morehead %}
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-bootstrap/0.5pre/css/custom-theme/jquery-ui-1.10.0.custom.css" rel="stylesheet"/>
+
+
+    <style>
+        ul {list-style-type: none;}
+    </style>
+
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+
+            {% if not selGeohazs %}
+            <h2>View EDM</h2>
+            <form method='POST' id="geohazSer">
+                <input type="text" name="server" placeholder="serverName" id="server" class="form-control autocomplete">
+                <button type="submit" class="btn btn-primary btn-sm bg-danger">Select!</button>
+            </form>
+            {% endif %}
+
+            {% if selGeohazs %}
+            <h2>View EDM</h2>
+            <form method='POST' id="geohazSer">
+                <input type="text" name="myServer" placeholder={{ thisSer }} id="server" class="form-control autocomplete" value="{{ thisSer }}" readonly="readonly">
+                <br>
+
+                <br>
+                {% if selGeohazs|length > 0 %}
+                    <label>Available EDMs</label>
+                    <select id="thisGeohaz" name="thisGeohaz" method="POST" form="geohazSer">
+                    <option value="{{selGeohazs[0]}}" selected>{{selGeohazs[0]}}</option>
+                    {% if selGeohazs|length > 1 %}
+                        {% for ghaz in selGeohazs[1:] %}
+                            <option value="{{ghaz}}">{{ghaz}}</option>
+                        {% endfor %}
+                    {% endif %}
+                    </select>
+
+
+                    <label>Portfolios</label>
+                    <select name="portfolios" id="portfolios" method="POST" form="geohazSer" disabled>
+                        <option value="1">1</option>
+                    </select>
+
+                {% endif %}
+                <button type="submit" class="btn btn-primary btn-sm bg-danger" name="btn" value="Run" form="geohazSer">Run</button>
+            </form>
+            {% endif %}
+            <br>
+            <br>
+            {% if statusPageLink %}
+                Check status of the tasks: click  <a href="{{ url_for('getGVStatus') }}">here</a>
+            {% endif %}
+
+
+            <script>
+                $( function() {
+                    var availableTags = {{ serList|tojson|safe }};
+                    <!--var availableTags = ["ca-md1-02","ca1mdrlcsint02","ca1mdmcert30","ca1mdtools01","ca1mdnaeq18"];-->
+                    $("#server").autocomplete({
+                        source: availableTags,
+                        delay: 0,
+                        minLength: 0
+                    });
+                });
+
+                $('select[name="thisGeohaz"]').on('change', function() {
+                    var countryId = $(this).val();
+                    $.ajax({
+                        type: "POST",
+                        url: "getEDMPorts",
+                        dataType: 'json',
+                        data: {
+                            ser: $('#server').val(),
+                            edm: $('#thisGeohaz').val()
+                        },
+                        success: function (data) {
+                            $('select[name="portfolios"]').prop("disabled", false);
+                            console.log(data)
+                            var $el = $("#portfolios");
+                            $("#portfolios").empty(); // remove old options
+
+                            $.each(data, function(value, key){
+                            //Appending the json items to the dropdown (select tag)
+                            //item is the id of your select tag
+                            console.log(JSON.parse(key).port)
+                            $("#portfolios").append($("<option></option>")
+                                .attr("value", JSON.parse(key).port).text(JSON.parse(key).port));
+
+                            });
+                        }
+                    });
+                });
+
+            </script>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

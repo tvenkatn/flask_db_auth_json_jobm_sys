@@ -3,6 +3,7 @@ from sqlalchemy.sql import func
 from app import db
 import pyodbc
 import os
+import json
 
 ALLOWED_EXTENSIONS = set(['txt','dat','csv','xml','zip','bat','yml'])
 
@@ -41,6 +42,37 @@ def getGeohazDbs(ser):
         a = row[0]
         geohazs.append(a)
     return geohazs
+
+def getEDMDbs(ser):
+    command = ["""SELECT name FROM   sys.databases WHERE  CASE WHEN state_desc = 'ONLINE' THEN OBJECT_ID(QUOTENAME(name) + '.[dbo].[cghs]', 'U') END IS NOT NULL""", """select name from sys.databases where name like '%EDM%' or name like '%EED%' or name like '%IED%' and state_desc = 'ONLINE'"""]
+    edms = []
+    cnn = pyodbc.connect(driver='{SQL Server}', host=ser, Trusted_Connection='yes')
+    # cnn = pyodbc.connect(driver='{SQL Server}', host=ser, user='sa', password='Rmsuser!')
+    cursor = cnn.cursor()
+    cursor.execute(command[1])
+    rows = cursor.fetchall()
+    for row in rows:
+        a = row[0]
+        edms.append(a)
+    return edms
+
+def getEDMPorts(ser, EDM):
+    command = ["""select portinfoid from [""" + EDM + """].[dbo].[portinfo]"""]
+    ports = []
+    cnn = pyodbc.connect(driver='{SQL Server}', host=ser, Trusted_Connection='yes')
+    cursor = cnn.cursor()
+    cursor.execute(command[0])
+    rows = cursor.fetchall()
+    # for row in rows:
+    #     a = row[0]
+    #     ports.append(a)
+    # return ports
+    allRecords = []
+    record = {}
+    for row in rows:
+        record['port'] = row[0]
+        allRecords.append(json.dumps(record))
+    return allRecords
 
 def allowed_file(filename):
     return '.' in filename and \

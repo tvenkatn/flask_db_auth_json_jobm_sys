@@ -547,9 +547,39 @@ def getGVReport(rep_name):
     return send_from_directory(directory=os.path.join(str(GEOHAZ_TOOLPATH),'log'), filename="Report_"+rep_name+".html")
     # return render_template(os.path.join(str(GEOHAZ_TOOLPATH),'log',"Report_"+rep_name+".html"))
 
+#region plotEDM
 @app.route('/leaf')
 def leaf():
     return render_template("leafMaps.html")
+
+@app.route('/viewEDM', methods=["GET", "POST"])
+@login_required
+def viewEDM():
+    db.create_all()
+    with open('data/serList.csv', 'r') as f:
+        serList = [line.rstrip() for line in f]
+    if request.method == "POST" and 'server' in request.form:
+        from defs import getEDMDbs
+        thisSer = request.form.get("server")
+        geohazs = getEDMDbs(thisSer)
+        return render_template('viewEDM.html', serList=serList, selGeohazs=geohazs, thisSer=thisSer)
+    elif 'myServer' in request.form:
+        ghazDb = request.form.get("thisGeohaz")
+        thisSer = request.form.get("myServer")
+        thisPort = request.form.get("portfolios")
+        return jsonify([ghazDb, thisSer, thisPort])
+    else:
+        return render_template('viewEDM.html', serList=serList)
+
+@app.route('/getEDMPorts', methods=['GET', 'POST'])
+def getEDMPorts():
+    edmSer = request.form['ser']
+    edm = request.form['edm']
+    # edmSer = 'ca1mdrlcsint02'
+    # edm = "EDM_HAZ_RTV_01_SH_JPEQ_v3"
+    from defs import getEDMPorts
+    return jsonify(getEDMPorts(edmSer, edm))
+    # return jsonify([edmSer, edm])
 
 @app.route('/getLocData')
 def getLocData():
@@ -574,6 +604,8 @@ def getLocData():
         record['title'] = row['title']
         allRecords.append(json.dumps(record))
     return jsonify(allRecords)
+
+#endregion
 
 if __name__ == '__main__':
     # app.run(host='0.0.0.0', port = 5005, debug=True)
