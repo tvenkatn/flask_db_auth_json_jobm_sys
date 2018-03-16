@@ -553,7 +553,6 @@ def leaf():
     return render_template("leafMaps.html")
 
 @app.route('/viewEDM', methods=["GET", "POST"])
-@login_required
 def viewEDM():
     db.create_all()
     with open('data/serList.csv', 'r') as f:
@@ -561,8 +560,13 @@ def viewEDM():
     if request.method == "POST" and 'server' in request.form:
         from defs import getEDMDbs
         thisSer = request.form.get("server")
-        geohazs = getEDMDbs(thisSer)
-        return render_template('viewEDM.html', serList=serList, selGeohazs=geohazs, thisSer=thisSer)
+        if len(thisSer) ==0:
+            flash(u'Please provide a server', 'danger')
+            return render_template('viewEDM.html', serList=serList)
+        else:
+            geohazs = getEDMDbs(thisSer)
+            return render_template('viewEDM.html', serList=serList, selGeohazs=geohazs, thisSer=thisSer)
+
     elif 'myServer' in request.form:
         ghazDb = request.form.get("thisGeohaz")
         thisSer = request.form.get("myServer")
@@ -579,7 +583,6 @@ def getEDMPorts():
     return jsonify(getEDMPorts(edmSer, edm))
 
 @app.route('/leaf_EDM')
-@login_required
 def leaf_EDM():
     ser = request.args.get('ser')
     edm = request.args.get('edm')

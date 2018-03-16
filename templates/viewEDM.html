@@ -17,6 +17,19 @@
 
             {% if not selGeohazs %}
             <h2>View EDM</h2>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                <!-- Categories: success (green), info (blue), warning (yellow), danger (red) -->
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <!-- <strong>Title</strong> --> {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
             <form method='POST' id="geohazSer">
                 <input type="text" name="server" placeholder="serverName" id="server" class="form-control autocomplete">
                 <button type="submit" class="btn btn-primary btn-sm bg-danger">Select!</button>
@@ -40,8 +53,6 @@
                         {% endfor %}
                     {% endif %}
                     </select>
-
-
                     <label>Portfolios</label>
                     <select name="portfolios" id="portfolios" method="POST" form="geohazSer" disabled>
                         <option value="1">1</option>

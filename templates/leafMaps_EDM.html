@@ -46,30 +46,30 @@ Portfolio is <span id="port" name="port">{{ port }}</span>
             port: document.getElementById('port').innerHTML
         },
         success: function(data) {
-            lonC = 0;
-            latC = 0;
-            console.log("Number of points: " + data.length)
-            document.getElementById('numLocs').innerHTML = "Number of locations in this portfolo is " + (data.length);
-            for (var i = 0; i < data.length; i++) {
-                var jd = JSON.parse(data[i])
-                lonC = lonC + (jd.lon);
-                latC = latC + (jd.lat);
-            }
-            lonC = lonC/data.length;
-            latC = latC/data.length;
-            console.log("Latitude is :" + latC);
-            console.log("Longitude is :" + lonC);
+
+            <!--lonC = 0;-->
+            <!--latC = 0;-->
+            <!--console.log("Number of points: " + data.length)-->
+            <!--for (var i = 0; i < data.length; i++) {-->
+                <!--var jd = JSON.parse(data[i])-->
+                <!--lonC = lonC + (jd.lon);-->
+                <!--latC = latC + (jd.lat);-->
+            <!--}-->
+            <!--lonC = lonC/data.length;-->
+            <!--latC = latC/data.length;-->
+            <!--console.log("Latitude is :" + latC);-->
+            <!--console.log("Longitude is :" + lonC);-->
 
             <!--https://stackoverflow.com/questions/43015854/large-dataset-of-markers-or-dots-in-leaflet-->
             <!--https://www.rgbtohex.net/-->
             <!--https://github.com/Leaflet/Leaflet.heat-->
-
+            document.getElementById('numLocs').innerHTML = "Number of locations in this portfolo is " + (data.length);
             var map = L.map('map');
             var layer = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
             });
             var myRenderer = L.canvas({ padding: 0.5 });
-            map.setView([latC, lonC], 6);
+            <!--map.setView([latC, lonC], 6);-->
 
             var jd = JSON.parse(data[0])
             var ints =  [[jd.lat, jd.lon, jd.exposure]]
