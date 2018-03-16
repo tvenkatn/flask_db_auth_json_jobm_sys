@@ -11,18 +11,24 @@
 
     <script type="text/javascript" src="{{ url_for('static', filename='js/leaflet-heat.js') }}"></script>
 
+    <style>
+        .nobr { white-space: nowrap }
+    </style>
+
 {% endblock %}
 
 {% block content %}
 
-EDM is <div id="edm" name="edm">{{ edm }}</div>
+<!--div under here would introduce line breaks. Span doesn't!-->
+EDM is <span id="edm" name="edm">{{ edm }}</span>
 <br>
-Server is is <div id="ser" name="ser">{{ ser }}</div>
+Server is <span id="ser" name="ser">{{ ser }}</span>
 <br>
-Portfolio is <div id="port" name="port">{{ port }}</div>
+Portfolio is <span id="port" name="port">{{ port }}</span>
 <br>
+<div id="numLocs" name="numLocs"></div>
 
-<div id="map" style="width: 50%; height: 500px;"></div>
+<div id="map" style="width: 70%; height: 500px;"></div>
 
 <script type="text/javascript">
   // The first parameter are the coordinates of the center of the map
@@ -43,6 +49,7 @@ Portfolio is <div id="port" name="port">{{ port }}</div>
             lonC = 0;
             latC = 0;
             console.log("Number of points: " + data.length)
+            document.getElementById('numLocs').innerHTML = "Number of locations in this portfolo is " + (data.length);
             for (var i = 0; i < data.length; i++) {
                 var jd = JSON.parse(data[i])
                 lonC = lonC + (jd.lon);
@@ -62,19 +69,38 @@ Portfolio is <div id="port" name="port">{{ port }}</div>
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
             });
             var myRenderer = L.canvas({ padding: 0.5 });
-            map.setView([latC, lonC], 8);
+            map.setView([latC, lonC], 6);
 
             var jd = JSON.parse(data[0])
             var ints =  [[jd.lat, jd.lon, jd.exposure]]
+            var minLat = jd.lat;
+            var maxLat = jd.lat;
+            var minLon = jd.lon;
+            var maxLon = jd.lon;
             for (var i = 1; i < data.length; i++) {
-                var jd = JSON.parse(data[i])
+                var jd = JSON.parse(data[i]);
                 <!--L.circleMarker([jd.lat, jd.lon], {renderer: myRenderer,color: '#FC4E2A'}).addTo(map).bindPopup('marker ' + i);-->
                 <!--L.heatLayer([[jd.lat, jd.lon, jd.title]], {radius: 25}).addTo(map);-->
-                ints.push([jd.lat, jd.lon, jd.exposure])
+                ints.push([jd.lat, jd.lon, jd.exposure]);
+                if (jd.lat > maxLat) {
+                    maxLat = jd.lat;
+                }
+                if (jd.lat < minLat) {
+                    minLat = jd.lat;
+                }
+                if (jd.lon > maxLon) {
+                    maxLon = jd.lon;
+                }
+                if (jd.lon < minLon) {
+                    minLon = jd.lon;
+                }
             }
-            L.heatLayer(ints, {radius: 6}).addTo(map);
+            L.heatLayer(ints, {radius: 5}).addTo(map);
             // Now add the layer onto the map
+            <!--map.fitBounds(map.getBounds());-->
+            map.fitBounds([ [minLat, minLon],[maxLat, maxLon]]);
             map.addLayer(layer);
+
 
         }
     })

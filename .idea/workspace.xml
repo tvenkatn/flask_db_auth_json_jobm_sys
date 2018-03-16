@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="69ddd861-7033-4c51-a449-c02021b355cc" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/app.py" afterPath="$PROJECT_DIR$/app.py" />
-      <change beforePath="$PROJECT_DIR$/defs.py" afterPath="$PROJECT_DIR$/defs.py" />
+      <change beforePath="$PROJECT_DIR$/templates/leafMaps_EDM.html" afterPath="$PROJECT_DIR$/templates/leafMaps_EDM.html" />
+      <change beforePath="$PROJECT_DIR$/templates/runRTemplate.html" afterPath="$PROJECT_DIR$/templates/runRTemplate.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -17,8 +19,8 @@
       <file leaf-file-name="app.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-272">
-              <caret line="597" column="29" lean-forward="true" selection-start-line="597" selection-start-column="29" selection-end-line="597" selection-end-column="29" />
+            <state relative-caret-position="127">
+              <caret line="581" column="15" lean-forward="false" selection-start-line="581" selection-start-column="15" selection-end-line="581" selection-end-column="15" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -29,10 +31,10 @@
       <file leaf-file-name="leafMaps_EDM.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/leafMaps_EDM.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="296">
-              <caret line="74" column="40" lean-forward="false" selection-start-line="74" selection-start-column="40" selection-end-line="74" selection-end-column="40" />
+            <state relative-caret-position="425">
+              <caret line="97" column="23" lean-forward="false" selection-start-line="97" selection-start-column="14" selection-end-line="97" selection-end-column="23" />
               <folding>
-                <element signature="n#style#0;n#div#3;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -87,6 +89,16 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="102">
               <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="134" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="runRTemplate.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/runRTemplate.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="44" column="74" lean-forward="false" selection-start-line="44" selection-start-column="74" selection-end-line="44" selection-end-column="74" />
               <folding />
             </state>
           </provider>
@@ -152,13 +164,13 @@
         <option value="$PROJECT_DIR$/templates/register.html" />
         <option value="$PROJECT_DIR$/templates/welcome.html" />
         <option value="$PROJECT_DIR$/templates/login.html" />
-        <option value="$PROJECT_DIR$/templates/runRTemplate.html" />
         <option value="$PROJECT_DIR$/templates/getGeohazValidationStatus.html" />
         <option value="$PROJECT_DIR$/templates/leafMaps.html" />
         <option value="$PROJECT_DIR$/templates/runRLR.html" />
         <option value="$PROJECT_DIR$/templates/viewEDM.html" />
-        <option value="$PROJECT_DIR$/app.py" />
         <option value="$PROJECT_DIR$/defs.py" />
+        <option value="$PROJECT_DIR$/templates/runRTemplate.html" />
+        <option value="$PROJECT_DIR$/app.py" />
         <option value="$PROJECT_DIR$/templates/leafMaps_EDM.html" />
       </list>
     </option>
@@ -607,14 +619,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/runRTemplate.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="28" column="36" lean-forward="true" selection-start-line="28" selection-start-column="33" selection-end-line="28" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/leafMaps.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-51">
@@ -675,10 +679,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/runRTemplate.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="44" column="74" lean-forward="false" selection-start-line="44" selection-start-column="74" selection-end-line="44" selection-end-column="74" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-272">
-          <caret line="597" column="29" lean-forward="true" selection-start-line="597" selection-start-column="29" selection-end-line="597" selection-end-column="29" />
+        <state relative-caret-position="127">
+          <caret line="581" column="15" lean-forward="false" selection-start-line="581" selection-start-column="15" selection-end-line="581" selection-end-column="15" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
@@ -687,10 +699,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/leafMaps_EDM.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="74" column="40" lean-forward="false" selection-start-line="74" selection-start-column="40" selection-end-line="74" selection-end-column="40" />
+        <state relative-caret-position="425">
+          <caret line="97" column="23" lean-forward="false" selection-start-line="97" selection-start-column="14" selection-end-line="97" selection-end-column="23" />
           <folding>
-            <element signature="n#style#0;n#div#3;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>

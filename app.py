@@ -579,6 +579,7 @@ def getEDMPorts():
     return jsonify(getEDMPorts(edmSer, edm))
 
 @app.route('/leaf_EDM')
+@login_required
 def leaf_EDM():
     ser = request.args.get('ser')
     edm = request.args.get('edm')
@@ -615,33 +616,6 @@ def getPortLocs():
     ser = request.form['ser']
     edm = request.form['edm']
     port = int(request.form['port'])
-    # ser = 'ca1mdtools01'
-    # edm = 'EDM_1loc'
-    # port = 15
-    # reader = [
-    #     {
-    #         "lat": 37.250615,
-    #         "lon": -122.13778,
-    #         "title": "Point1"
-    #     },
-    #     {
-    #         "lat": 37.150615,
-    #         "lon": -121.13778,
-    #         "title": "Point3"
-    #     },
-    #     {
-    #         "lat": 37.550615,
-    #         "lon": -122.069778,
-    #         "title": "Point2"
-    #     }
-    # ]
-    # allRecords = []
-    # record = {}
-    # for row in reader:
-    #     record['lat'] = row['lat']
-    #     record['lon'] = row['lon']
-    #     record['title'] = row['title']
-    #     allRecords.append(json.dumps(record))
     allRecords = LocsPorts(ser, edm, port)
     return jsonify(allRecords)
 
