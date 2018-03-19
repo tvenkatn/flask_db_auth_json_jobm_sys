@@ -57,7 +57,7 @@ def getEDMDbs(ser):
     return edms
 
 def getEDMPorts(ser, EDM):
-    command = ["""select portinfoid from [""" + EDM + """].[dbo].[portinfo]"""]
+    command = ["""select cast(PORTINFOID as varchar) + '_' + PORTNAME from [""" + EDM + """].[dbo].[portinfo]"""]
     ports = []
     cnn = pyodbc.connect(driver='{SQL Server}', host=ser, Trusted_Connection='yes')
     cursor = cnn.cursor()

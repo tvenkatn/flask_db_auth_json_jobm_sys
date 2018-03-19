@@ -20,11 +20,11 @@
 {% block content %}
 
 <!--div under here would introduce line breaks. Span doesn't!-->
-EDM is <span id="edm" name="edm">{{ edm }}</span>
+<strong>EDM:</strong> <span id="edm" name="edm">{{ edm }}</span>
 <br>
-Server is <span id="ser" name="ser">{{ ser }}</span>
+<strong>Server:</strong> <span id="ser" name="ser">{{ ser }}</span>
 <br>
-Portfolio is <span id="port" name="port">{{ port }}</span>
+<strong>Portfolio:</strong> <span id="port" name="port">{{ port }}</span>
 <br>
 <div id="numLocs" name="numLocs"></div>
 
@@ -70,7 +70,7 @@ function get_locs() {
         data: {
             ser: document.getElementById('ser').innerHTML,
             edm: document.getElementById('edm').innerHTML,
-            port: document.getElementById('port').innerHTML
+            port: document.getElementById('port').innerHTML.split("_")[0]
         },
         success: function(data) {
 
@@ -90,7 +90,7 @@ function get_locs() {
             <!--https://stackoverflow.com/questions/43015854/large-dataset-of-markers-or-dots-in-leaflet-->
             <!--https://www.rgbtohex.net/-->
             <!--https://github.com/Leaflet/Leaflet.heat-->
-            document.getElementById('numLocs').innerHTML = "Number of locations in this portfolo is " + (data.length);
+            document.getElementById('numLocs').innerHTML = "Number of locations in this portfolo: " + (data.length);
             var map = L.map('map');
             var layer = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'

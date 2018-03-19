@@ -23,6 +23,7 @@ import time
 # in a separate command window within the same venv as the app
 
 UPLOAD_FOLDER = './rFiles/rlr/'
+LOG_FOLDER = './logs/'
 e2eLogFolder = r'D:\Srinivas\mytools\EQ_E2E'
 GEOHAZ_TOOLPATH = r'D:\Srinivas\tools\ModelDev_TFS\ModelDataValidation\Geohaz\latest'
 # e2eLogFolder = r'D:\Srinivas\work\20180105_flask_db_auth_json\rFiles\hdr'
@@ -37,6 +38,7 @@ login.login_view = 'login' # tells where to redirect if @login_required is not m
 app.config['TESTING'] = False
 ENABLE_REGISTRATIONS = False
 
+app.config['LOG_FOLDER'] = LOG_FOLDER
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['CELERY_BROKER_URL'] = 'redis://localhost:6379/0'
 app.config['CELERY_RESULT_BACKEND'] = 'redis://localhost:6379/0'
@@ -570,8 +572,12 @@ def viewEDM():
     elif 'myServer' in request.form:
         ghazDb = request.form.get("thisGeohaz")
         thisSer = request.form.get("myServer")
-        thisPort = request.form.get("portfolios")
-        return redirect(url_for('leaf_EDM', ser = thisSer, edm = ghazDb, port = thisPort))
+        Port = request.form.get("portfolios")
+        thisPort = Port.split('_')[0]
+        with open(os.path.join(app.config['LOG_FOLDER'], 'leafEDM.txt'), 'a') as myFile:
+            myFile.write('\nAccessed on ' + str(datetime.datetime.now()) + ' by ' + request.remote_addr)
+            myFile.write('\n\tServer: ' + thisSer + '; EDM: ' + ghazDb+ '; Port: ' + thisPort)
+        return redirect(url_for('leaf_EDM', ser = thisSer, edm = ghazDb, port = Port))
     else:
         return render_template('viewEDM.html', serList=serList)
 
