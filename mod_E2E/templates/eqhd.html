@@ -1,0 +1,79 @@
+{% extends "runRTemplate.html" %}
+{% block morehead %}
+<style>
+    input:invalid {
+        border: 2px solid red;
+    }
+
+    input:valid {
+        border: 2px solid black;
+    }
+
+</style>
+
+{% endblock %}
+
+{% block content %}
+<p class="lead" id="top1">This is HD E2E home page</p>
+
+<div id = "formBefore">
+    <script>
+        function get_locs() {
+            $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+            $.getJSON($SCRIPT_ROOT+"/e2e/eqhdConfig",
+                function(data) {
+                    console.log("Received date is " + Object.keys(data).length + " long")
+                    counter = 0
+                    var thisP = document.getElementById('top1')
+                    console.log(thisP);
+                    var form = document.createElement("form");
+                    form.method = "POST";
+
+                    for(var i in data) {
+                        var d1 = document.createElement("div");
+                        d1.className = "form-group row";
+
+                        var d2 = document.createElement("div");
+                        d2.className= "col-sm-10";
+
+                        var lab = document.createElement("label");
+                        lab.innerText = i + ": ";
+                        lab.className="col-sm-2 col-form-label";
+                        lab.for=i;
+
+                        var sel = document.createElement("input");
+                        sel.type = "text";
+                        sel.id = i;
+                        sel.name = i;
+                        sel.placeholder = data[i];
+                        sel.innerText = data[i];
+                        sel.pattern = "^[A-Za-z0-9_:/]{1,30}$"
+
+                        <!--order is important here for nesting                    -->
+                        d2.appendChild(sel);
+                        d1.appendChild(lab);
+                        d1.appendChild(d2);
+                        form.appendChild(d1);
+
+                        console.log("Key " + counter + " is " + i + " and its value is " + data[i]);
+                        counter++;
+                    }
+
+                    var btn = document.createElement("button")
+                    btn.type = "submit";
+                    btn.className = "btn btn-primary";
+                    btn.innerText = "Run";
+
+                    form.appendChild(btn);
+
+                    Element.prototype.appendAfter = function (element) {
+                        element.parentNode.insertBefore(this, element.nextSibling);
+                    }, false;
+
+                    form.appendAfter(document.getElementById('top1'));
+                }
+            )
+        };
+        get_locs()
+    </script>
+{% endblock %}

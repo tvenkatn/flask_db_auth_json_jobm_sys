@@ -48,6 +48,9 @@ socketio = SocketIO(app)
 celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'], backend=app.config['CELERY_RESULT_BACKEND'])
 celery.conf.update(app.config)
 
+from mod_E2E.controller import e2e
+app.register_blueprint(e2e, url_prefix = '/e2e')
+
 ## psycopg2
 def getPostName(nameHere):
     conn = psycopg2.connect("dbname='flaskApp1' user ='postgres' host= 'localhost' password='welcome'")
@@ -280,7 +283,7 @@ def getDropDown():
 @app.route('/defTest', methods=["GET", "POST"])
 @login_required
 def defTest():
-    from defs import getColors, getNames
+    from bin.defs import getNames
     colours = ['Red', 'Blue', 'Black', 'Orange']
 #    colours = getColors()
     colours = getNames()
@@ -297,7 +300,7 @@ def getVulns():
     with open('data/serList.csv', 'r') as f:
         serList = [line.rstrip() for line in f]
     if request.method == "POST" and 'server' in request.form:
-        from defs import getVulnDbs
+        from bin.defs import getVulnDbs
         vulns = getVulnDbs(request.form.get("server"))
         # return "the selected server is %s" % ser
         return render_template('allVulns.html', serList=serList, selVuln=vulns)
@@ -434,7 +437,7 @@ def rlrunner():
 def rlr():
     db.create_all()
     if request.method == "POST":
-        from defs import allowed_file, mkDirs
+        from bin.defs import allowed_file, mkDirs
         tName = request.form.get("testName")
         mkDirs(app.config['UPLOAD_FOLDER'], tName)
         runMTH=request.form['options']
@@ -502,7 +505,7 @@ def runGeohazValid():
     with open('data/serList.csv', 'r') as f:
         serList = [line.rstrip() for line in f]
     if request.method == "POST" and 'server' in request.form:
-        from defs import getGeohazDbs
+        from bin.defs import getGeohazDbs
         thisSer = request.form.get("server")
         geohazs = getGeohazDbs(thisSer)
         return render_template('runGeohazValidation.html', serList=serList, selGeohazs=geohazs, thisSer=thisSer)
@@ -560,7 +563,7 @@ def viewEDM():
     with open('data/serList.csv', 'r') as f:
         serList = [line.rstrip() for line in f]
     if request.method == "POST" and 'server' in request.form:
-        from defs import getEDMDbs
+        from bin.defs import getEDMDbs
         thisSer = request.form.get("server")
         if len(thisSer) ==0:
             flash(u'Please provide a server', 'danger')
@@ -585,7 +588,7 @@ def viewEDM():
 def getEDMPorts():
     edmSer = request.form['ser']
     edm = request.form['edm']
-    from defs import getEDMPorts
+    from bin.defs import getEDMPorts
     return jsonify(getEDMPorts(edmSer, edm))
 
 @app.route('/leaf_EDM')
@@ -621,7 +624,7 @@ def getLocData():
 
 @app.route('/getPortLocs', methods=['GET', 'POST'])
 def getPortLocs():
-    from defs import LocsPorts
+    from bin.defs import LocsPorts
     ser = request.form['ser']
     edm = request.form['edm']
     port = int(request.form['port'])
