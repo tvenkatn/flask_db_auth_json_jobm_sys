@@ -1,0 +1,113 @@
+{% extends "runRTemplate.html" %}
+{% block morehead %}
+<style>
+    input:invalid {
+        border: 2px solid red;
+    }
+
+    input:valid {
+        border: 2px solid black;
+    }
+
+</style>
+
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <h2> HD Regression Reports </h2>
+            {% if selLogs %}
+                Available reports are
+                {% if selLogs|length > 0 %}
+                    <select name="thisLog" id="thisLog" onchange=getRegressionReport("thisLog")>
+                    <option value="{{selLogs[0]}}" selected>{{selLogs[0]}}</option>
+                    {% if selLogs|length > 1 %}
+                        {% for vuln in selLogs[1:] %}
+                            <option value="{{vuln}}">{{vuln}}</option>
+                        {% endfor %}
+                    {% endif %}
+                    </select>
+                {% endif %}
+            {% endif %}
+<!--<p class="lead" id="top1">Log</p>-->
+
+<table class="table-sm">
+                <tr>
+                  <th>Test Case</th>
+                  <th>Failing Records</th>
+                  <th>Total Records</th>
+                  <th>Extra Records</th>
+                </tr>
+                <tbody>
+                    <tr>
+                    </tr>
+                </tbody>
+            </table>
+
+
+
+        </div>
+    </div>
+</div>
+<script>
+                <!--window.onload=function() {-->
+                    <!--document.getElementById("thisLog").onchange=function() {-->
+                        <!--var period = this.value;-->
+                        <!--if (period=="") return; // please select - possibly you want something else here-->
+
+                        <!--Element.prototype.appendAfter = function (element) {-->
+                            <!--element.parentNode.insertBefore(this, element.nextSibling);-->
+                        <!--}, false;-->
+
+                        <!--var myLog = document.createElement("p");-->
+                        <!--myLog.innerText = period-->
+                        <!--myLog.id= "thisTab"-->
+                        <!--if (document.contains(document.getElementById("thisTab"))) {-->
+                            <!--document.getElementById("thisTab").remove();-->
+                        <!--}-->
+                        <!--myLog.appendAfter(document.getElementById('top1'));-->
+                    <!--}-->
+                <!--}-->
+                var getRegressionReport = function(idName) {
+                    var countryId = document.getElementById(idName).value;
+                    console.log("selected value is ", countryId)
+                    $.ajax({
+                        type: "POST",
+                        url: "getHDRLog",
+                        dataType: 'json',
+                        data: {
+                            ser: countryId
+                        },
+                        success: function (data) {
+                            $('table').find('tbody').empty();
+                            tr = $('<tr/>');
+                            tr.append("<th>" + "Sl. No." + "</th>");
+                            tr.append("<th>" + "Test Case" + "</th>");
+                            tr.append("<th>" + "Failing Records" + "</th>");
+                            tr.append("<th>" + "Total Records" + "</th>");
+                            tr.append("<th>" + "Extra Records" + "</th>");
+                            $('table').append(tr);
+                            for (var i = 0; i < data.length; i++) {
+                            var jd = JSON.parse(data[i])
+                            tr = $('<tr/>');
+                            if( jd.b > 0) {tr.addClass("table-danger")}
+                            tr.append("<td>" + (i+1) + "</td>");
+                            tr.append("<td>" + jd.a + "</td>");
+                            tr.append("<td>" + jd.b + "</td>");
+                            tr.append("<td>" + jd.c + "</td>");
+                            tr.append("<td>" + jd.d + "</td>");
+                            $('table').append(tr);
+
+                            };
+                        }
+                    });
+                }
+
+                <!--$('select[name="thisLog"]').on('change', getRegressionReport('thisLog'));-->
+                <!--window.onload=function() {document.getElementById("thisLog").onchange=getRegressionReport('thisLog')};-->
+                <!--document.getElementById("thisLog").addEventListener("change",getRegressionReport("thisLog")) -->
+                window.onload=function() {getRegressionReport('thisLog')};
+            </script>
+{% endblock %}

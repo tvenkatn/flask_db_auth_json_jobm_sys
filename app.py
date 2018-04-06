@@ -49,7 +49,9 @@ celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'], backend=app.co
 celery.conf.update(app.config)
 
 from mod_E2E.controller import e2e
+from mod_logs.controller import getLogs
 app.register_blueprint(e2e, url_prefix = '/e2e')
+app.register_blueprint(getLogs, url_prefix = '/logs')
 
 ## psycopg2
 def getPostName(nameHere):

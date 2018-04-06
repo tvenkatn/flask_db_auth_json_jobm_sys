@@ -3,7 +3,7 @@ from flask import Blueprint, render_template, jsonify, request
 e2e = Blueprint('e2e',__name__,template_folder='templates')
 
 @e2e.route('/')
-def inedx():
+def index():
     return 'Welcome to E2E blueprints'
 
 #region autocreate inputs test
