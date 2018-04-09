@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, jsonify, request
 import os, csv, json
+from flask_login import login_required
 
 getLogs = Blueprint('getLogs',__name__,template_folder='templates')
 
@@ -32,8 +33,8 @@ def getHDRLog():
         allRecords.append(json.dumps(record))
     return jsonify(allRecords)
 
-
 @getLogs.route('/getLogsList')
+@login_required
 def eqhdConfig():
     from mod_logs.bin.defs import getAllFiles
     allFiles = getAllFiles(HDReg_wd, HDReg_repFormat)

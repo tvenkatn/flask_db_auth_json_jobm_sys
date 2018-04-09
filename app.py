@@ -33,6 +33,11 @@ app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:welcome@localhost/f
 db=SQLAlchemy(app)
 app.secret_key = 'CatchMe, if yOU Ca nn~!'
 
+from mod_E2E.controller import e2e
+from mod_logs.controller import getLogs
+app.register_blueprint(e2e, url_prefix = '/e2e')
+app.register_blueprint(getLogs, url_prefix = '/logs')
+
 login = LoginManager(app)
 login.login_view = 'login' # tells where to redirect if @login_required is not met!
 app.config['TESTING'] = False
@@ -48,10 +53,7 @@ socketio = SocketIO(app)
 celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'], backend=app.config['CELERY_RESULT_BACKEND'])
 celery.conf.update(app.config)
 
-from mod_E2E.controller import e2e
-from mod_logs.controller import getLogs
-app.register_blueprint(e2e, url_prefix = '/e2e')
-app.register_blueprint(getLogs, url_prefix = '/logs')
+
 
 ## psycopg2
 def getPostName(nameHere):
