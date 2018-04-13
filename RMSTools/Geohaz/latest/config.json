@@ -1,0 +1,68 @@
+{
+    // This is the config file for setting up the GeoHazard DB to be tested
+	// If NGGeography and/or Vulnerability DBs are also provided, more tests can be done
+	// 
+	
+	"GeoHazard":  {
+		"db": "RMS_GEOHAZARD",
+        "server": "ca1md15",
+        "userid": "qatest1",
+        "password": "qa#tst"
+		},
+    
+    "NGGeography":	{
+        "db": "RMS_NGGeography",
+        "server": "ca-md1-02",
+        "userid": "sa",
+        "password": "Rmsuser!"
+        },
+				
+	"Vulnerability": {
+		"db": "RMS_VULNERABILITY",
+        "server": "ca1md15",
+        "userid": "qatest1",
+        "password": "qa#tst"	
+		},
+	
+	"EQ_Models": ["APEQ","NAEQ"],	
+	
+	"LandslideRanges": {
+			"US": {
+                "SoilPeriod": [1.3,20, 0],
+				"PHI": [10,60],
+				"COHES": [10,60],
+				"ELEV": [0,5000],
+				"SLOPE": [0,89],
+				"ROUGH": [0,5],
+				"TOPO": [-1000,1000],
+				"NDVI": [-1,1],
+				"PRECIP": [0,10]
+				},
+            "CA": "US",
+			"MX": "US",
+			"NZ": "US",
+			"ID": "US",
+			"MY": "US",
+			"PH": "US",
+			"SG": "US",
+			"TH": "US",
+			"VN": "US"
+			},
+    "LiquefactionRanges": {
+        "US": {
+			"DI": [0,100],
+			"EQBI": [1,6]     //Doesn't really belong to liquefaction
+			},
+		"CA": "US",
+		"MX": "US",
+		"NZ": "US",
+		"ID": "US",
+		"MY": "US",
+		"PH": "US",
+		"SG": "US",
+		"TH": "US",
+		"VN": "US"
+		},
+	
+	"nullAccepted": ["STATECODE"]
+}

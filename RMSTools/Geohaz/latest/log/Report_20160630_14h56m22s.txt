@@ -1,0 +1,82 @@
+------------------------------------------------------------
+	Test1.1: Total number of tables: 29
+	Tables of zero records
+	eqcacr
+ 	eqcavrgfire
+ 	eqcavrgsec
+ 	eqmxcr
+ 	eqmxcy
+ 	eqmxdt
+ 	eqmxvrgsec
+ 	equscr
+ 	equscy
+ 	equsvrgsec
+=========================================================================
+	 Test1.1a: Number of countries: 3
+	 Test1.1a: List of County Codes: 
+	 ca 	 mx 	 us
+=========================================================================
+	All unique tables: 
+	cr
+ 	cy
+ 	dt
+ 	lc
+ 	pc
+ 	vrg_geoid
+ 	vrgfire
+ 	vrgland
+ 	vrgliq
+ 	vrgsec
+ 	vrgsoil
+ 	vrgsoilperiod
+	------------------------------
+	CA missing tables: 
+ 	cy
+ 	dt
+ 	pc
+	------------------------------
+	MX missing tables: 
+ 	lc
+ 	vrgfire
+	------------------------------
+	US missing tables: 
+ 	dt
+ 	lc
+	------------------------------
+=========================================================================
+	  All tables contain GEOID column
+	  for CA, VRG GEOIDs' count numbers ARE consistent among vrg tables
+	  for MX, VRG GEOIDs' count numbers ARE consistent among vrg tables
+	  for US, VRG GEOIDs' count numbers ARE consistent among vrg tables
+=========================================================================
+Reading PC table for CA (eqcapc) 
+	 CA does not have pc table
+	 ---------------------------------  ---------------------------------  
+Reading PC table for MX (eqmxpc) 
+Calculating soil type 
+Comparing with actual soil type 
+
+	  For US: Test1: ST vs VS: Total failed records in EQMXPC is 5323
+	---------------------------------    
+	 Test2: CRITD and GWD are 0 in pc table, not comparing them 
+	 Test3: WARNING: Number of states in MX is less than 50 ( 49)
+	---------------------------------  ---------------------------------  
+Reading PC table for US (equspc) 
+Calculating soil type 
+Comparing with actual soil type 
+
+	  For US: Test1: ST vs VS: Total failed records in EQUSPC is 0
+	---------------------------------    
+	 Test2: CRITD and GWD are 0 in pc table, not comparing them 
+	 Test3: WARNING: Number of states in US is less than 50 ( 49)
+	---------------------------------  ---------------------------------  
+
+	 Total failed records in EQ CA VRG is 0
+
+	 Total failed records in EQ MX VRG is 250476
+
+	 Total failed records in EQ US VRG is 0
+	There are 2607 PostalCode missing in GeoHaz DB
+
+
+

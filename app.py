@@ -35,8 +35,10 @@ app.secret_key = 'CatchMe, if yOU Ca nn~!'
 
 from mod_E2E.controller import e2e
 from mod_logs.controller import getLogs
+from mod_tools_mdv.controller import mdv
 app.register_blueprint(e2e, url_prefix = '/e2e')
 app.register_blueprint(getLogs, url_prefix = '/logs')
+app.register_blueprint(mdv, url_prefix = '/mdv')
 
 login = LoginManager(app)
 login.login_view = 'login' # tells where to redirect if @login_required is not met!

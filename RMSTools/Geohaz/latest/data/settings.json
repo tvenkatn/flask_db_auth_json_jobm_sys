@@ -1,0 +1,17 @@
+{
+    // this is the config file for checking which country the hazcache belongs to and some inputs required to run some of the cheks
+        "country":	{
+        "NA": [58,59],
+        "NZ": [138,139]
+				},
+    
+    "ExpFlatFile":"D:/Nervdeshwar/NAEQ17/Tests/Vulnerability/4C/1PostPerState/FF",
+    
+    "ModelData": {
+        "dataDir": "D:/NGDLMDATA/ModelData/NaEq/v17",
+        "country": "US", //Only one country at a time 
+        "EventID": ["D:/Nervdeshwar/NAEQ17/Tests/Vulnerability/4C/1PostPerState/SingleLoc/eventids.csv"], //[15072894,15072977,15073069,15001050]
+        "attenScheme": [-1] //default is -1
+        }
+
+    }

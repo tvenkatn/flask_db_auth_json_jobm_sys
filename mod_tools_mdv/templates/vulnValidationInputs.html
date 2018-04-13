@@ -1,0 +1,166 @@
+{% extends "runRTemplate.html" %}
+{% block morehead %}
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-bootstrap/0.5pre/css/custom-theme/jquery-ui-1.10.0.custom.css" rel="stylesheet"/>
+
+    <style>
+        ul {list-style-type: none;}
+}
+    </style>
+
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <h2> Vulnerability validation tool </h2>
+            <br>
+            <form method='POST'>
+                <div class="form-group row">
+                    <label for="server" class="col-sm-4 col-form-label">Select a SQL server:</label>
+                    <div class="col-sm-4">
+                        <input type="text" name="server" placeholder="serverName" id="server" class="form-control autocomplete" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    </div>
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-primary btn-sm bg-danger">Connect!</button>
+                    </div>
+                </div>
+            </form>
+
+            {% if selVuln %}
+                Available vulnerability databases are:
+                {% if selVuln|length > 0 %}
+                    <select name="thisVuln" id="thisVuln" method="POST" onchange=getPerilCountry("thisVuln") action={{ url_for('mdv.testAction1') }}>
+                    <option value="{{selVuln[0]}}" selected>{{selVuln[0]}}</option>
+                    {% if selVuln|length > 1 %}
+                        {% for vuln in selVuln[1:] %}
+                            <option value="{{vuln}}">{{vuln}}</option>
+                        {% endfor %}
+                    {% endif %}
+                    </select>
+                {% endif %}
+            {% endif %}
+            <p>
+            <div id="selectPeril">
+                <!--<input type="checkbox" id="thisPeril" name="thisPeril" value="Peril">-->
+                <!--<label for="thisPeril">Peril</label>-->
+            </div>
+            <div id="selectCountry" class="form-check form-check-inline">
+                <!--<input type="checkbox" id="thisPeril" name="thisPeril" value="Peril">-->
+                <!--<label for="thisPeril">Peril</label>-->
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    $( function() {
+        var availableTags = {{ serList|tojson|safe }};
+        $("#server").autocomplete({
+            source: availableTags,
+            delay: 0,
+            minLength: 0
+        });
+    });
+
+    var getPerils = function(data) {
+        var dd = [];
+        for( var i = 0; i < data.length; i++) {
+            if(dd.indexOf(data[i][0]) == -1) {
+                dd.push(data[i][0]);
+            }
+        }
+        return(dd)
+    }
+
+    var getCountries = function(data) {
+        var dd = [];
+        for( var i = 0; i < data.length; i++) {
+            if(dd.indexOf(data[i][1]) == -1) {
+                dd.push(data[i][1]);
+            }
+        }
+        return(dd)
+    }
+
+    Element.prototype.appendAfter = function (element) {
+        element.parentNode.insertBefore(this, element.nextSibling);
+    }, false;
+
+    var getPerilCountry = function(idName) {
+        var db = document.getElementById(idName).value;
+        {% if selSer %}
+            var ser = {{ selSer|tojson|safe }};
+            console.log("Server is ", ser);
+        {% endif %}
+        console.log("database is ", db);
+
+        $.ajax({
+                type: "POST",
+                url: "returnPerilModels",
+                dataType: 'json',
+                data: {
+                    thisSer: ser,
+                    thisDb: db
+                },
+                success: function (data) {
+                    allPerils = getPerils(data);
+                    allCountries = getCountries(data);
+                    console.log("Peril was ", allPerils)
+                    console.log("allCountries was ", allCountries)
+                    document.getElementById("selectPeril").appendChild(document.createTextNode("Select Perils:"));
+                    document.getElementById("selectPeril").appendChild(document.createElement("BR"));
+                    allPerils.forEach(element => {
+                        var per = document.createElement("input");
+                            per.type = "checkbox";
+                            per.id = "thisPeril";
+                            per.name = "thisPeril";
+                            per.placeholder = element;
+                            per.value = element;
+                        var perLab = document.createElement("label");
+                            perLab.for = "thisPeril";
+                            perLab.innerHTML = element;
+                        document.getElementById("selectPeril").appendChild(per);
+                        document.getElementById("selectPeril").appendChild(perLab);
+                    });
+                    document.getElementById("selectPeril").appendChild(document.createElement("BR"));
+
+                    document.getElementById("selectCountry").appendChild(document.createTextNode("Select Countries:"));
+                    document.getElementById("selectCountry").appendChild(document.createElement("BR"));
+                    allCountries.forEach(element => {
+                        var per = document.createElement("input");
+                            per.type = "checkbox";
+                            per.id = element;
+                            per.name = "thisCountry";
+                            per.className = "form-check-input";
+                            per.placeholder = element;
+                            per.value = element;
+                        var perLab = document.createElement("label");
+                            perLab.className = "form-check-input";
+                            perLab.setAttribute("for",element);
+                            perLab.innerHTML = element;
+                        document.getElementById("selectCountry").appendChild(per);
+                        document.getElementById("selectCountry").appendChild(perLab);
+                    });
+                    
+
+                },
+                error:function(){
+                    console.log("Request to returnPerilModels failed")
+                    console.log("server was ", ser)
+                    console.log("database was ", db)
+                }
+        });
+    }
+
+   var fillSer = function() {
+        {% if selSer %}
+            var ser = {{ selSer|tojson|safe }};
+            document.getElementById("server").value = ser
+        {% endif %}
+    }
+    fillSer()
+</script>
+{% endblock %}

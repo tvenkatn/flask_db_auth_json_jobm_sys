@@ -1,0 +1,16 @@
+tableList,CA,MX,US,JP
+vrg_geoid,Y,Y,Y,Y
+vrgfire,Y,N,Y,Y
+vrgland,Y,Y,Y,Y
+vrgliq,Y,Y,Y,Y
+vrgsec,Y,Y,Y,Y
+vrgsoil,Y,Y,Y,Y
+vrgsoilperiod,Y,Y,Y,Y
+lc,Y,N,N,N
+pc,N,Y,Y,N
+dt,N,Y,N,N
+cy,N,Y,Y,N
+st,N,N,N,Y
+cr,Y,Y,Y,Y
+ct,N,N,N,Y
+a4,N,N,N,Y

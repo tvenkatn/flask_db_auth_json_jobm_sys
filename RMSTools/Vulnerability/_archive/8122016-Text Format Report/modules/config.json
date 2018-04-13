@@ -1,0 +1,10 @@
+{
+    // this is the config file for checking which country the hazcache belongs to and some inputs required to run some of the cheks
+    
+    "NGGeography":	{
+        "db": "",
+        "server": "ca1md11",
+        "userid": "sa",
+        "password": "Rmsuser!"
+        }
+}
