@@ -17,7 +17,8 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 mx-auto">
-            <h2> HD Regression Reports </h2>
+            <h3> JPEQ HD Regression Reports </h3>
+            <br>
             {% if selLogs %}
                 Available reports are
                 {% if selLogs|length > 0 %}
@@ -31,26 +32,27 @@
                     </select>
                 {% endif %}
             {% endif %}
-<!--<p class="lead" id="top1">Log</p>-->
 
-<table class="table-sm">
-                <tr>
-                  <th>Test Case</th>
-                  <th>Failing Records</th>
-                  <th>Total Records</th>
-                  <th>Extra Records</th>
-                </tr>
-                <tbody>
+                <table class="table-sm" id="tab1">
+                    <thead>
                     <tr>
+                      <th>Sl. No. </th>
+                      <th>Test Case</th>
+                      <th>Iteration</th>
+                      <th>Test Type</th>
+                      <th>Failing Records</th>
+                      <th>Total Records</th>
+                      <th>Extra Records</th>
                     </tr>
-                </tbody>
-            </table>
-
-
+                    </thead>
+                </table>
 
         </div>
     </div>
 </div>
+
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script>
                 <!--window.onload=function() {-->
                     <!--document.getElementById("thisLog").onchange=function() {-->
@@ -73,7 +75,9 @@
                 var getRegressionReport = function(idName) {
                     var countryId = document.getElementById(idName).value;
                     console.log("selected value is ", countryId)
-                    $.ajax({
+                    
+                        
+                        $.ajax ({
                         type: "POST",
                         url: "getHDRLog",
                         dataType: 'json',
@@ -82,32 +86,34 @@
                         },
                         success: function (data) {
                             $('table').find('tbody').empty();
-                            tr = $('<tr/>');
-                            tr.append("<th>" + "Sl. No." + "</th>");
-                            tr.append("<th>" + "Test Case" + "</th>");
-                            tr.append("<th>" + "Failing Records" + "</th>");
-                            tr.append("<th>" + "Total Records" + "</th>");
-                            tr.append("<th>" + "Extra Records" + "</th>");
-                            $('table').append(tr);
+                            $('table').find('tbody').addClass("list");
                             for (var i = 0; i < data.length; i++) {
-                            var jd = JSON.parse(data[i])
-                            tr = $('<tr/>');
-                            if( jd.b > 0) {tr.addClass("table-danger")}
-                            tr.append("<td>" + (i+1) + "</td>");
-                            tr.append("<td>" + jd.a + "</td>");
-                            tr.append("<td>" + jd.b + "</td>");
-                            tr.append("<td>" + jd.c + "</td>");
-                            tr.append("<td>" + jd.d + "</td>");
-                            $('table').append(tr);
+                                var jd = JSON.parse(data[i])
+                                tr = $('<tr/>');
+                                if( jd.b > 0) {
+                                    tr.addClass("table-danger")
+                                }
+                                tr.append("<td>" + (i+1) + "</td>");
+                                tr.append('<td>' + jd.a + "</td>");
+                                tr.append("<td>" + jd.iter + "</td>");
+                                tr.append("<td>" + jd.runtype + "</td>");
+                                tr.append("<td>" + jd.b + "</td>");
+                                tr.append("<td>" + jd.c + "</td>");
+                                tr.append("<td>" + jd.d + "</td>");
+                                $('table').append(tr);
 
                             };
                         }
                     });
+                        
+                                                                                       
                 }
 
                 <!--$('select[name="thisLog"]').on('change', getRegressionReport('thisLog'));-->
                 <!--window.onload=function() {document.getElementById("thisLog").onchange=getRegressionReport('thisLog')};-->
                 <!--document.getElementById("thisLog").addEventListener("change",getRegressionReport("thisLog")) -->
+
                 window.onload=function() {getRegressionReport('thisLog')};
             </script>
+
 {% endblock %}

@@ -14,19 +14,32 @@ def index():
 #region autocreate inputs test
 @getLogs.route('/getHDRLog', methods=['POST'])
 def getHDRLog():
+    """curl -X POST -F "ser=20180413_14h31m09s" "http://10.100.190.137:5005/logs/getHDRLog"""
     if request.method == "POST":
         reqData = request.form['ser']
     else:
-        reqData = "20170629_14h06m26s"
-    fn_ = os.path.join(HDReg_wd,"reports",str(reqData) + "_allReports.csv")
-    csvfile = open(fn_, 'r')
+        reqData = "20180413_14h31m09s"
+    thisfname = os.path.join(HDReg_wd,"reports",str(reqData) + "_allReports.csv")
+    csvfile = open(thisfname, 'r')
     # TODO: get this log file from actual HD regression
-    fieldnames = ("a", "b", "c", "d");
+    from mod_logs.bin.defs import getCsvNCol
+    lenCsv = getCsvNCol(thisfname)
+
+    if lenCsv == 4:
+        fieldnames = ("a", "b", "c", "d")
+    else:
+        fieldnames = ("a", "iter", "runtype", "b", "c", "d")
     reader = csv.DictReader(csvfile, fieldnames)
     allRecords = []
     record = {}
     for row in reader:
         record['a'] = os.path.basename(os.path.dirname(os.path.dirname(row['a'])))
+        if len(row) == 4:
+            record['iter'] = "It00"
+            record['runtype'] = "UNK"
+        else:
+            record['iter'] = row['iter']
+            record['runtype'] = row['runtype']
         record['b'] = row['b']
         record['c'] = row['c']
         record['d'] = row['d']
