@@ -10,7 +10,7 @@
     }
 
 </style>
-
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -18,21 +18,28 @@
     <div class="row">
         <div class="col-md-8 mx-auto">
             <h3> JPEQ HD Regression Reports </h3>
-            <br>
-            {% if selLogs %}
-                Available reports are
-                {% if selLogs|length > 0 %}
-                    <select name="thisLog" id="thisLog" onchange=getRegressionReport("thisLog")>
-                    <option value="{{selLogs[0]}}" selected>{{selLogs[0]}}</option>
-                    {% if selLogs|length > 1 %}
-                        {% for vuln in selLogs[1:] %}
-                            <option value="{{vuln}}">{{vuln}}</option>
-                        {% endfor %}
-                    {% endif %}
-                    </select>
-                {% endif %}
-            {% endif %}
 
+            <div class="col-md-4 mx-left">
+                {% if selLogs %}
+
+                    {% if selLogs|length > 0 %}
+                        <select name="thisLog" id="thisLog" class="custom-select custom-select" onchange=getRegressionReport("thisLog")>
+                        <option value="{{selLogs[0]}}" selected>
+                            <script>document.write(moment({{selLogs[0].split("_")[0] }}, 'YYYYMMDD').format('YYYY-MM-DD'));</script>
+                        </option>
+                        {% if selLogs|length > 1 %}
+                            {% for vuln in selLogs[1:] %}
+                                <option value="{{vuln}}">
+                                    <script>document.write(moment({{vuln.split("_")[0]}}, 'YYYYMMDD').format('YYYY-MM-DD'));</script>
+                                </option>
+                            {% endfor %}
+                        {% endif %}
+                        </select>
+                    {% endif %}
+                {% endif %}
+
+            </div>
+            <br>
                 <table class="table-sm" id="tab1">
                     <thead>
                     <tr>
@@ -43,6 +50,7 @@
                       <th>Failing Records</th>
                       <th>Total Records</th>
                       <th>Extra Records</th>
+                      <th></th>
                     </tr>
                     </thead>
                 </table>
@@ -74,8 +82,6 @@
                 <!--}-->
                 var getRegressionReport = function(idName) {
                     var countryId = document.getElementById(idName).value;
-                    console.log("selected value is ", countryId)
-                    
                         
                         $.ajax ({
                         type: "POST",
@@ -85,6 +91,7 @@
                             ser: countryId
                         },
                         success: function (data) {
+                            var iconPath = "{{ url_for('static', filename='img/glyphicons145folderopen.png') }}";
                             $('table').find('tbody').empty();
                             $('table').find('tbody').addClass("list");
                             for (var i = 0; i < data.length; i++) {
@@ -100,8 +107,14 @@
                                 tr.append("<td>" + jd.b + "</td>");
                                 tr.append("<td>" + jd.c + "</td>");
                                 tr.append("<td>" + jd.d + "</td>");
+                                <!-- below needs this https://stackoverflow.com/questions/1465010/html-links-to-local-network-shares-->
+                                tr.append("<td>" +
+                                    '<a href = "file://////' + jd.testPath.slice(2) +'">'
+                                    + '<img src = "' + iconPath + '" alt="Open" style="width:20px;height:15px;border:0;opacity: 0.3;">'
+                                    <!--+ 'Open'-->
+                                    + "</a>"
+                                + "</td>");
                                 $('table').append(tr);
-
                             };
                         }
                     });

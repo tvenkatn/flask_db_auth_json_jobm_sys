@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, jsonify, request
 import os, csv, json
 from flask_login import login_required
 
-getLogs = Blueprint('getLogs',__name__,template_folder='templates')
+getLogs = Blueprint('getLogs',__name__,template_folder='templates', static_folder='static')
 
 HDReg_wd = r'\\cawd16744\HD_testRegression'
 HDReg_repFormat = "allReports.csv$"
@@ -43,6 +43,7 @@ def getHDRLog():
         record['b'] = row['b']
         record['c'] = row['c']
         record['d'] = row['d']
+        record['testPath'] = os.path.join(HDReg_wd, *row['a'].split('/')[3:-2])
         allRecords.append(json.dumps(record))
     return jsonify(allRecords)
 

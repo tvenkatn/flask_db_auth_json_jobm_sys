@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="69ddd861-7033-4c51-a449-c02021b355cc" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/mod_logs/bin/defs.py" afterPath="$PROJECT_DIR$/mod_logs/bin/defs.py" />
       <change beforePath="$PROJECT_DIR$/mod_logs/controller.py" afterPath="$PROJECT_DIR$/mod_logs/controller.py" />
       <change beforePath="$PROJECT_DIR$/mod_logs/templates/hdr_logSelect.html" afterPath="$PROJECT_DIR$/mod_logs/templates/hdr_logSelect.html" />
     </list>
@@ -16,18 +14,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="app.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4981">
-              <caret line="308" column="39" lean-forward="false" selection-start-line="308" selection-start-column="39" selection-end-line="308" selection-end-column="39" />
-              <folding>
-                <element signature="e#0#9#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mod_tools_mdv/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -50,11 +36,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="controller.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="controller.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mod_logs/controller.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="46" column="19" lean-forward="false" selection-start-line="46" selection-start-column="19" selection-end-line="46" selection-end-column="19" />
+            <state relative-caret-position="272">
+              <caret line="16" column="56" lean-forward="false" selection-start-line="16" selection-start-column="56" selection-end-line="16" selection-end-column="56" />
               <folding>
                 <element signature="e#0#62#0" expanded="true" />
               </folding>
@@ -62,11 +48,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="hdr_logSelect.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="hdr_logSelect.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mod_logs/templates/hdr_logSelect.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="523">
-              <caret line="116" column="0" lean-forward="false" selection-start-line="116" selection-start-column="0" selection-end-line="116" selection-end-column="0" />
+            <state relative-caret-position="187">
+              <caret line="83" column="74" lean-forward="false" selection-start-line="83" selection-start-column="74" selection-end-line="83" selection-end-column="74" />
               <folding />
             </state>
           </provider>
@@ -82,31 +68,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="defs.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mod_tools_mdv/bin/defs.py">
+      <file leaf-file-name="leafMaps_EDM.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/leafMaps_EDM.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="22" column="25" lean-forward="false" selection-start-line="22" selection-start-column="25" selection-end-line="22" selection-end-column="25" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="vulnValidationInputs.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mod_tools_mdv/templates/vulnValidationInputs.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="782">
-              <caret line="46" column="26" lean-forward="false" selection-start-line="46" selection-start-column="26" selection-end-line="46" selection-end-column="26" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="eqhd.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mod_E2E/templates/eqhd.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="629">
-              <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+            <state relative-caret-position="187">
+              <caret line="11" column="94" lean-forward="false" selection-start-line="11" selection-start-column="39" selection-end-line="11" selection-end-column="94" />
               <folding />
             </state>
           </provider>
@@ -115,9 +81,11 @@
       <file leaf-file-name="runRTemplate.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/runRTemplate.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1105">
-              <caret line="65" column="80" lean-forward="false" selection-start-line="65" selection-start-column="42" selection-end-line="65" selection-end-column="80" />
-              <folding />
+            <state relative-caret-position="243">
+              <caret line="27" column="81" lean-forward="false" selection-start-line="27" selection-start-column="81" selection-end-line="27" selection-end-column="81" />
+              <folding>
+                <element signature="n#style#0;n#a#0;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -134,9 +102,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>FAIL</find>
-      <find>.delay</find>
-      <find>rscri</find>
       <find>showHDRLog</find>
       <find>getH</find>
       <find>rlr</find>
@@ -164,6 +129,9 @@
       <find>selected</find>
       <find>serlist</find>
       <find>body</find>
+      <find>leaflet-heat</find>
+      <find>url</find>
+      <find>flask.pn</find>
     </findStrings>
     <replaceStrings>
       <replace>selLogs</replace>
@@ -207,8 +175,8 @@
         <option value="$PROJECT_DIR$/mod_tools_mdv/bin/defs.py" />
         <option value="$PROJECT_DIR$/mod_tools_mdv/templates/vulnValidationInputs.html" />
         <option value="$PROJECT_DIR$/mod_logs/bin/defs.py" />
-        <option value="$PROJECT_DIR$/mod_logs/templates/hdr_logSelect.html" />
         <option value="$PROJECT_DIR$/mod_logs/controller.py" />
+        <option value="$PROJECT_DIR$/mod_logs/templates/hdr_logSelect.html" />
       </list>
     </option>
   </component>
@@ -275,12 +243,6 @@
               <item name="20180105_flask_db_auth_json" type="b2602c69:ProjectViewProjectNode" />
               <item name="20180105_flask_db_auth_json" type="462c0819:PsiDirectoryNode" />
               <item name="mod_logs" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="20180105_flask_db_auth_json" type="b2602c69:ProjectViewProjectNode" />
-              <item name="20180105_flask_db_auth_json" type="462c0819:PsiDirectoryNode" />
-              <item name="mod_logs" type="462c0819:PsiDirectoryNode" />
-              <item name="bin" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="20180105_flask_db_auth_json" type="b2602c69:ProjectViewProjectNode" />
@@ -376,19 +338,20 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22697794" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32776618" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="R Packages" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="R Graphics" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3361169" sideWeight="0.1283566" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32881" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27139875" sideWeight="0.87164336" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3057325" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20772442" sideWeight="0.48925886" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18796992" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="R Packages" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="R Graphics" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32985386" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18474758" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25578406" sideWeight="0.48925886" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -396,7 +359,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32985386" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -608,13 +570,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/leafMaps_EDM.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mod_logs/bin/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -684,7 +639,7 @@
         <state relative-caret-position="4981">
           <caret line="308" column="39" lean-forward="false" selection-start-line="308" selection-start-column="39" selection-end-line="308" selection-end-column="39" />
           <folding>
-            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#0#9#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -718,18 +673,36 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/runRTemplate.html">
+    <entry file="file://$PROJECT_DIR$/mod_tools_mdv/controller.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1105">
-          <caret line="65" column="80" lean-forward="false" selection-start-line="65" selection-start-column="42" selection-end-line="65" selection-end-column="80" />
+        <state relative-caret-position="85">
+          <caret line="7" column="12" lean-forward="false" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#62#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/leafMaps_EDM.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="94" lean-forward="false" selection-start-line="11" selection-start-column="39" selection-end-line="11" selection-end-column="94" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mod_tools_mdv/templates/vulnValidationInputs.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="782">
+        <state relative-caret-position="261">
           <caret line="46" column="26" lean-forward="false" selection-start-line="46" selection-start-column="26" selection-end-line="46" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mod_tools_mdv/bin/defs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="22" column="25" lean-forward="false" selection-start-line="22" selection-start-column="25" selection-end-line="22" selection-end-column="25" />
           <folding />
         </state>
       </provider>
@@ -742,24 +715,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mod_tools_mdv/controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="7" column="12" lean-forward="false" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#62#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mod_tools_mdv/bin/defs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="25" lean-forward="false" selection-start-line="22" selection-start-column="25" selection-end-line="22" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mod_logs/bin/defs.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
@@ -768,21 +723,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mod_logs/templates/hdr_logSelect.html">
+    <entry file="file://$PROJECT_DIR$/templates/runRTemplate.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="523">
-          <caret line="116" column="0" lean-forward="false" selection-start-line="116" selection-start-column="0" selection-end-line="116" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="243">
+          <caret line="27" column="81" lean-forward="false" selection-start-line="27" selection-start-column="81" selection-end-line="27" selection-end-column="81" />
+          <folding>
+            <element signature="n#style#0;n#a#0;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mod_logs/controller.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="46" column="19" lean-forward="false" selection-start-line="46" selection-start-column="19" selection-end-line="46" selection-end-column="19" />
+        <state relative-caret-position="272">
+          <caret line="16" column="56" lean-forward="false" selection-start-line="16" selection-start-column="56" selection-end-line="16" selection-end-column="56" />
           <folding>
             <element signature="e#0#62#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mod_logs/templates/hdr_logSelect.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="83" column="74" lean-forward="false" selection-start-line="83" selection-start-column="74" selection-end-line="83" selection-end-column="74" />
+          <folding />
         </state>
       </provider>
     </entry>
