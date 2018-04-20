@@ -6,6 +6,7 @@ getLogs = Blueprint('getLogs',__name__,template_folder='templates', static_folde
 
 HDReg_wd = r'\\cawd16744\HD_testRegression'
 HDReg_repFormat = "allReports.csv$"
+JPEQ_N_PATH = r'N:\ModelCertification\Projects\_2018\HD18_JPEQ\TestExecution'
 
 @getLogs.route('/')
 def index():
@@ -44,6 +45,13 @@ def getHDRLog():
         record['c'] = row['c']
         record['d'] = row['d']
         record['testPath'] = os.path.join(HDReg_wd, *row['a'].split('/')[3:-2])
+        if record['a'][0:3] == 'HAZ':
+            dName = 'Hazard'
+        elif record['a'][0:3] == 'VUL':
+            dName = 'Vulnerability'
+        else:
+            dName = 'Loss Validations'
+        record['NPath'] = os.path.join(JPEQ_N_PATH, dName, record['a'])
         allRecords.append(json.dumps(record))
     return jsonify(allRecords)
 

@@ -1,29 +1,70 @@
 {% extends "runRTemplate.html" %}
 {% block morehead %}
-<style>
-    input:invalid {
-        border: 2px solid red;
-    }
 
-    input:valid {
-        border: 2px solid black;
-    }
+    <style>
+        input:invalid {
+            border: 2px solid red;
+        }
 
-</style>
-<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+        input:valid {
+            border: 2px solid black;
+        }
+
+        a:link {
+            color: rgb(115, 0, 0);
+        }
+
+        a:hover {
+            color: rgb(252, 140, 88);
+            text-decoration: none;
+        }
+
+        a:active, a:visited, a:visited:hover {
+            color: rgb(179, 0, 0);
+        }
+
+    </style>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+
 {% endblock %}
 
 {% block content %}
 <div class="container">
-    <div class="row">
-        <div class="col-md-8 mx-auto">
+    <div class="row justify-content-md-center">
+        <div class="col-8">
             <h3> JPEQ HD Regression Reports </h3>
+            <hr>
+                <table class="table-sm" id="tab1">
+                    <thead>
+                    <tr>
+                      <th>Sl. No. </th>
+                      <th>Test Case</th>
+                      <th></th>
+                      <th>Iteration</th>
+                      <th>Test Type</th>
+                      <th>Failing Records</th>
+                      <th>Total Records</th>
+                      <th>Extra Records</th>
+                      <th>Current Local Repo</th>
+                    </tr>
+                    </thead>
+                </table>
+            <hr>
+            <br>
+            <br>
 
-            <div class="col-md-4 mx-left">
+
+        </div>
+        <!--<div class="col-2"></div>-->
+        <div class="col-2">
+            <br>
+            <br>
+            <h6> Select date </h6>
                 {% if selLogs %}
 
                     {% if selLogs|length > 0 %}
-                        <select name="thisLog" id="thisLog" class="custom-select custom-select" onchange=getRegressionReport("thisLog")>
+                        <select name="thisLog" id="thisLog" class="custom-select" size="10" onchange=getRegressionReport("thisLog")>
                         <option value="{{selLogs[0]}}" selected>
                             <script>document.write(moment({{selLogs[0].split("_")[0] }}, 'YYYYMMDD').format('YYYY-MM-DD'));</script>
                         </option>
@@ -39,29 +80,24 @@
                 {% endif %}
 
             </div>
-            <br>
-                <table class="table-sm" id="tab1">
-                    <thead>
-                    <tr>
-                      <th>Sl. No. </th>
-                      <th>Test Case</th>
-                      <th>Iteration</th>
-                      <th>Test Type</th>
-                      <th>Failing Records</th>
-                      <th>Total Records</th>
-                      <th>Extra Records</th>
-                      <th></th>
-                    </tr>
-                    </thead>
-                </table>
-
-        </div>
     </div>
 </div>
 
 <link rel="stylesheet" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
 <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script>
+
+    var copyThis = function(el) {
+            var thisLink = document.getElementById(el).querySelector("a").href.slice(8);
+            var textArea = document.createElement("textarea");
+            textArea.value = thisLink;
+            document.getElementById(el).appendChild(textArea);
+            <!--document.body.appendChild(textArea);-->
+            textArea.focus();
+            textArea.select();
+            document.execCommand('copy');
+            document.getElementById(el).removeChild(textArea);
+    }
                 <!--window.onload=function() {-->
                     <!--document.getElementById("thisLog").onchange=function() {-->
                         <!--var period = this.value;-->
@@ -92,6 +128,7 @@
                         },
                         success: function (data) {
                             var iconPath = "{{ url_for('static', filename='img/glyphicons145folderopen.png') }}";
+                            var clipIconPath = "{{ url_for('static', filename='img/copyToClipboard.png') }}";
                             $('table').find('tbody').empty();
                             $('table').find('tbody').addClass("list");
                             for (var i = 0; i < data.length; i++) {
@@ -101,7 +138,16 @@
                                     tr.addClass("table-danger")
                                 }
                                 tr.append("<td>" + (i+1) + "</td>");
-                                tr.append('<td>' + jd.a + "</td>");
+
+                                tr.append("<td id=tc" + (i+1)+ ">" +
+                                    '<a href = "file://////' + jd.NPath +'">'
+                                    + jd.a
+                                    + "</a>"
+                                + "</td>");
+
+                                tr.append("<td align='left'>"
+                                    + '<img src = "' + clipIconPath + '" onclick=copyThis("tc' + (i+1) + '")' + ' alt="Open"  title="Copy network path to clipboard" style="width:15px;height:15px;border:0;opacity: 0.3;">'
+                                + "</td>");
                                 tr.append("<td>" + jd.iter + "</td>");
                                 tr.append("<td>" + jd.runtype + "</td>");
                                 tr.append("<td>" + jd.b + "</td>");
