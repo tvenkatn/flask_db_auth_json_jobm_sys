@@ -108,8 +108,7 @@
                 success: function (data) {
                     allPerils = getPerils(data);
                     allCountries = getCountries(data);
-                    console.log("Peril was ", allPerils)
-                    console.log("allCountries was ", allCountries)
+                    document.getElementById("selectPeril").innerHTML="";
                     document.getElementById("selectPeril").appendChild(document.createTextNode("Select Perils:"));
                     document.getElementById("selectPeril").appendChild(document.createElement("BR"));
                     allPerils.forEach(element => {
@@ -127,6 +126,7 @@
                     });
                     document.getElementById("selectPeril").appendChild(document.createElement("BR"));
 
+                    document.getElementById("selectCountry").innerHTML="";
                     document.getElementById("selectCountry").appendChild(document.createTextNode("Select Countries:"));
                     document.getElementById("selectCountry").appendChild(document.createElement("BR"));
                     allCountries.forEach(element => {
@@ -162,5 +162,9 @@
         {% endif %}
     }
     fillSer()
+    window.onload = function() {
+        getPerilCountry("thisVuln")
+    };
+
 </script>
 {% endblock %}
