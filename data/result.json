@@ -1,7 +1,5 @@
 {
-    "Countries": [
-        "us"
-    ],
+    "Countries": [],
     "DBserver": "ca-md1-02",
     "NGGeography": {
         "db": "RMS_NGGeography",
@@ -9,8 +7,6 @@
         "server": "ca1mdtools01",
         "userid": "sa"
     },
-    "Perils": [
-        "eq"
-    ],
-    "VULNDB": "RMS_VULN_NAEQ_RL9_NG"
+    "Perils": [],
+    "VULNDB": "RMS_VULN_NAEQ_v11a_NG_preVMT"
 }

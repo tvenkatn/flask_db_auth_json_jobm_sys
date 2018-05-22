@@ -1,8 +1,10 @@
 from flask import Blueprint, render_template, jsonify, request
-import os, csv, json
+import os, csv, json, datetime
 from flask_login import login_required
 
 mdv = Blueprint('mdv',__name__,template_folder='templates')
+
+vulnToolRelPath = os.path.join(os.getcwd(), 'RMSTools/Vulnerability/latest')
 
 @mdv.route('/')
 def index():
@@ -11,19 +13,34 @@ def index():
 @mdv.route('/vulnValidationRun', methods=["GET", "POST"])
 def vulnValidationRun():
     with open('data/serList.csv', 'r') as f:
-        serList = [line.rstrip() for line in f]
+        serList = [line.strip() for line in f]
     if request.method == "POST" and 'server' in request.form and request.form['action'] == 'getDb':
         from bin.defs import getVulnDbs
         thisSer = request.form.get("server")
         vulns = getVulnDbs(thisSer)
         return render_template('vulnValidationInputs.html', serList=serList, selVuln=vulns, selSer = thisSer)
     elif request.method == "POST" and 'server' in request.form and request.form['action'] == 'runVulnValidation':
+        from mod_tools_mdv.bin.defs import runRinBack_VulnValid
+        dtNow = datetime.datetime.now().strftime("%Y%m%d_%Hh%Mm%Ss")
         vConfig = {
-                "server": request.form.get("server"),
-                "vuln": request.form.get("thisVuln"),
-                "peril": request.form.getlist("thisPeril"),
-                "country": request.form.getlist("thisCountry")
-            }
+                # "currentPath": os.getcwd(),
+                "DBserver": request.form.get("server"),
+                "VULNDB": request.form.get("thisVuln"),
+                "Perils": request.form.getlist("thisPeril"),
+                "Countries": request.form.getlist("thisCountry"),
+                "NGGeography": {
+                    "db": "RMS_NGGeography",
+                    "server": "ca1mdtools01",
+                    "userid": "sa",
+                    "password": "Rmsuser!"
+                    }
+                }
+        with open('RMSTools/Vulnerability/latest/config.json', 'w', encoding="utf-8", newline='\n') as fp:
+            json.dump(vConfig, fp, indent=4, sort_keys=True, ensure_ascii=False)
+
+        # execute script
+        runRinBack_VulnValid(vulnToolRelPath, dtNow)
+
         return jsonify(vConfig)
     return render_template('vulnValidationInputs.html', serList=serList)
 
