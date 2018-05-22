@@ -20,36 +20,39 @@
                 <div class="form-group row">
                     <label for="server" class="col-sm-4 col-form-label">Select a SQL server:</label>
                     <div class="col-sm-4">
-                        <input type="text" name="server" placeholder="serverName" id="server" class="form-control autocomplete" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <input type="text" name="server" placeholder="serverName" id="server" class="form-control autocomplete">
                     </div>
                     <div class="input-group-append">
-                        <button type="submit" class="btn btn-primary btn-sm bg-danger">Connect!</button>
+                        <button type="submit" class="btn btn-primary btn-sm bg-danger" name="action" value="getDb">Connect!</button>
                     </div>
                 </div>
+
+                {% if selVuln %}
+                    Available vulnerability databases are:
+                    {% if selVuln|length > 0 %}
+                        <select name="thisVuln" id="thisVuln" method="POST" onchange=getPerilCountry("thisVuln") action={{ url_for('mdv.testAction1') }}>
+                        <option value="{{selVuln[0]}}" selected>{{selVuln[0]}}</option>
+                        {% if selVuln|length > 1 %}
+                            {% for vuln in selVuln[1:] %}
+                                <option value="{{vuln}}">{{vuln}}</option>
+                            {% endfor %}
+                        {% endif %}
+                        </select>
+                    {% endif %}
+                <p>
+                <div id="selectPeril">
+                    <!--<input type="checkbox" id="thisPeril" name="thisPeril" value="Peril">-->
+                    <!--<label for="thisPeril">Peril</label>-->
+                </div>
+                <div id="selectCountry" class="form-check form-check-inline">
+                    <!--<input type="checkbox" id="thisCountry" name="thisPeril" value="Peril">-->
+                    <!--<label for="thisPeril">Peril</label>-->
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary btn-sm bg-danger" name="action" value="runVulnValidation">Run</button>
+                {% endif %}
             </form>
 
-            {% if selVuln %}
-                Available vulnerability databases are:
-                {% if selVuln|length > 0 %}
-                    <select name="thisVuln" id="thisVuln" method="POST" onchange=getPerilCountry("thisVuln") action={{ url_for('mdv.testAction1') }}>
-                    <option value="{{selVuln[0]}}" selected>{{selVuln[0]}}</option>
-                    {% if selVuln|length > 1 %}
-                        {% for vuln in selVuln[1:] %}
-                            <option value="{{vuln}}">{{vuln}}</option>
-                        {% endfor %}
-                    {% endif %}
-                    </select>
-                {% endif %}
-            {% endif %}
-            <p>
-            <div id="selectPeril">
-                <!--<input type="checkbox" id="thisPeril" name="thisPeril" value="Peril">-->
-                <!--<label for="thisPeril">Peril</label>-->
-            </div>
-            <div id="selectCountry" class="form-check form-check-inline">
-                <!--<input type="checkbox" id="thisPeril" name="thisPeril" value="Peril">-->
-                <!--<label for="thisPeril">Peril</label>-->
-            </div>
         </div>
 
     </div>

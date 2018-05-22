@@ -820,6 +820,7 @@
       <w>ChristmasEve</w>
       <w>Cigar</w>
       <w>ClassStat</w>
+      <w>ClusterFuture</w>
       <w>CmdArgsFunction</w>
       <w>Cmetric</w>
       <w>CobarOre</w>
@@ -836,6 +837,7 @@
       <w>Complex</w>
       <w>Conakry</w>
       <w>ConnCompLabel</w>
+      <w>ConstantFuture</w>
       <w>ContinuousRange</w>
       <w>ContourLines2SLDF</w>
       <w>ConvertMedUnits</w>
@@ -975,6 +977,17 @@
       <w>Ftest</w>
       <w>Funafuti</w>
       <w>Function</w>
+      <w>Future</w>
+      <w>FutureCondition</w>
+      <w>FutureError</w>
+      <w>FutureEvaluationCondition</w>
+      <w>FutureEvaluationError</w>
+      <w>FutureEvaluationMessage</w>
+      <w>FutureEvaluationWarning</w>
+      <w>FutureGlobals</w>
+      <w>FutureMessage</w>
+      <w>FutureResult</w>
+      <w>FutureWarning</w>
       <w>GAGurine</w>
       <w>GBBankHoliday</w>
       <w>GBMayDay</w>
@@ -1053,6 +1066,7 @@
       <w>GlaucomaM</w>
       <w>GlaucomaMVF</w>
       <w>Gleser</w>
+      <w>Globals</w>
       <w>Glucose</w>
       <w>Glucose2</w>
       <w>Godthab</w>
@@ -1384,6 +1398,9 @@
       <w>MrhoInf</w>
       <w>MultiReporter</w>
       <w>MultiVerbose</w>
+      <w>MulticoreFuture</w>
+      <w>MultiprocessFuture</w>
+      <w>MultisessionFuture</w>
       <w>Muscat</w>
       <w>Muscle</w>
       <w>Mwgt</w>
@@ -1740,6 +1757,7 @@
       <w>Seatbelts</w>
       <w>Seoul</w>
       <w>Septuagesima</w>
+      <w>SequentialFuture</w>
       <w>SeriesPost</w>
       <w>Settings</w>
       <w>Shanghai</w>
@@ -1949,6 +1967,8 @@
       <w>UScitiesD</w>
       <w>UScrime</w>
       <w>Ulaanbaatar</w>
+      <w>UnexpectedFutureResultError</w>
+      <w>UniprocessFuture</w>
       <w>Urumqi</w>
       <w>Ushuaia</w>
       <w>Uzhgorod</w>
@@ -2049,11 +2069,14 @@
       <w>`%dopar%`</w>
       <w>`%du%`</w>
       <w>`%fin%`</w>
+      <w>`%globals%`</w>
       <w>`%has_args%`</w>
       <w>`%has_attr%`</w>
       <w>`%has_name%`</w>
       <w>`%in%`</w>
       <w>`%inrange%`</w>
+      <w>`%label%`</w>
+      <w>`%lazy%`</w>
       <w>`%like%`</w>
       <w>`%m%`</w>
       <w>`%m+%`</w>
@@ -2061,6 +2084,8 @@
       <w>`%ni%`</w>
       <w>`%nin%`</w>
       <w>`%over%`</w>
+      <w>`%packages%`</w>
+      <w>`%plan%`</w>
       <w>`%s!=%`</w>
       <w>`%s!==%`</w>
       <w>`%s%`</w>
@@ -2071,6 +2096,7 @@
       <w>`%s===%`</w>
       <w>`%s&gt;%`</w>
       <w>`%s&gt;=%`</w>
+      <w>`%seed%`</w>
       <w>`%stri!=%`</w>
       <w>`%stri!==%`</w>
       <w>`%stri+%`</w>
@@ -2080,6 +2106,7 @@
       <w>`%stri===%`</w>
       <w>`%stri&gt;%`</w>
       <w>`%stri&gt;=%`</w>
+      <w>`%tweak%`</w>
       <w>`%u%`</w>
       <w>`%within%`</w>
       <w>`%|%`</w>
@@ -2727,6 +2754,7 @@
       <w>`digits&lt;-`</w>
       <w>`dimNA&lt;-.default`</w>
       <w>`dimNA&lt;-`</w>
+      <w>`dim_na&lt;-`</w>
       <w>`dimnames&lt;-.xts`</w>
       <w>`display&lt;-`</w>
       <w>`distribution&lt;-`</w>
@@ -3191,6 +3219,8 @@
       <w>as.Date.yearmon</w>
       <w>as.Date.yearqtr</w>
       <w>as.Formula</w>
+      <w>as.FutureGlobals</w>
+      <w>as.Globals</w>
       <w>as.IDate</w>
       <w>as.ITime</w>
       <w>as.SpatialGridDataFrame.im</w>
@@ -3230,6 +3260,7 @@
       <w>as.chron</w>
       <w>as.chron.IDate</w>
       <w>as.chron.ITime</w>
+      <w>as.cluster</w>
       <w>as.data.frame</w>
       <w>as.data.table</w>
       <w>as.dendrogram</w>
@@ -3283,6 +3314,7 @@
       <w>as.list.MultiVerbose</w>
       <w>as.list.Options</w>
       <w>as.listLevelsMap</w>
+      <w>as.listenv</w>
       <w>as.logical.Verbose</w>
       <w>as.logical.bit</w>
       <w>as.logical.bitwhich</w>
@@ -3503,6 +3535,8 @@
       <w>autourna</w>
       <w>avNNet</w>
       <w>available.packages</w>
+      <w>availableCores</w>
+      <w>availableWorkers</w>
       <w>avas</w>
       <w>ave</w>
       <w>average.path.length</w>
@@ -3528,6 +3562,7 @@
       <w>backports</w>
       <w>backsolve</w>
       <w>backtick</w>
+      <w>backtrace</w>
       <w>bacteria</w>
       <w>bag</w>
       <w>bagControl</w>
@@ -3671,6 +3706,7 @@
       <w>binomial.lvm</w>
       <w>binsearch</w>
       <w>biocAccess</w>
+      <w>bioc_install_repos</w>
       <w>biomass</w>
       <w>biomassTill</w>
       <w>biomed</w>
@@ -5156,6 +5192,7 @@
       <w>dev.size</w>
       <w>dev2bitmap</w>
       <w>devAskNewPage</w>
+      <w>dev_package_deps</w>
       <w>devcoords</w>
       <w>deviance</w>
       <w>deviance.nlrq</w>
@@ -5351,6 +5388,7 @@
       <w>downloadFile.character</w>
       <w>download_html</w>
       <w>download_ssl_cert</w>
+      <w>download_version</w>
       <w>download_xml</w>
       <w>downs.bc</w>
       <w>dp</w>
@@ -6162,6 +6200,12 @@
       <w>funion</w>
       <w>funs</w>
       <w>funs_</w>
+      <w>future</w>
+      <w>futureAssign</w>
+      <w>futureCall</w>
+      <w>futureOf</w>
+      <w>future_lapply</w>
+      <w>futures</w>
       <w>fuzzygenet</w>
       <w>fwrite</w>
       <w>fyff</w>
@@ -6406,6 +6450,7 @@
       <w>getErrorIndex</w>
       <w>getErrorValue</w>
       <w>getEvent</w>
+      <w>getExpression</w>
       <w>getExtends</w>
       <w>getFilename</w>
       <w>getFilename.Arguments</w>
@@ -6417,6 +6462,7 @@
       <w>getGenericS3</w>
       <w>getGenerics</w>
       <w>getGeoCode</w>
+      <w>getGlobalsAndPackages</w>
       <w>getGraphicsEvent</w>
       <w>getGraphicsEventEnv</w>
       <w>getGridIndex</w>
@@ -6490,6 +6536,7 @@
       <w>getOption.Options</w>
       <w>getOption.default</w>
       <w>getOrgData</w>
+      <w>getOutput</w>
       <w>getPackageName</w>
       <w>getParent</w>
       <w>getParent.default</w>
@@ -6624,6 +6671,7 @@
       <w>get_root_desc</w>
       <w>get_spinner</w>
       <w>get_stamenmap</w>
+      <w>get_variable</w>
       <w>getascattr</w>
       <w>getburst</w>
       <w>getcontour</w>
@@ -6669,6 +6717,8 @@
       <w>ginv</w>
       <w>girth</w>
       <w>github_document</w>
+      <w>github_pull</w>
+      <w>github_release</w>
       <w>gives_warning</w>
       <w>gkgamma</w>
       <w>glance</w>
@@ -6697,6 +6747,9 @@
       <w>globalVariables</w>
       <w>global_env</w>
       <w>global_frame</w>
+      <w>globals</w>
+      <w>globalsByName</w>
+      <w>globalsOf</w>
       <w>gls</w>
       <w>glsApVar</w>
       <w>glsControl</w>
@@ -7462,6 +7515,14 @@
       <w>installPackages.default</w>
       <w>installSuggests</w>
       <w>installXLSXsupport</w>
+      <w>install_bitbucket</w>
+      <w>install_deps</w>
+      <w>install_git</w>
+      <w>install_github</w>
+      <w>install_local</w>
+      <w>install_svn</w>
+      <w>install_url</w>
+      <w>install_version</w>
       <w>installed.packages</w>
       <w>int</w>
       <w>intToBin</w>
@@ -8276,6 +8337,7 @@
       <w>length.bitwhich</w>
       <w>length.ri</w>
       <w>lengthLine</w>
+      <w>lengths.listenv</w>
       <w>less</w>
       <w>less.Verbose</w>
       <w>leuk</w>
@@ -8345,6 +8407,7 @@
       <w>list_modify</w>
       <w>list_spinners</w>
       <w>listbdsmatrix</w>
+      <w>listenv</w>
       <w>litter</w>
       <w>lizards</w>
       <w>ll</w>
@@ -8426,6 +8489,7 @@
       <w>local_options</w>
       <w>local_output_sink</w>
       <w>local_package</w>
+      <w>local_package_deps</w>
       <w>local_par</w>
       <w>local_path</w>
       <w>local_pdf</w>
@@ -8578,6 +8642,7 @@
       <w>makeClassRepresentation</w>
       <w>makeClassTemplate</w>
       <w>makeCluster</w>
+      <w>makeClusterPSOCK</w>
       <w>makeCodeWalker</w>
       <w>makeConstantFolder</w>
       <w>makeContent</w>
@@ -8590,6 +8655,7 @@
       <w>makeLocalsCollector</w>
       <w>makeMethodsList</w>
       <w>makeNames</w>
+      <w>makeNodePSOCK</w>
       <w>makeNstr</w>
       <w>makePSOCKcluster</w>
       <w>makePoly</w>
@@ -8636,6 +8702,8 @@
       <w>mammoexp</w>
       <w>managNAkasc</w>
       <w>manaus</w>
+      <w>mandelbrot</w>
+      <w>mandelbrot_tiles</w>
       <w>manifest</w>
       <w>manova</w>
       <w>mantel.randtest</w>
@@ -8684,6 +8752,7 @@
       <w>mapdist</w>
       <w>maples</w>
       <w>maply</w>
+      <w>mapping</w>
       <w>mapplot</w>
       <w>mapproj</w>
       <w>mapproject</w>
@@ -9051,6 +9120,7 @@
       <w>multi_list</w>
       <w>multi_run</w>
       <w>multi_set</w>
+      <w>multicore</w>
       <w>multiedit</w>
       <w>multigroup</w>
       <w>multilevel.community</w>
@@ -9060,6 +9130,8 @@
       <w>multipleClasses</w>
       <w>multiply_by</w>
       <w>multiply_by_matrix</w>
+      <w>multiprocess</w>
+      <w>multisession</w>
       <w>multispati</w>
       <w>multispati.randtest</w>
       <w>multispati.rtest</w>
@@ -9184,6 +9256,7 @@
       <w>nbands</w>
       <w>nbrOfOptions</w>
       <w>nbrOfOptions.Options</w>
+      <w>nbrOfWorkers</w>
       <w>ncell</w>
       <w>nclass.FD</w>
       <w>nclass.Sturges</w>
@@ -9609,7 +9682,9 @@
       <w>packageVersion</w>
       <w>package_coverage</w>
       <w>package_dependencies</w>
+      <w>package_deps</w>
       <w>package_native_routine_registration_skeleton</w>
+      <w>packagesOf</w>
       <w>packet.number</w>
       <w>packet.panel.default</w>
       <w>page</w>
@@ -9816,9 +9891,12 @@
       <w>parse_date</w>
       <w>parse_date_time</w>
       <w>parse_date_time2</w>
+      <w>parse_env_subset</w>
       <w>parse_expr</w>
       <w>parse_exprs</w>
       <w>parse_format</w>
+      <w>parse_github_repo_spec</w>
+      <w>parse_github_url</w>
       <w>parse_headers</w>
       <w>parse_headers_list</w>
       <w>parse_hm</w>
@@ -9831,6 +9909,7 @@
       <w>parse_quos</w>
       <w>parse_quosure</w>
       <w>parse_quosures</w>
+      <w>parse_repo_spec</w>
       <w>parse_url</w>
       <w>parsed_content</w>
       <w>parsedesign</w>
@@ -9999,6 +10078,7 @@
       <w>pl.ds</w>
       <w>place.knots</w>
       <w>placeGrob</w>
+      <w>plan</w>
       <w>planes</w>
       <w>plantTraits</w>
       <w>plasma</w>
@@ -10950,11 +11030,13 @@
       <w>relist</w>
       <w>rematchDefinition</w>
       <w>remission</w>
+      <w>remote</w>
       <w>remote_con</w>
       <w>remote_name</w>
       <w>remote_query</w>
       <w>remote_query_plan</w>
       <w>remote_src</w>
+      <w>remotes</w>
       <w>remove.duplicates</w>
       <w>remove.edge.attribute</w>
       <w>remove.graph.attribute</w>
@@ -11070,17 +11152,20 @@
       <w>residuals.slm</w>
       <w>resizePanels</w>
       <w>resolution</w>
+      <w>resolve</w>
       <w>resolveDependencies</w>
       <w>resolveHJust</w>
       <w>resolveRasterSize</w>
       <w>resolveVJust</w>
       <w>resolve_output_format</w>
+      <w>resolved</w>
       <w>response.frequencies</w>
       <w>responseSummary</w>
       <w>restartSession</w>
       <w>restarting</w>
       <w>restorePreserveChunks</w>
       <w>restore_raw_output</w>
+      <w>result</w>
       <w>retinopathy</w>
       <w>returnCluster</w>
       <w>returnCode</w>
@@ -11692,11 +11777,13 @@
       <w>seq_qgrams</w>
       <w>seq_sim</w>
       <w>sequence.lvm</w>
+      <w>sequential</w>
       <w>sequential_hcl</w>
       <w>sequential_pal</w>
       <w>serializeJSON</w>
       <w>serotonin</w>
       <w>serotonin2</w>
+      <w>sessionDetails</w>
       <w>sessionInfo</w>
       <w>sessionInfoX</w>
       <w>set</w>
@@ -12857,6 +12944,7 @@
       <w>superMatrix</w>
       <w>supportsExpat</w>
       <w>supportsLibxml</w>
+      <w>supportsMulticore</w>
       <w>suppressDependencies</w>
       <w>suppressForeignCheck</w>
       <w>suprow</w>
@@ -13508,6 +13596,7 @@
       <w>transmute_all</w>
       <w>transmute_at</w>
       <w>transmute_if</w>
+      <w>transparent</w>
       <w>transplant</w>
       <w>transpose</w>
       <w>trap.rule</w>
@@ -13599,6 +13688,7 @@
       <w>tukeyPsi1</w>
       <w>tuna</w>
       <w>tw</w>
+      <w>tweak</w>
       <w>twindata</w>
       <w>twoClassSim</w>
       <w>twoClassSummary</w>
@@ -13638,6 +13728,7 @@
       <w>undebug_fseq</w>
       <w>undebugcall</w>
       <w>underline</w>
+      <w>undim</w>
       <w>undirected_graph</w>
       <w>undoc</w>
       <w>unemp</w>
@@ -13714,6 +13805,7 @@
       <w>update_geom_defaults</w>
       <w>update_labels</w>
       <w>update_list</w>
+      <w>update_packages</w>
       <w>update_pkg_po</w>
       <w>update_stat_defaults</w>
       <w>updatelvm</w>
@@ -13906,6 +13998,7 @@
       <w>waldtest.default</w>
       <w>walk</w>
       <w>walk2</w>
+      <w>walkAST</w>
       <w>walkCode</w>
       <w>walktrap.community</w>
       <w>wapply</w>

@@ -12,11 +12,19 @@ def index():
 def vulnValidationRun():
     with open('data/serList.csv', 'r') as f:
         serList = [line.rstrip() for line in f]
-    if request.method == "POST" and 'server' in request.form:
+    if request.method == "POST" and 'server' in request.form and request.form['action'] == 'getDb':
         from bin.defs import getVulnDbs
         thisSer = request.form.get("server")
         vulns = getVulnDbs(thisSer)
         return render_template('vulnValidationInputs.html', serList=serList, selVuln=vulns, selSer = thisSer)
+    elif request.method == "POST" and 'server' in request.form and request.form['action'] == 'runVulnValidation':
+        vConfig = {
+                "server": request.form.get("server"),
+                "vuln": request.form.get("thisVuln"),
+                "peril": request.form.getlist("thisPeril"),
+                "country": request.form.getlist("thisCountry")
+            }
+        return jsonify(vConfig)
     return render_template('vulnValidationInputs.html', serList=serList)
 
 @mdv.route('/returnPerilModels', methods=["GET", "POST"])
