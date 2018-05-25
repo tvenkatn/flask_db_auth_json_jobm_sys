@@ -4,6 +4,7 @@ from app import db
 import pyodbc
 import os
 import json
+import subprocess
 
 ALLOWED_EXTENSIONS = set(['txt','dat','csv','xml','zip','bat','yml'])
 
@@ -108,3 +109,26 @@ def mkDirs(bPath, dirName):
     if not os.path.exists(dName):
         os.makedirs(dName)
     return dName
+
+def getLatLongsFromHazBlock():
+    x = subprocess.check_output("Rscript D:/Srinivas/work/20180523_getLocs_HazDataNAWF/getLocs_NAWF_Haz.r")
+    x2 = x.decode('ascii')
+    x3 = x2.split("\r\n")
+    # x4 = [p.split(',') for p in x3]
+    allRecords = []
+    record = {}
+    # for idx, row in enumerate(x3[:-2]):
+    #     print(idx)
+    #     rr=row.split(',')
+    #     record['GEOID'] = rr[0]
+    #     record['lat'] = rr[1]
+    #     record['lon'] = rr[2]
+    #     allRecords.append(json.dumps(record))
+    for row in x3[:-2]:
+        rr=row.split(',')
+        record['GEOID'] = rr[0]
+        record['lon'] = float(rr[1])
+        record['lat'] = float(rr[2])
+        allRecords.append(json.dumps(record))
+    return allRecords
+

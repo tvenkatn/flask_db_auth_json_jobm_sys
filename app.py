@@ -639,6 +639,19 @@ def getPortLocs():
 
 #endregion
 
+
+
+#region plotWFHazLocs
+@app.route('/getWFLocData')
+def getWFLocData():
+    from bin.defs import getLatLongsFromHazBlock
+    return jsonify(getLatLongsFromHazBlock())
+
+@app.route('/leafWF')
+def leafWF():
+    return render_template("leafMaps_WFLocs.html")
+#endregion
+
 if __name__ == '__main__':
     # app.run(host='0.0.0.0', port = 5005, debug=True)
     socketio.run(app, host='0.0.0.0', port = 5005, debug=True)

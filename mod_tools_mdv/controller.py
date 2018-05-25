@@ -35,7 +35,7 @@ def vulnValidationRun():
                     "password": "Rmsuser!"
                     }
                 }
-        with open('RMSTools/Vulnerability/latest/config.json', 'w', encoding="utf-8", newline='\n') as fp:
+        with open(os.path.join(vulnToolRelPath, 'config.json'), 'w', encoding="utf-8", newline='\n') as fp:
             json.dump(vConfig, fp, indent=4, sort_keys=True, ensure_ascii=False)
 
         # execute script
