@@ -56,7 +56,6 @@ celery = Celery(app.name, broker=app.config['CELERY_BROKER_URL'], backend=app.co
 celery.conf.update(app.config)
 
 
-
 ## psycopg2
 def getPostName(nameHere):
     conn = psycopg2.connect("dbname='flaskApp1' user ='postgres' host= 'localhost' password='welcome'")
@@ -651,6 +650,17 @@ def getWFLocData():
 def leafWF():
     return render_template("leafMaps_WFLocs.html")
 #endregion
+
+
+## this should go into mod_tools_mdv blueprints
+## but can't make it work as celery is defined here
+## need to read more
+## maybe http://shulhi.com/celery-integration-with-flask/
+## TODO
+@celery.task
+def runRinBack_VulnValid(vulnToolRelPath , repName):
+    a = ["cmd", "/c", "Rscript", os.path.join(vulnToolRelPath, "Main.r"), """\"%s\" \"%s\" \"%s\"""" % (vulnToolRelPath, vulnToolRelPath, repName)]
+    subprocess.call(" ".join(a))
 
 if __name__ == '__main__':
     # app.run(host='0.0.0.0', port = 5005, debug=True)

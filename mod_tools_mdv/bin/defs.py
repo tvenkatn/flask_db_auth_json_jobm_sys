@@ -1,4 +1,5 @@
 import pyodbc, subprocess, os
+from celery import Celery
 
 ser = 'ca1mdtools01'
 mydb = 'RMS_VULNERABILITY_EUFL_official'
@@ -22,6 +23,3 @@ def getCountryPerils(ser, mydb):
     perilCountries = [(x[0:2], x[-2:]) for x in vccs]
     return perilCountries
 
-def runRinBack_VulnValid(vulnToolRelPath , repName):
-    a = ["cmd", "/c", "Rscript", os.path.join(vulnToolRelPath, "Main.r"), """\"%s\" \"%s\" \"%s\"""" % (vulnToolRelPath, vulnToolRelPath, repName)]
-    subprocess.call(" ".join(a))

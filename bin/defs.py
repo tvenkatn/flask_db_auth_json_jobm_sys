@@ -74,6 +74,7 @@ def getEDMPorts(ser, EDM):
         record['port'] = row[0]
         allRecords.append(json.dumps(record))
     return allRecords
+
 def LocsPorts(ser, EDM, port):
     command = ["""select latitude, longitude, locid from [""" + EDM + """].[dbo].[loc] where accgrpid in (select accgrpid from [""" + EDM + """].[dbo].[portacct] where portinfoid = """ + str(port) + """)"""]
     command2 = [

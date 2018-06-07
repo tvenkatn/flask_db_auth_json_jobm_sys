@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, jsonify, request
 import os, csv, json, datetime
 from flask_login import login_required
+from celery import Celery
 
 mdv = Blueprint('mdv',__name__,template_folder='templates')
 
@@ -20,7 +21,7 @@ def vulnValidationRun():
         vulns = getVulnDbs(thisSer)
         return render_template('vulnValidationInputs.html', serList=serList, selVuln=vulns, selSer = thisSer)
     elif request.method == "POST" and 'server' in request.form and request.form['action'] == 'runVulnValidation':
-        from mod_tools_mdv.bin.defs import runRinBack_VulnValid
+        from app import runRinBack_VulnValid
         dtNow = datetime.datetime.now().strftime("%Y%m%d_%Hh%Mm%Ss")
         vConfig = {
                 # "currentPath": os.getcwd(),
@@ -39,7 +40,7 @@ def vulnValidationRun():
             json.dump(vConfig, fp, indent=4, sort_keys=True, ensure_ascii=False)
 
         # execute script
-        runRinBack_VulnValid(vulnToolRelPath, dtNow)
+        runRinBack_VulnValid.delay(vulnToolRelPath, dtNow)
 
         return jsonify(vConfig)
     return render_template('vulnValidationInputs.html', serList=serList)
