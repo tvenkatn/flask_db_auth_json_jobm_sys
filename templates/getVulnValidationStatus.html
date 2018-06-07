@@ -9,6 +9,7 @@
 
     </style>
 
+
 {% endblock %}
 
 {% block content %}
@@ -16,11 +17,11 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 mx-auto">
-            <h2>Geohazard validation: Job Status</h2>
+            <h2>Vulnerability validation: Job Status</h2>
             <br>
 
             <h6>Displaying details for last: <form method='POST' style="display: inline-block">
-                <select name="thisGeohaz" method="POST">
+                <select name="thisVuln" method="POST">
                     <option value="5" selected>5</option>
                     <option value="10">10</option>
                     <option value="20">20</option>
@@ -45,10 +46,11 @@
                             <td>{{task[1]}}</td>
                             <td>{{task[2]}}</td>
                             <td>{{task[3]}}</td>
+                            <!--<td><script>document.write(moment({{task[3]}}, 'YYYY-MM-DD HH:mm:ss.SSSSSS').format("YYYY-MM-DD HH:mm:ss"))</script></td>-->
                             <td>{{task[4]}}</td>
                             <td>
                                 {% if task[4] in ("Success", "SUCCESS") %}
-                                    <a class="vvlink" href="{{ url_for('getGVReport', rep_name=task[5]) }}">{{task[5]}}</a>
+                                    <a class="vvlink" href="{{ url_for('getVVReport', rep_name=task[5]) }}">{{task[5]}}</a>
                                 {% else %}
                                     {{task[5]}}
                                 {% endif %}

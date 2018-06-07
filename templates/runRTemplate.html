@@ -23,7 +23,16 @@
     {% endif %}
 
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-
+    <style>
+        ul {list-style-type: none;}
+        .container {
+              font-family: 'Avenir', Helvetica, Arial, sans-serif;
+              -webkit-font-smoothing: antialiased;
+              -moz-osx-font-smoothing: grayscale;
+              color: #2c3e50;
+            }
+}
+    </style>
 </head>
 <body>
 
@@ -66,11 +75,12 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="/runGeohazValid">Geohazard</a>
-                    <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href={{ url_for('mdv.vulnValidationRun') }}>Vulnerability</a>
+                    <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#">HazardCache</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="/getGVStatus">Geohazard validation status</a>
+                    <a class="dropdown-item" href="/getVVStatus">Vulnerability validation status</a>
                 </div>
             </li>
 

@@ -20,6 +20,7 @@ import time
 
 # to turn on Celery, run
 # celery worker -A app.celery --loglevel=info
+# celery worker -A app.celery --loglevel=debug
 # in a separate command window within the same venv as the app
 
 UPLOAD_FOLDER = './rFiles/rlr/'
@@ -29,16 +30,17 @@ GEOHAZ_TOOLPATH = r'D:\Srinivas\tools\ModelDev_TFS\ModelDataValidation\Geohaz\la
 # e2eLogFolder = r'D:\Srinivas\work\20180105_flask_db_auth_json\rFiles\hdr'
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:welcome@localhost/flaskApp1'
-db=SQLAlchemy(app)
-app.secret_key = 'CatchMe, if yOU Ca nn~!'
-
 from mod_E2E.controller import e2e
 from mod_logs.controller import getLogs
 from mod_tools_mdv.controller import mdv
 app.register_blueprint(e2e, url_prefix = '/e2e')
 app.register_blueprint(getLogs, url_prefix = '/logs')
 app.register_blueprint(mdv, url_prefix = '/mdv')
+
+
+app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:welcome@localhost/flaskApp1'
+db=SQLAlchemy(app)
+app.secret_key = 'CatchMe, if yOU Ca nn~!'
 
 login = LoginManager(app)
 login.login_view = 'login' # tells where to redirect if @login_required is not met!
@@ -661,6 +663,66 @@ def leafWF():
 def runRinBack_VulnValid(vulnToolRelPath , repName):
     a = ["cmd", "/c", "Rscript", os.path.join(vulnToolRelPath, "Main.r"), """\"%s\" \"%s\" \"%s\"""" % (vulnToolRelPath, vulnToolRelPath, repName)]
     subprocess.call(" ".join(a))
+
+class RunVulnValidTasks(db.Model):
+    __tablename__="runVulnValidTasks"
+    id=db.Column(db.Integer, primary_key=True)
+    server_= db.Column(db.String(40), unique=False)
+    initTime = db.Column(db.DateTime, default=datetime.datetime.now)
+    db_ = db.Column(db.String(120), unique=False)
+    status_ = db.Column(db.String(120), unique=False, default="PENDING")
+    taskId_ = db.Column(db.String(120), unique=True)
+    reportName_ = db.Column(db.String(120), unique=True)
+
+    def __init__(self, server_, db_, status_, taskId_, reportName_):
+        self.server_ = server_
+        self.db_ = db_
+        self.status_ = status_
+        self.taskId_ = taskId_
+        self.reportName_ = reportName_
+
+def runVulnValidation(vulnToolRelPath, dtNow, rf):
+    db.create_all()
+    task = runRinBack_VulnValid.delay(vulnToolRelPath, dtNow)
+    runRValid = RunVulnValidTasks(rf.get("server"), rf.get("thisVuln"), "PENDING", task.id, dtNow)
+    db.session.add(runRValid)
+    db.session.commit()
+
+@app.route('/getVVStatus', methods=["GET", "POST"])
+def getVVStatus():
+    tasks = db.session.query(RunVulnValidTasks)
+    tid = {}
+    numShow = 5
+    if request.method == "thisVuln":
+        numShow = int(request.form.get("thisGeohaz"))
+    for task in tasks[-1 * int(numShow):]:
+        runStat = str(runRinBack_VulnValid.AsyncResult(task.taskId_).state)
+        if runStat == "SUCCESS":
+            tsk = db.session.query(RunVulnValidTasks).filter_by(taskId_=task.taskId_).first()
+            tsk.status_ = "SUCCESS"
+            db.session.commit()
+        elif runStat == "FAILURE":
+            tsk = db.session.query(RunVulnValidTasks).filter_by(taskId_=task.taskId_).first()
+            tsk.status_ = "FAIL"
+            db.session.commit()
+        else:
+            tsk = db.session.query(RunVulnValidTasks).filter_by(taskId_=task.taskId_).first()
+            tsk.status_ = "PENDING"
+            db.session.commit()
+        qr = db.session.query(RunVulnValidTasks).filter_by(taskId_=task.taskId_).first()
+        runStatNow = qr.status_
+        repLink = task.reportName_
+
+        # tid stores Key Value pairs with taskid as key, tuple as value
+        tid[task.taskId_] = (task.id, task.server_, task.db_, str(task.initTime), runStatNow, repLink)
+    return render_template('getVulnValidationStatus.html', tasks_=list(tid.values()))
+
+@app.route('/getVVReport/<rep_name>')
+def getVVReport(rep_name):
+    from mod_tools_mdv.controller import vulnToolRelPath
+    vtPath = vulnToolRelPath
+    return send_from_directory(directory=os.path.join(str(vtPath),'log'), filename="Report_"+rep_name+".html")
+
 
 if __name__ == '__main__':
     # app.run(host='0.0.0.0', port = 5005, debug=True)
